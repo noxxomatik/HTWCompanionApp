@@ -2,7 +2,11 @@
     $.ajax({
         url: "https://www2.htw-dresden.de/~app/API/GetTimetable.php",
         data: { StgJhr: StJh, Stg: St, StgGrp: StGr},
-        complete: updateTimtable
+        success: updateTimtable,
+        error: function() {
+            var localSettings = applicationData.localSettings;
+            updateTimtable(JSON.parse(localSettings.values["backupTimetable"]));
+        }
     });
 }
 
@@ -27,7 +31,7 @@ function updateTimtable(data) {
     // gerade oder ungerade Woche
     var week = (getCurrentWeekNumber() % 2) == 0 ? 2 : 1;
 
-    $.each(data.responseJSON, function (index, lesson) {
+    $.each(data, function (index, lesson) {
         // Termin liegt in dieser Woche
         if (lesson.week == 0 || lesson.week == week) {
             // genauen Termin bestimmen
@@ -36,6 +40,13 @@ function updateTimtable(data) {
             $(selector).html(lesson.type + " " + lesson.lessonTag + "<br/>" + lesson.Rooms[0]);
         }
     });
+
+    // backup
+    var localSettings = applicationData.localSettings;
+    var backup = JSON.stringify(data);
+    localSettings.values["backupTimetable"] = backup;
+
+    $('#progressBar').hide();
 }
 
 function getTimetableRoom(room) {

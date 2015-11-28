@@ -85,6 +85,7 @@
     <Content Include="css\ui-themed.theme-dark.css" />
     <Content Include="css\ui-themed.theme-light.css" />
     <Content Include="pages\settingsHub\settings.html" />
+    <Content Include="pages\settingsHub\settings.js" />
     <PRIResource Include="strings\de-DE\resources.resjson" />
   </ItemGroup>
   <ItemGroup>

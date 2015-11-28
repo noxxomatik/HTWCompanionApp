@@ -201,15 +201,15 @@
 	}
 }
 
-.timetable {
-    border-collapse: collapse;
+.timetable {    
     text-align: center;
     vertical-align: auto;
     width: 100%;
 }
 
 table, th, td {
-    border: 1px solid white;
+    border-collapse: collapse;
+    border: 1px solid;
 }
 
 td {

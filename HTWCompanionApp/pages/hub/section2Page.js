@@ -14,7 +14,12 @@
                 $("#selectRoom").hide();
                 $("#add").hide();
                 $("#inputRoom").show();
-                $("#inputRoom").focus();
+                $("#inputRoom").focus().blur(function () {
+                    $("#selectRoom").show();
+                    $("#add").show();
+                    $("#inputRoom").hide();
+                    $("#inputRoom").val("");
+                });
             });
 
             $("#formRoom").on("submit", function () {
@@ -35,6 +40,7 @@
 
                 getTimetableRoom(selectRoom.value);
             });
+
             var rooms = getAllRooms();
             if (rooms != null) {
                 $.each(rooms, function (index, room) {

@@ -9,8 +9,14 @@
                 url: "https://wwwqis.htw-dresden.de/appservice/getgrades",
                 method: "POST",
                 data: {"sNummer": sNum, "RZLogin": RZLog, "AbschlNr": context.AbschlNr, "StgNr": context.StgNr, "POVersion": context.POVersion},
-                success: updateGradesView
+                success: updateGradesView,
+                error: function (data, error) {
+                    $('#gradesContainer').append("Beim Abruf der Noten kam es zu folgendem Fehler:<br/>" + error);
+                }
             })
+        },
+        error: function (data, error) {
+            $('#gradesContainer').append("Beim Abruf der Noten kam es zu folgendem Fehler:<br/>" + error);
         }
     });
 }
