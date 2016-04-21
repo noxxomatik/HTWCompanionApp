@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="8e4fa85b-0a25-413c-a4b4-0535c7540806" Version="0.1.0.4" Publisher="CN=Sven" />
+  <Identity Name="8e4fa85b-0a25-413c-a4b4-0535c7540806" Version="1.0.0.0" Publisher="CN=Sven" />
   <mp:PhoneIdentity PhoneProductId="8e4fa85b-0a25-413c-a4b4-0535c7540806" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>HTWCompanionApp</DisplayName>
