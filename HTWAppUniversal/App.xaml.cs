@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -77,6 +78,10 @@ namespace HTWAppUniversal
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
             }
+
+            // TEST
+            TimetableModel timetable = new TimetableModel();
+            Debug.WriteLine(timetable.getTimetable("15", "044", "73-CM"));
         }
 
         /// <summary>

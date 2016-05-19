@@ -16,7 +16,7 @@ function updateTimtable(data) {
     //$("#timetable").html(data.responseText);
 
     /*
-    lessonTag - Kürzel
+    lessonTag - Kürzeld:\development\htwcompanionapp\htwcompanionapp\js\timetable.js
     name - ganzer Name
     type - V Vorlesung Pr Praktikum
     week - 0 jede Woche 1 ungerade Woche 2 gerade Woche
