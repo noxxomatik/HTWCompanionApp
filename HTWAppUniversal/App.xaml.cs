@@ -84,6 +84,8 @@ namespace HTWAppUniversal
             timetable.getTimetable("15", "044", "73-CM");
             RoomTimetableModel roomTimetable = new RoomTimetableModel();
             roomTimetable.getRoomTimetable("Z 701");
+            //GradesModel gradesModel = new GradesModel();
+            //gradesModel.getGrades("sXXXXX", "XXXX");
         }
 
         /// <summary>
