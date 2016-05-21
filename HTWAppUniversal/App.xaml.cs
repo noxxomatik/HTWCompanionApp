@@ -81,7 +81,7 @@ namespace HTWAppUniversal
 
             // TEST
             TimetableModel timetable = new TimetableModel();
-            Debug.WriteLine(timetable.getTimetable("15", "044", "73-CM"));
+            timetable.getTimetable("15", "044", "73-CM");
         }
 
         /// <summary>
