@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CanteenModel.cs" />
     <Compile Include="Grades.xaml.cs">
       <DependentUpon>Grades.xaml</DependentUpon>
     </Compile>
@@ -110,6 +111,7 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsModel.cs" />
     <Compile Include="Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
