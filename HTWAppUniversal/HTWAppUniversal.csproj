@@ -105,6 +105,7 @@
     <Compile Include="RoomTimetable.xaml.cs">
       <DependentUpon>RoomTimetable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RoomTimetableModel.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
