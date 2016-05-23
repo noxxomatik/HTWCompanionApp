@@ -26,5 +26,35 @@ namespace HTWAppUniversal
         {
             this.InitializeComponent();
         }
+
+        private async void textBlock_Loading(FrameworkElement sender, object args) {
+            // TEST
+            SettingsModel settings = new SettingsModel();
+            // replace with your sNummer and password
+            settings.SNummer = "sXXXXX";
+            settings.RZLogin = "XXXX";
+            settings.StgJhr = "15";
+            settings.Stg = "044";
+            settings.StgGrp = "73-CM";
+            List<string> rooms = new List<string>();
+            rooms.Add("S 354");
+            rooms.Add("Z 701");
+            rooms.Add("S 355");
+            settings.Rooms = rooms;
+
+            TimetableModel timetable = new TimetableModel();
+            List<TimetableObject> timetableObjects = await timetable.getTimetable(settings.StgJhr, settings.Stg, settings.StgGrp);
+            RoomTimetableModel roomTimetable = new RoomTimetableModel();
+            roomTimetable.getRoomTimetable(settings.Rooms[1]);
+            GradesModel gradesModel = new GradesModel();
+            gradesModel.getGrades(settings.SNummer, settings.RZLogin);
+            CanteenModel canteenModel = new CanteenModel();
+            List<CanteenObject> foodList = await canteenModel.getCanteenToday();
+            canteenModel.getCanteenTomorrow();
+
+            TextBlock textBlock = (TextBlock)sender;
+            textBlock.Text = timetableObjects[0].lessonTag;
+            textBlock.Text += "\n" + (foodList.Count > 0 ? foodList[0].title : "");
+        }
     }
 }
