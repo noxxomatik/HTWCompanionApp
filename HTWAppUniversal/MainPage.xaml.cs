@@ -29,7 +29,7 @@ namespace HTWAppUniversal
 
         private async void textBlock_Loading(FrameworkElement sender, object args) {
             // TEST
-            SettingsModel settings = new SettingsModel();
+            SettingsModel settings = SettingsModel.getInstance();
             // replace with your sNummer and password
             settings.SNummer = "sXXXXX";
             settings.RZLogin = "XXXX";

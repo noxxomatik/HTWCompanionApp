@@ -9,6 +9,7 @@ namespace HTWAppUniversal {
     // use settings as roaming data to sync them with other systems
     // https://msdn.microsoft.com/en-us/windows/uwp/app-settings/store-and-retrieve-app-data
     class SettingsModel {
+        static SettingsModel instance = null;
         ApplicationDataContainer roamingSettings;
         StorageFolder roamingFolder;
 
@@ -20,13 +21,19 @@ namespace HTWAppUniversal {
         string stgGrp;
         List<string> rooms;
 
-        public SettingsModel () {
+        // Singleton pattern
+        private SettingsModel () {
             roamingSettings = ApplicationData.Current.RoamingSettings;
             roamingFolder = ApplicationData.Current.RoamingFolder;
         }
 
-        public string SNummer
-        {
+        public static SettingsModel getInstance () {
+            if (instance == null)
+                instance = new SettingsModel();
+            return instance;
+        }
+
+        public string SNummer {
             get
             {
                 sNummer = (string) roamingSettings.Values["sNummer"];
