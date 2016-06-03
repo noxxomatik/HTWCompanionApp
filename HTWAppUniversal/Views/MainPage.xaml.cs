@@ -15,15 +15,12 @@ using Windows.UI.Xaml.Navigation;
 
 // Die Vorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 dokumentiert.
 
-namespace HTWAppUniversal
-{
+namespace HTWAppUniversal.Views {
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class MainPage : Page
-    {
-        public MainPage()
-        {
+    public sealed partial class MainPage : Page {
+        public MainPage() {
             this.InitializeComponent();
         }
 
@@ -42,13 +39,13 @@ namespace HTWAppUniversal
             rooms.Add("S 355");
             settings.Rooms = rooms;
 
-            TimetableModel timetable = new TimetableModel();
+            TimetableModel timetable = TimetableModel.getInstance();
             List<TimetableObject> timetableObjects = await timetable.getTimetable(settings.StgJhr, settings.Stg, settings.StgGrp);
-            RoomTimetableModel roomTimetable = new RoomTimetableModel();
+            RoomTimetableModel roomTimetable = RoomTimetableModel.getInstance();
             roomTimetable.getRoomTimetable(settings.Rooms[1]);
-            GradesModel gradesModel = new GradesModel();
+            GradesModel gradesModel = GradesModel.getInstance();
             gradesModel.getGrades(settings.SNummer, settings.RZLogin);
-            CanteenModel canteenModel = new CanteenModel();
+            CanteenModel canteenModel = CanteenModel.getInstance();
             List<CanteenObject> foodList = await canteenModel.getCanteenToday();
             canteenModel.getCanteenTomorrow();
 

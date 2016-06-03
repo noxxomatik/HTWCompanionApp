@@ -10,8 +10,17 @@ using System.Xml.Linq;
 
 namespace HTWAppUniversal {
     class CanteenModel {
+        static CanteenModel instance = null;
         private const string feedTodayUri = "http://www.studentenwerk-dresden.de/feeds/speiseplan.rss?mid=9";
         private const string feedTomorrowUri = "http://www.studentenwerk-dresden.de/feeds/speiseplan.rss?mid=9&tag=morgen";
+
+        private CanteenModel () {}
+
+        public static CanteenModel getInstance() {
+            if (instance == null)
+                instance = new CanteenModel();
+            return instance;
+        }
 
         public async Task<List<CanteenObject>> getCanteenToday() {
             return await getCanteen(feedTodayUri);

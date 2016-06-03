@@ -13,7 +13,16 @@ using Windows.Storage;
 
 namespace HTWAppUniversal {
     class GradesModel {
+        static GradesModel instance = null;
         private const string filename = "grades";
+
+        private GradesModel() {}
+
+        public static GradesModel getInstance() {
+            if (instance == null)
+                instance = new GradesModel();
+            return instance;
+        }
 
         public async Task<List<GradeObject>> getGrades(string sNummer, string rZLogin) {
             // get additional information first

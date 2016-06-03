@@ -14,7 +14,16 @@ using Windows.Storage;
 
 namespace HTWAppUniversal {
     class TimetableModel {
+        static TimetableModel instance = null;
         private const string filename = "timetable.xml";
+
+        private TimetableModel () {}
+
+        public static TimetableModel getInstance() {
+            if (instance == null)
+                instance = new TimetableModel();
+            return instance;
+        }
 
         /*
          * Get the timetable asynchronous from the server.

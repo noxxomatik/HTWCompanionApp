@@ -95,27 +95,39 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CanteenModel.cs" />
-    <Compile Include="Grades.xaml.cs">
+    <Compile Include="Models\CanteenModel.cs" />
+    <Compile Include="Views\CanteenItem.xaml.cs">
+      <DependentUpon>CanteenItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cantine.xaml.cs">
+      <DependentUpon>Cantine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Grades.xaml.cs">
       <DependentUpon>Grades.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GradesModel.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Models\GradesModel.cs" />
+    <Compile Include="Views\GradesItem.xaml.cs">
+      <DependentUpon>GradesItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoomTimetable.xaml.cs">
+    <Compile Include="Views\RoomTimetable.xaml.cs">
       <DependentUpon>RoomTimetable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RoomTimetableModel.cs" />
-    <Compile Include="Settings.xaml.cs">
+    <Compile Include="Models\RoomTimetableModel.cs" />
+    <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingsModel.cs" />
-    <Compile Include="Timetable.xaml.cs">
+    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TimetableModel.cs" />
+    <Compile Include="Models\TimetableModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -138,23 +150,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Grades.xaml">
+    <Page Include="Styles\NavRadioButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RoomTimetable.xaml">
+    <Page Include="Views\CanteenItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings.xaml">
+    <Page Include="Views\Cantine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Timetable.xaml">
+    <Page Include="Views\Grades.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GradesItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RoomTimetable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Timetable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

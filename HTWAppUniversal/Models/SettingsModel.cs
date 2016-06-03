@@ -15,7 +15,7 @@ namespace HTWAppUniversal {
 
         // settings
         string sNummer;
-        string rZLogin;
+        string rZLogin;         
         string stgJhr;
         string stg;
         string stgGrp;
@@ -33,90 +33,85 @@ namespace HTWAppUniversal {
             return instance;
         }
 
+        /// <summary>
+        /// Bibliotheksnummer (inkl. fuehrendem s)
+        /// </summary>
         public string SNummer {
-            get
-            {
+            get {
                 sNummer = (string) roamingSettings.Values["sNummer"];
                 return sNummer;
             }
-
-            set
-            {
+            set {
                 sNummer = value;
                 roamingSettings.Values["sNummer"] = sNummer;                
             }
         }
 
-        public string RZLogin
-        {
-            get
-            {
+        /// <summary>
+        /// Passwort
+        /// </summary>
+        public string RZLogin {
+            get {
                 rZLogin = (string)roamingSettings.Values["RZLogin"];
                 return rZLogin;
             }
-
-            set
-            {
+            set {
                 rZLogin = value;
                 roamingSettings.Values["RZLogin"] = rZLogin;
             }
         }
 
-        public string StgJhr
-        {
-            get
-            {
+        /// <summary>
+        /// Studienjahrgang (z.B. 15)
+        /// </summary>
+        public string StgJhr {
+            get {
                 stgJhr = (string)roamingSettings.Values["StgJhr"];
                 return stgJhr;
             }
-
-            set
-            {
+            set {
                 stgJhr = value;
                 roamingSettings.Values["StgJhr"] = stgJhr;
             }
         }
 
-        public string Stg
-        {
-            get
-            {
+        /// <summary>
+        /// Studiengang (z.B. 044)
+        /// </summary>
+        public string Stg {
+            get {
                 stg = (string)roamingSettings.Values["Stg"];
                 return stg;
             }
-
-            set
-            {
+            set {
                 stg = value;
                 roamingSettings.Values["Stg"] = stg;
             }
         }
 
-        public string StgGrp
-        {
-            get
-            {
+        /// <summary>
+        /// Studiengruppe (z.B. 73-CM)
+        /// </summary>
+        public string StgGrp {
+            get {
                 stgGrp = (string)roamingSettings.Values["StgGrp"];
                 return stgGrp;
             }
-
-            set
-            {
+            set {
                 stgGrp = value;
                 roamingSettings.Values["StgGrp"] = stgGrp;
             }
         }
 
-        public List<string> Rooms
-        {
-            get
-            {
+        /// <summary>
+        /// anzuzeigende Raeume fuer Raumbelegung
+        /// </summary>
+        public List<string> Rooms {
+            get {
                 rooms = ((string[]) roamingSettings.Values["Rooms"]).ToList<string>();
                 return rooms;
             }
-
-            set
-            {
+            set {
                 rooms = value;
                 roamingSettings.Values["Rooms"] = rooms.ToArray();
             }

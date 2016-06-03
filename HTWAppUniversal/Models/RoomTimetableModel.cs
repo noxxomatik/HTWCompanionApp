@@ -13,7 +13,16 @@ using Windows.Storage;
 
 namespace HTWAppUniversal {
     class RoomTimetableModel {
+        static RoomTimetableModel instance = null;
         private const string filename = "roomTimetable";
+
+        private RoomTimetableModel () {}
+
+        public static RoomTimetableModel getInstance() {
+            if (instance == null)
+                instance = new RoomTimetableModel();
+            return instance;
+        }
 
         /*
          * Get the timetable for the room asynchronous from the server.

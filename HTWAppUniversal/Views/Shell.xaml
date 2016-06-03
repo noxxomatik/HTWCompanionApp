@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="HTWAppUniversal.Views.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HTWAppUniversal.Views"
+    xmlns:style="using:HTWAppUniversal.Styles"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/NavRadioButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="RadioButton" BasedOn="{StaticResource NavRadioButtonStyle}" />
+        </ResourceDictionary>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <SplitView x:Name="SplitView" Background="Black" OpenPaneLength="240" CompactPaneLength="48"  
+        DisplayMode="CompactOverlay" IsPaneOpen="False" PaneBackground="DarkSeaGreen" Content="{Binding}">
+            <SplitView.Pane>
+                <StackPanel x:Name="SplitViewPanePanel">
+                    <RadioButton x:Name="b_back" Click="b_back_Click" Tag="&#xE112;" Background="Green" Content="Back" GroupName="Back"/>
+                    <RadioButton x:Name="b_hamburger" Click="b_hamburger_Click" Tag="&#xE700;" Content="Menu" GroupName="Hamburger"/>
+                    <RadioButton x:Name="b_home" Click="b_home_Click" Tag="&#xE80F;" Content="Home" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_settings" Click="b_settings_Click" Tag="&#xE713;" Content="Einstellungen" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_grades" Click="b_grades_Click" Tag="&#xE713;" Content="Noten" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_cantine" Click="b_cantine_Click" Tag="&#xE713;" Content="Mensa" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_timetable" Click="b_timetable_Click" Tag="&#xE713;" Content="Stundenplan" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_rTimetable" Click="b_rTimetable_Click" Tag="&#xE713;" Content="Raum Stundenplan" GroupName="Navigation"/>
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
+    </Grid>
+</Page>
