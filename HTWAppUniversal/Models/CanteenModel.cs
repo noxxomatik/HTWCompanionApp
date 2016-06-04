@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HTWAppObjects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,11 +39,11 @@ namespace HTWAppUniversal {
                 List<CanteenObject> foodList = new List<CanteenObject>();
                 foreach (var item in feedXML.Descendants("item")) {
                     CanteenObject food = new CanteenObject();
-                    food.title = item.Element("title").Value;
-                    food.link = item.Element("link").Value;
-                    food.description = item.Element("description").Value;
-                    food.guid = item.Element("guid").Value;
-                    food.author = item.Element("author").Value;
+                    food.Title = item.Element("title").Value;
+                    food.Link = item.Element("link").Value;
+                    food.Description = item.Element("description").Value;
+                    food.Guid = item.Element("guid").Value;
+                    food.Author = item.Element("author").Value;
                     foodList.Add(food);
                 }
                 return foodList;
@@ -52,13 +53,5 @@ namespace HTWAppUniversal {
                 return new List<CanteenObject>();
             }
         }
-    }
-
-    public class CanteenObject {
-        public string title { get; set; }
-        public string link { get; set; }
-        public string description { get; set; }
-        public string guid { get; set; }
-        public string author { get; set; }
     }
 }

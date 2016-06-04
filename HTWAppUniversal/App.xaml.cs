@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Data.Xml.Dom;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -74,6 +76,16 @@ namespace HTWAppUniversal {
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
             }
+
+            // Create a tile notification
+            /*string adaptiveTile = File.ReadAllText(@"Tiles/adaptive_tile.xml");
+            XmlDocument tileXml = new XmlDocument();
+            tileXml.LoadXml(adaptiveTile);
+            TileNotification tile = new TileNotification(tileXml);
+            TileUpdater tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
+            tileUpdater.Update(tile);*/
+
+            // Create a scheduled tile notification
         }
 
         /// <summary>

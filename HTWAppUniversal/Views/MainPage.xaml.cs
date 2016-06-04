@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HTWAppObjects;
+using HTWAppUniversal.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +24,9 @@ namespace HTWAppUniversal.Views {
     public sealed partial class MainPage : Page {
         public MainPage() {
             this.InitializeComponent();
+
+            // register the background task
+            TileBackgroundTask tileBackgroundTask = TileBackgroundTask.getInstance();
         }
 
         private async void textBlock_Loading(FrameworkElement sender, object args) {
@@ -50,8 +55,9 @@ namespace HTWAppUniversal.Views {
             canteenModel.getCanteenTomorrow();
 
             TextBlock textBlock = (TextBlock)sender;
-            textBlock.Text = timetableObjects[0].lessonTag;
-            textBlock.Text += "\n" + (foodList.Count > 0 ? foodList[0].title : "");
+            textBlock.Text = timetableObjects[0].LessonTag;
+            textBlock.Text += "\n" + (foodList.Count > 0 ? foodList[0].Title : "");
         }
     }
+
 }

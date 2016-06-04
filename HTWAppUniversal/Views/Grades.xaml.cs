@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HTWAppObjects;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace HTWAppUniversal.Views {
             GradesModel gm = GradesModel.getInstance();
 
             /* for testing */
-            sm.SNummer = "";
-            sm.RZLogin = "";
+            sm.SNummer = " ";
+            sm.RZLogin = " ";
             /* for testing */
 
             List<GradeObject> grades = await gm.getGrades(sm.SNummer, sm.RZLogin);
@@ -39,8 +40,8 @@ namespace HTWAppUniversal.Views {
             // get all semesters
             List<string> semester = new List<string>();
             foreach (GradeObject g in grades) {
-                if (!semester.Contains(g.semester))
-                    semester.Add(g.semester);
+                if (!semester.Contains(g.Semester))
+                    semester.Add(g.Semester);
             }
 
             // create as many listviews as there are semester
@@ -54,7 +55,7 @@ namespace HTWAppUniversal.Views {
             // todo: fill listviews with entries
             foreach (ListView lv in semList) {
                 foreach (GradeObject g in grades) {
-                    if (g.semester == lv.Name) {
+                    if (g.Semester == lv.Name) {
                         // ListViewItem method (simple)
                         /*string grade = (double.Parse(g.prNote) / 100).ToString();
                         ListViewItem lvi = new ListViewItem();
@@ -62,11 +63,11 @@ namespace HTWAppUniversal.Views {
                         lv.Items.Add(lvi);*/
 
                         // custom page method
-                        double grade = double.Parse(g.prNote) / 100;
+                        double grade = double.Parse(g.PrNote) / 100;
                         GradesItem gi = new GradesItem();
-                        gi.Tb_title.Text = g.prTxt + "(" + g.prForm + ")";
+                        gi.Tb_title.Text = g.PrTxt + "(" + g.PrForm + ")";
                         gi.Tb_grade.Text = grade.ToString();
-                        gi.Tb_credits.Text = g.ectsCredits;
+                        gi.Tb_credits.Text = g.EctsCredits;
                         lv.Items.Add(gi);
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HTWAppObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -85,33 +86,5 @@ namespace HTWAppUniversal {
             var timetableObjects = (List<TimetableObject>)serializer.ReadObject(readStream);
             return timetableObjects;
         }
-    }
-
-    /*
-    * One lesson in the timetable
-    */
-    /*
-        lessonTag - Kürzel
-        name - ganzer Name
-        type - V Vorlesung Pr Praktikum
-        week - 0 jede Woche 1 ungerade Woche 2 gerade Woche
-        day - Wochentag beginnend mit 1
-        beginTime - 11:10:00
-        endTime - 12:40:00
-        professor - Familienname
-        WeeksOnly - Anzahl Wochen in denen Lehrveranstaltung stattfindet
-        Rooms - Array mit Raumnummern ["S 128"]
-    */
-    public class TimetableObject {
-        public string lessonTag { get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
-        public int week { get; set; }
-        public int day { get; set; }
-        public string beginTime { get; set; }
-        public string endTime { get; set; }
-        public string professor { get; set; }
-        public string weeksOnly { get; set; }
-        public List<string> rooms { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HTWAppObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,7 @@ namespace HTWAppUniversal {
             List<CourseObject> courseObjects = await getCourses(sNummer, rZLogin);
             CourseObject course = courseObjects[0];
             // get the grades
-            List<GradeObject> gradeObjects = await getGradesRemote(sNummer, rZLogin, course.abschlNr, course.stgNr, course.pOVersion);
+            List<GradeObject> gradeObjects = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
             // backup grades
             if (gradeObjects.Count > 0) {
                 await saveGradesBackup(gradeObjects, sNummer);
@@ -116,28 +117,5 @@ namespace HTWAppUniversal {
             var gradeObjects = (List<GradeObject>)serializer.ReadObject(readStream);
             return gradeObjects;
         }
-    }
-
-    public class CourseObject {
-        public string abschlTxt { get; set; }
-        public string pOVersion { get; set; }
-        public string stgTxt { get; set; }
-        public string stgNr { get; set; }
-        public string abschlNr { get; set; }
-    }
-
-    public class GradeObject {
-        public string status { get; set; }
-        public string semester { get; set; }
-        public string prDatum { get; set; }
-        public string voDatum { get; set; }
-        public string prNr { get; set; }
-        public string ectsGrade { get; set; }
-        public string vermerk { get; set; }
-        public string prNote { get; set; }
-        public string ectsCredits { get; set; }
-        public string prTxt { get; set; }
-        public string versuch { get; set; }
-        public string prForm { get; set; }
     }
 }
