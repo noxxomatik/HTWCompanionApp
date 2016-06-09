@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="BackgroundTasks\TileBackgroundTask.cs" />
     <Compile Include="Models\CanteenModel.cs" />
+    <Compile Include="Services\Util.cs" />
     <Compile Include="Views\CanteenItem.xaml.cs">
       <DependentUpon>CanteenItem.xaml</DependentUpon>
     </Compile>

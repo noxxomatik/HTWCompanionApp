@@ -31,8 +31,8 @@ namespace HTWAppUniversal.Views {
             GradesModel gm = GradesModel.getInstance();
 
             /* for testing */
-            sm.SNummer = " ";
-            sm.RZLogin = " ";
+            //sm.SNummer = " ";
+            //sm.RZLogin = " ";
             /* for testing */
 
             List<GradeObject> grades = await gm.getGrades(sm.SNummer, sm.RZLogin);

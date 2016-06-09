@@ -33,7 +33,7 @@ namespace HTWAppUniversal.Views {
             // TEST
             SettingsModel settings = SettingsModel.getInstance();
             // replace with your sNummer and password
-            settings.SNummer = "sXXXXX";
+            /*settings.SNummer = "sXXXXX";
             settings.RZLogin = "XXXX";
             settings.StgJhr = "15";
             settings.Stg = "044";
@@ -56,7 +56,7 @@ namespace HTWAppUniversal.Views {
 
             TextBlock textBlock = (TextBlock)sender;
             textBlock.Text = timetableObjects[0].LessonTag;
-            textBlock.Text += "\n" + (foodList.Count > 0 ? foodList[0].Title : "");
+            textBlock.Text += "\n" + (foodList.Count > 0 ? foodList[0].Title : "");*/
         }
     }
 
