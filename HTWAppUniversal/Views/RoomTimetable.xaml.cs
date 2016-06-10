@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using HTWAppObjects;
 using System.Linq;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -13,23 +16,30 @@ namespace HTWAppUniversal.Views {
     /// </summary>
     public sealed partial class RoomTimetable : Page {
         private RoomTimetableModel roomTimetableModel;
-        private Util util;
+        private TimetableUtils util;
+        private SettingsModel settingsModel;
+
+        private ObservableCollection<String> rooms;
+
+        private ObservableCollection<String> SuggestedRooms
+        {
+            get { return rooms; }
+            set { rooms = value; }
+            
+        }
+
 
         public RoomTimetable()
         {
             this.InitializeComponent();
-            SettingsModel settingsModel = SettingsModel.getInstance();
+            settingsModel = SettingsModel.getInstance();
+            rooms = new ObservableCollection<string>(settingsModel.Rooms);
             roomTimetableModel = RoomTimetableModel.getInstance();
-            roomChoiceComboBox.DataContext = settingsModel.Rooms;
-            util = new Util();
+            util = new TimetableUtils();
         }
 
-        private async void roomSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void setupTimetable(string newRoom)
         {
-            ComboBox combo = (ComboBox)sender;
-            String newRoom = combo.SelectedItem.ToString();
-
-
             /*check if grid already contains elements (except days and times = 13)
               if yes: delete those elements 
              */
@@ -76,7 +86,7 @@ namespace HTWAppUniversal.Views {
                                 timetableGrid.Children.Add(tb);
 
                                 TextBlock copy = util.setupRoomTimetableTextBlock(item);
-                                Grid.SetRow(copy, row + Util.totalNumberofLessons + 1); //Add 1 because of empty row in view
+                                Grid.SetRow(copy, row + TimetableUtils.totalNumberofLessons + 1); //Add 1 because of empty row in view
                                 Grid.SetColumn(copy, item.Day);
                                 timetableGrid.Children.Add(copy);
                                 break;
@@ -86,7 +96,7 @@ namespace HTWAppUniversal.Views {
                         case 1:
                             {
                                 if (evenOdd == 0) /*current week is even -> show it first*/
-                                    Grid.SetRow(tb, row + Util.totalNumberofLessons + 1);
+                                    Grid.SetRow(tb, row + TimetableUtils.totalNumberofLessons + 1);
                                 else
                                     Grid.SetRow(tb, row);
                                 timetableGrid.Children.Add(tb);
@@ -99,7 +109,7 @@ namespace HTWAppUniversal.Views {
                                 if (evenOdd == 0) /*current week is even -> show it first*/
                                     Grid.SetRow(tb, row);
                                 else
-                                    Grid.SetRow(tb, row + Util.totalNumberofLessons + 1);
+                                    Grid.SetRow(tb, row + TimetableUtils.totalNumberofLessons + 1);
                                 timetableGrid.Children.Add(tb);
                                 break;
                             }
@@ -113,6 +123,67 @@ namespace HTWAppUniversal.Views {
                 }
             }
 
+        }
+
+
+
+
+
+        private void roomChoiceComboBoxTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if(e.Key == VirtualKey.Enter)
+            {
+                String newRoom = ((AutoSuggestBox)sender).Text;
+
+                if (null != util.checkRoomSpell(newRoom))
+                {
+                    if (!util.lookupRoom(newRoom))
+                    {
+                        SuggestedRooms.Clear();
+                        foreach (String room in settingsModel.Rooms)
+                        {
+                            SuggestedRooms.Add(room);
+                        }
+
+                        SuggestedRooms.Add(newRoom);
+                        settingsModel.Rooms = new List<String>(SuggestedRooms);
+                    }
+
+                    setupTimetable(newRoom);
+                }
+            }
+        }
+
+        private async void editListButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialogEditRooms editRoomsDialog = new ContentDialogEditRooms(this.ActualWidth);
+            var result = await editRoomsDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                SuggestedRooms = new ObservableCollection<String>(settingsModel.Rooms);
+                roomChoiceComboBoxTextBox.ItemsSource = SuggestedRooms;
+            }
+
+        }
+
+        private void roomChoiceComboBoxTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            String text = sender.Text.ToLower();
+            SuggestedRooms.Clear();
+
+            List<string> all = new List<string>(settingsModel.Rooms);
+            foreach(String room in all)
+            {
+                String lower = room.ToLower();
+                Regex regex = new Regex(@"\b" + text);
+
+                if (regex.Match(lower).Success)
+                {
+                    SuggestedRooms.Add(room);
+                }
+            }
+            
         }
     }
 }

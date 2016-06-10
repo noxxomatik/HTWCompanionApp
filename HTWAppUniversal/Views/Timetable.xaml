@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loading="Page_Loading">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height ="60"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height ="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -17,8 +18,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <!-- headline-->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Stundenplan" FontSize="16" Margin="0 0 0 4"/>
+        
         <!-- Header of Table -->
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -31,7 +35,6 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Montag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Dienstag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="0" Grid.Column="3" Text="Mittwoch" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
@@ -39,8 +42,9 @@
             <TextBlock Grid.Row="0" Grid.Column="5" Text="Freitag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <!-- Displaying the data -->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
+        
+        <!-- Display the data (Scrollviewer must indicate MaxHeight to reveal scrollbars)-->
+        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
             <Grid x:Name="timetableGrid">
                 <Grid.Resources>
                     <SolidColorBrush x:Key="brush" Color="#FFECECEC"/>
@@ -74,6 +78,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <!-- times -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap"/>
@@ -92,6 +97,7 @@
                 <TextBlock Grid.Row="15" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="16" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap"/>
 
+                <!-- grey stripes in the background-->
                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>

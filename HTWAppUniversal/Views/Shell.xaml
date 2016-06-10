@@ -28,8 +28,8 @@
                     <RadioButton x:Name="b_settings" Click="b_settings_Click" Tag="&#xE713;" Content="Einstellungen" GroupName="Navigation"/>
                     <RadioButton x:Name="b_grades" Click="b_grades_Click" Tag="&#xE713;" Content="Noten" GroupName="Navigation"/>
                     <RadioButton x:Name="b_cantine" Click="b_cantine_Click" Tag="&#xE713;" Content="Mensa" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_timetable" Click="b_timetable_Click" Tag="&#xE713;" Content="Stundenplan" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_rTimetable" Click="b_rTimetable_Click" Tag="&#xE713;" Content="Raum Stundenplan" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_timetable" Click="b_timetable_Click" Tag="&#xE787;" Content="Stundenplan" GroupName="Navigation"/>
+                    <RadioButton x:Name="b_rTimetable" Click="b_rTimetable_Click" Tag="&#xE8EC;" Content="Raumbelegungsplan" GroupName="Navigation"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>

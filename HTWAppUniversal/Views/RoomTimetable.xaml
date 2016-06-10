@@ -5,28 +5,30 @@
     xmlns:local="using:HTWAppUniversal.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:suggestData="using:HTWAppObjects"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height ="60"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="36" />
+            <RowDefinition Height ="auto"/>
+            <RowDefinition Height ="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <!-- headline -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Raumbelegungsplan" FontSize="16" Margin="0 0 0 4"/>
+
         <!-- User Input -->
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Height="24" Width="112" Margin="0,0,2,0">
-        	<Run Text="Raum auswählen"/>
-        	<Run Text=" "/>
-        </TextBlock>
-        <ComboBox x:Name="roomChoiceComboBox" ItemsSource="{Binding}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120" SelectionChanged="roomSelectionChanged" Grid.Column="1" Grid.Row="0"/>
+        <AutoSuggestBox x:Name="roomChoiceComboBoxTextBox" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" Grid.Column="0" Grid.Row="1" Margin="0 0 0 4" PlaceholderText="Raum" BorderThickness="1" KeyUp="roomChoiceComboBoxTextBox_KeyUp" ItemsSource="{x:Bind SuggestedRooms}" TextChanged="roomChoiceComboBoxTextBox_TextChanged"/>
+        <Button x:Name="editListButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="32" Margin="0 0 0 4" FontFamily="Segoe MDL2 Assets" Content="&#xE90F;" Foreground="Black" Background="{x:Null}" BorderBrush="Gray" BorderThickness="1" Click="editListButton_Click"/>
 
         <!-- Header of Table -->
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -47,8 +49,8 @@
 
         </Grid>
 
-        <!-- Displaying the data -->
-        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
+        <!-- Display the data (scrollviewer must indicate MaxHeigt to reveal scrollbars) -->
+        <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
             <Grid x:Name="timetableGrid" >
                 <Grid.Resources>
                     <SolidColorBrush x:Key="brush" Color="#FFECECEC"/>
@@ -82,6 +84,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <!-- times -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap"/>
@@ -100,6 +103,7 @@
                 <TextBlock Grid.Row="15" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap"/>
                 <TextBlock Grid.Row="16" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap"/>
 
+                <!-- grey stripes in the background -->
                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
@@ -108,9 +112,6 @@
                 <Border Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
                 <Border Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>
-
-
-
             </Grid>
 
         </ScrollViewer>

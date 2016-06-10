@@ -96,8 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BackgroundTasks\TileBackgroundTask.cs" />
+    <Compile Include="Views\ContentDialogEditRooms.xaml.cs">
+      <DependentUpon>ContentDialogEditRooms.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\CanteenModel.cs" />
-    <Compile Include="Services\Util.cs" />
+    <Compile Include="Services\TimetableUtils.cs" />
     <Compile Include="Views\CanteenItem.xaml.cs">
       <DependentUpon>CanteenItem.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\ContentDialogEditRooms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\NavRadioButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

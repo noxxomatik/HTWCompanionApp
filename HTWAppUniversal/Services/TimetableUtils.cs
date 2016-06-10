@@ -2,20 +2,22 @@
 using HTWAppObjects;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Controls;
 
 namespace HTWAppUniversal
 {
-    class Util
+    class TimetableUtils
     {
         public const int totalNumberofLessons = 8;
         public const String STACKPANEL = "stackpanel";
 
+        private SettingsModel settingsModel;
+
+        /*dictionary to map dates to appropriate number of row in the grid*/
         private Dictionary<String, int> timeToRowDictionary;
 
         public Dictionary<String, int> TimeToRowDictionary
@@ -31,8 +33,11 @@ namespace HTWAppUniversal
             }
         }
 
-        public Util()
+        public TimetableUtils()
         {
+            settingsModel = SettingsModel.getInstance();
+
+            /*setup dictionary*/
             timeToRowDictionary = new Dictionary<String, int>();
             timeToRowDictionary.Add("07:30:00", 0);
             timeToRowDictionary.Add("09:20:00", 1);
@@ -44,6 +49,11 @@ namespace HTWAppUniversal
             timeToRowDictionary.Add("20:20:00", 7);
         }
 
+
+        /*estimate if particular cell of grid hosts already a subelement
+         * if yes: return subelement
+         * if no: return null
+         */
         public FrameworkElement getChildOfGrid(Grid grid, int row, int col)
         {
             int colNum, rowNum;
@@ -62,6 +72,8 @@ namespace HTWAppUniversal
             return null;
         }
 
+
+        /*merge element 1 und element2 in one stackpanel*/
         public StackPanel createStackPanel(Grid grid, FrameworkElement element1, FrameworkElement element2)
         {
             StackPanel stackpanel = new StackPanel();
@@ -80,6 +92,11 @@ namespace HTWAppUniversal
             return stackpanel;
         }
 
+
+        /*return if current week is even or odd
+         * 0 = even
+         * 1 = odd
+         */
         public int isCurrentWeekEvenOrOdd()
         {
             DateTime today = new DateTime();
@@ -90,12 +107,18 @@ namespace HTWAppUniversal
             return weekNum % 2;
         }
 
+
+        /*setup a textBlock with all required information for roomtimetable*/
         public TextBlock setupRoomTimetableTextBlock(TimetableObject item)
         {
             TextBlock tb = new TextBlock();
             tb.TextWrapping = TextWrapping.Wrap;
             tb.FontSize = 12;
             tb.MaxLines = 10;
+
+            Thickness thickness = new Thickness();
+            thickness.Right = thickness.Left = thickness.Top = thickness.Bottom = 1;
+            tb.Padding = thickness;
 
             Span lessonSpan = new Span();
             Run lesson = new Run();
@@ -117,12 +140,16 @@ namespace HTWAppUniversal
             return tb;
         }
 
+        /*setup a textBlock with all required information for timetable*/
         public TextBlock setupTimetableTextBlock(TimetableObject item)
         {
             TextBlock tb = new TextBlock();
             tb.TextWrapping = TextWrapping.Wrap;
             tb.FontSize = 12;
             tb.MaxLines = 10;
+            Thickness thickness = new Thickness();
+            thickness.Right = thickness.Left = thickness.Top = thickness.Bottom = 1;
+            tb.Padding = thickness;
 
             Span lessonSpan = new Span();
             Run lesson = new Run();
@@ -156,6 +183,8 @@ namespace HTWAppUniversal
             return tb;
         }
 
+
+        /*return Grid.Row of giben object*/
         public int getRowForTable(TimetableObject item)
         {
             int row;
@@ -163,5 +192,64 @@ namespace HTWAppUniversal
                 return row;
             else return -1;
         }
+
+
+        /*check if spelling is correct: 
+         * 1 letter (capital or lower)
+         * undefined number of whitespaces
+         * 3 digits
+         * 
+         * return null if not
+         * return corrected string if there where no space or too many (white)spaces
+         * */
+        public String checkRoomSpell(String room) {
+            String pattern = @"\b[A-Za-z]{1}\s*[0-9]{3}\b";
+            Regex regex = new Regex(pattern);
+
+            Match roomMatch = regex.Match(room);
+
+            if (!roomMatch.Success)
+            {
+                return null;
+            }
+
+            if (roomMatch.Length == 4) //missing whitespace
+            {
+                room = room.Insert(1, " ");
+            }
+
+            if (roomMatch.Length > 5) //too many whitespaces or no space
+            {
+                Regex r = new Regex("\\s*");
+                Match m = r.Match(room);
+                room.Remove(1, m.Length);
+                room = room.Insert(1, " ");
+            }
+
+            return room;
+        }
+
+
+        /*check if any of the given room-numbers suits input*/
+        public bool lookupRoom(string room)
+        {
+            room = room.ToLower();
+            List<String> all = settingsModel.Rooms;
+
+            foreach(string listItem in all)
+            {
+                string lower = listItem.ToLower();
+
+                Regex regex = new Regex(@"\b" + room);
+
+                if (regex.Match(lower).Success)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+                
     }
 }
