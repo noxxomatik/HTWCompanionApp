@@ -99,7 +99,7 @@ namespace HTWAppUniversal
          */
         public int isCurrentWeekEvenOrOdd()
         {
-            DateTime today = new DateTime();
+            DateTime today = DateTime.Now;
             DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
             Calendar cal = dtfi.Calendar;
             int weekNum = cal.GetWeekOfYear(today, dtfi.CalendarWeekRule, dtfi.FirstDayOfWeek);

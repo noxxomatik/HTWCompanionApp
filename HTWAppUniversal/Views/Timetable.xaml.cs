@@ -1,5 +1,8 @@
 ﻿using HTWAppObjects;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Windows.Data.Xml.Dom;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -37,10 +40,22 @@ namespace HTWAppUniversal.Views {
         private async void Page_Loading(FrameworkElement sender, object args)
         {
             timetableModel = TimetableModel.getInstance();
-            //if online
+            // if online
             SettingsModel model = SettingsModel.getInstance();
             Lessons = await timetableModel.getTimetable(model.StgJhr, model.Stg, model.StgGrp);
 
+            // update the live tile
+            try {
+                // Load the item.
+                XmlDocument tileXml = await TimetableObject.GetNextLessonXml();
+                if (tileXml == null)
+                    throw new Exception("Timetable is empty.");
+                // Update the live tile with the item.
+                TimetableObject.UpdateTile(tileXml);
+            }
+            catch (Exception e) {
+                Debug.WriteLine("Missing timteable item. First load the timetable.");
+            }
 
             /*find out if current week is even or odd*/
             int evenOdd = util.isCurrentWeekEvenOrOdd();
