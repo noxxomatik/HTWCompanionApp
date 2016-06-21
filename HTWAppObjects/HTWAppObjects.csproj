@@ -110,6 +110,8 @@
     <Compile Include="CanteenObject.cs" />
     <Compile Include="CourseObject.cs" />
     <Compile Include="GradeObject.cs" />
+    <Compile Include="Models\GradesModel.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="TimetableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\HTWAppObjects.rd.xml" />
