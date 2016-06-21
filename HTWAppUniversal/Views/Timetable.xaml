@@ -79,23 +79,24 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- times -->
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="13.20 - 14.50" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="15.10 - 16.40" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="5" Grid.Column="0" Text="17.00 - 18.30" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="7" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="13.20 - 14.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="15.10 - 16.40" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="17.00 - 18.30" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
 
-                <TextBlock Grid.Row="9" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="10" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="11" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="12" Grid.Column="0" Text="13.20 - 14.50" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="13" Grid.Column="0" Text="15.10 - 16.40" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="14" Grid.Column="0" Text="17.00 - 18.30" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="15" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap"/>
-                <TextBlock Grid.Row="16" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap"/>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Nächste Woche" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock Grid.Row="9" Grid.Column="0" Text="7.30 - 9.00" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="10" Grid.Column="0" Text="9.20 - 10.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="11" Grid.Column="0" Text="11.10 - 12.40" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="12" Grid.Column="0" Text="13.20 - 14.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="13" Grid.Column="0" Text="15.10 - 16.40" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="14" Grid.Column="0" Text="17.00 - 18.30" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="15" Grid.Column="0" Text="18.40 - 20.10" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="16" Grid.Column="0" Text="20.20 - 21.50" TextWrapping="Wrap" HorizontalAlignment="Center"/>
 
                 <!-- grey stripes in the background-->
                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{StaticResource brush}" Canvas.ZIndex="-1"/>

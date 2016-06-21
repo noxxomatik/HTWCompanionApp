@@ -23,7 +23,7 @@ namespace BackgroundTasks
                 // Update the live tile with the item.
                 TimetableObject.UpdateTile(tileXml);
             }
-            catch () {
+            catch {
                 Debug.WriteLine("Missing timetable item. First load the timetable.");
             }
 
@@ -48,7 +48,7 @@ namespace BackgroundTasks
                     ToastNotificationManager.CreateToastNotifier().Show(toast);
                 }
             }
-            catch () {
+            catch {
                 Debug.WriteLine("Grades could not be retrieved.");
             }
 

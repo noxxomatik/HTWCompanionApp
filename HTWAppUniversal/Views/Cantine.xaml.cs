@@ -42,7 +42,7 @@ namespace HTWAppUniversal.Views {
                 // custom page method
                 CanteenItem ci = new CanteenItem();
                 string category = c.Title.Split(':')[0];
-                string content = c.Title.Split(':')[1].Split('(')[0];
+                string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0] : c.Title;
                 string price = c.Title.Split('(')[c.Title.Split('(').Length - 1].Split(')')[0];
                 ci.Tb_cat.Text = category;
                 ci.Tb_desc.Text = content;

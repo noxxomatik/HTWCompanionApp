@@ -31,17 +31,7 @@ namespace HTWAppUniversal.Views {
         }
 
         private void b_hamburger_Click(object sender, RoutedEventArgs e) {
-            if (!this.SplitView.IsPaneOpen) {
-                this.SplitView.IsPaneOpen = true;
-            }
-        }
-
-        private void b_home_Click(object sender, RoutedEventArgs e) {
-            var frame = this.DataContext as Frame;
-            Page page = frame?.Content as Page;
-            if (page?.GetType() != typeof(Views.MainPage)) {
-                frame.Navigate(typeof(Views.MainPage));
-            }
+            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
         }
 
         private void b_settings_Click(object sender, RoutedEventArgs e) {
@@ -50,6 +40,7 @@ namespace HTWAppUniversal.Views {
             if (page?.GetType() != typeof(Views.Settings)) {
                 frame.Navigate(typeof(Views.Settings));
             }
+            SplitView.IsPaneOpen = false;
         }
 
         private void b_grades_Click(object sender, RoutedEventArgs e) {
@@ -58,6 +49,7 @@ namespace HTWAppUniversal.Views {
             if (page?.GetType() != typeof(Views.Grades)) {
                 frame.Navigate(typeof(Views.Grades));
             }
+            SplitView.IsPaneOpen = false;
         }
 
         private void b_cantine_Click(object sender, RoutedEventArgs e) {
@@ -66,6 +58,7 @@ namespace HTWAppUniversal.Views {
             if (page?.GetType() != typeof(Views.Cantine)) {
                 frame.Navigate(typeof(Views.Cantine));
             }
+            SplitView.IsPaneOpen = false;
         }
 
         private void b_timetable_Click(object sender, RoutedEventArgs e) {
@@ -74,6 +67,7 @@ namespace HTWAppUniversal.Views {
             if (page?.GetType() != typeof(Views.Timetable)) {
                 frame.Navigate(typeof(Views.Timetable));
             }
+            SplitView.IsPaneOpen = false;
         }
 
         private void b_rTimetable_Click(object sender, RoutedEventArgs e) {
@@ -82,6 +76,7 @@ namespace HTWAppUniversal.Views {
             if (page?.GetType() != typeof(Views.RoomTimetable)) {
                 frame.Navigate(typeof(Views.RoomTimetable));
             }
+            SplitView.IsPaneOpen = false;
         }
     }
 }
