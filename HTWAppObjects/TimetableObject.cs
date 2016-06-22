@@ -71,11 +71,13 @@ namespace HTWAppObjects
             Dictionary<int, Dictionary<int, TimetableObject>> nextWeekDictionary = new Dictionary<int, Dictionary<int, TimetableObject>>();
             for (int i = 0; i < 7; i++) {
                 Dictionary<int, TimetableObject> dayDictionary = new Dictionary<int, TimetableObject>();
+                Dictionary<int, TimetableObject> dayDictionaryNext = new Dictionary<int, TimetableObject>();
                 for (int k = 0; k < 8; k++) {
                     dayDictionary.Add(k, null);
+                    dayDictionaryNext.Add(k, null);
                 }
                 thisWeekDictionary.Add(i, dayDictionary);
-                nextWeekDictionary.Add(i, dayDictionary);
+                nextWeekDictionary.Add(i, dayDictionaryNext);
             }
 
             foreach (TimetableObject timetableObject in timetableObjects) {
