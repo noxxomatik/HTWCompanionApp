@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace HTWAppUniversal {
-    class CanteenModel {
+namespace HTWAppObjects {
+    public class CanteenModel {
         static CanteenModel instance = null;
         private const string feedTodayUri = "http://www.studentenwerk-dresden.de/feeds/speiseplan.rss?mid=9";
         private const string feedTomorrowUri = "http://www.studentenwerk-dresden.de/feeds/speiseplan.rss?mid=9&tag=morgen";

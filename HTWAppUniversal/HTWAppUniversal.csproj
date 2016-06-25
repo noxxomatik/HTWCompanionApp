@@ -99,7 +99,6 @@
     <Compile Include="Views\ContentDialogEditRooms.xaml.cs">
       <DependentUpon>ContentDialogEditRooms.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\CanteenModel.cs" />
     <Compile Include="Services\TimetableUtils.cs" />
     <Compile Include="Views\CanteenItem.xaml.cs">
       <DependentUpon>CanteenItem.xaml</DependentUpon>
@@ -110,7 +109,6 @@
     <Compile Include="Views\Grades.xaml.cs">
       <DependentUpon>Grades.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\GradesModel.cs" />
     <Compile Include="Views\GradesItem.xaml.cs">
       <DependentUpon>GradesItem.xaml</DependentUpon>
     </Compile>
@@ -118,18 +116,15 @@
     <Compile Include="Views\RoomTimetable.xaml.cs">
       <DependentUpon>RoomTimetable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\RoomTimetableModel.cs" />
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\TimetableModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

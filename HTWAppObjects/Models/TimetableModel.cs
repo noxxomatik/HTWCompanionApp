@@ -1,48 +1,85 @@
-﻿using NotificationsExtensions.Tiles;
+﻿using HTWAppObjects;
+using Newtonsoft.Json;
+using NotificationsExtensions.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.UI.Notifications;
 
-/*
-    One lesson in the timetable
-*/
-/*
-    lessonTag - Kürzel
-    name - ganzer Name
-    type - V Vorlesung Pr Praktikum
-    week - 0 jede Woche 1 ungerade Woche 2 gerade Woche
-    day - Wochentag beginnend mit 1
-    beginTime - 11:10:00
-    endTime - 12:40:00
-    professor - Familienname
-    WeeksOnly - Anzahl Wochen in denen Lehrveranstaltung stattfindet
-    Rooms - Array mit Raumnummern ["S 128"]
-*/
-namespace HTWAppObjects
-{
-    public class TimetableObject
-    {
-        public string LessonTag { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int Week { get; set; }
-        public int Day { get; set; }
-        public string BeginTime { get; set; }
-        public string EndTime { get; set; }
-        public string Professor { get; set; }
-        public string WeeksOnly { get; set; }
-        public List<string> Rooms { get; set; }
-
+namespace HTWAppObjects {
+    public class TimetableModel {
+        static TimetableModel instance = null;
         private const string filename = "timetable.xml";
+
+        private TimetableModel () {}
+
+        public static TimetableModel getInstance() {
+            if (instance == null)
+                instance = new TimetableModel();
+            return instance;
+        }
+
+        /*
+         * Get the timetable asynchronous from the server.
+         * Returns an empty list of objects if anything fails.
+         */
+        public async Task<List<TimetableObject>> getTimetable(string stgJhr, string stg, string stgGrp)  {
+            // TODO: Regex zum Prüfen der Werte
+            if (!stgJhr.Equals("") && !stg.Equals("") && !stgGrp.Equals("")) {
+                try {
+                    string requestData = WebUtility.UrlEncode("StgJhr") + "=" + WebUtility.UrlEncode(stgJhr) + "&"
+                        + WebUtility.UrlEncode("Stg") + "=" + WebUtility.UrlEncode(stg) + "&"
+                        + WebUtility.UrlEncode("StgGrp") + "=" + WebUtility.UrlEncode(stgGrp);
+
+                    Uri uri = new Uri("https://www2.htw-dresden.de/~app/API/GetTimetable.php?" + requestData);
+                    HttpClient client = new HttpClient();
+                    HttpResponseMessage response = await client.GetAsync(uri);
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    Debug.WriteLine(content);
+
+                    List<TimetableObject> timetableObjects = JsonConvert.DeserializeObject<List<TimetableObject>>(content);
+                    // backup timetable if connection fails the next time
+                    await saveTimetableBackup(timetableObjects);
+
+                    return timetableObjects;
+                }
+                catch (Exception e) {
+                    Debug.WriteLine(e.ToString());
+                    return await LoadTimetableBackup();
+                }                
+            }
+            else {
+                return new List<TimetableObject>();
+            }            
+        }
+
+        private async Task<bool> saveTimetableBackup(List<TimetableObject> timetableObjects) {
+            try {
+                StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+                using (Stream writeStream = await saveFile.OpenStreamForWriteAsync()) {
+                    DataContractSerializer serializer = new DataContractSerializer(typeof(List<TimetableObject>));
+                    serializer.WriteObject(writeStream, timetableObjects);
+                    await writeStream.FlushAsync();
+                    writeStream.Dispose();
+                }
+                return true;
+            }
+            catch (Exception e) {
+                throw new Exception("Unable to save the timetable", e);
+            }
+        }
 
         public static async Task<XmlDocument> GetNextLessonXml() {
             // don´t download a new timetable, use the stored one
@@ -144,6 +181,7 @@ namespace HTWAppObjects
                     nextLesson = nextWeekDictionary[dayOfWeek][nextLessonInt];
                     nextLessonInt++;
                 }
+                dayOfWeek++;
             }
             // if it found nothing yet the timetable is totally empty...
             XmlDocument doc = null;
@@ -159,7 +197,7 @@ namespace HTWAppObjects
                         Text = nextLesson.LessonTag + " (" + nextLesson.Type + ")"
                     },
                     new TileText() {
-                        Text = nextLesson.Rooms[0] + (nextLesson.Rooms.Count > 0 ? " u. a." : "")
+                        Text = nextLesson.Rooms[0] + (nextLesson.Rooms.Count > 1 ? " u. a." : "")
                     },
                     new TileText() {
                         Text = nextLesson.BeginTime.Remove(5, 3) + " Uhr"

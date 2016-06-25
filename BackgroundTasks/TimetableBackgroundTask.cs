@@ -17,11 +17,11 @@ namespace BackgroundTasks
             // update live tile
             try {
                 // Load the item.
-                XmlDocument tileXml = await TimetableObject.GetNextLessonXml();
+                XmlDocument tileXml = await TimetableModel.GetNextLessonXml();
                 if (tileXml == null)
                     throw new Exception("Timetable is empty.");
                 // Update the live tile with the item.
-                TimetableObject.UpdateTile(tileXml);
+                TimetableModel.UpdateTile(tileXml);
             }
             catch {
                 Debug.WriteLine("Missing timetable item. First load the timetable.");

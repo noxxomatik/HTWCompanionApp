@@ -4,39 +4,36 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace HTWAppUniversal {
-    class TimetableModel {
-        static TimetableModel instance = null;
-        private const string filename = "timetable.xml";
+namespace HTWAppObjects {
+    public class RoomTimetableModel {
+        static RoomTimetableModel instance = null;
+        private const string filename = "roomTimetable";
 
-        private TimetableModel () {}
+        private RoomTimetableModel () {}
 
-        public static TimetableModel getInstance() {
+        public static RoomTimetableModel getInstance() {
             if (instance == null)
-                instance = new TimetableModel();
+                instance = new RoomTimetableModel();
             return instance;
         }
 
         /*
-         * Get the timetable asynchronous from the server.
+         * Get the timetable for the room asynchronous from the server.
+         * Room must be from pattern [
          * Returns an empty list of objects if anything fails.
          */
-        public async Task<List<TimetableObject>> getTimetable(string stgJhr, string stg, string stgGrp) {
+        public async Task<List<TimetableObject>> getRoomTimetable(string room) {
             // TODO: Regex zum Prüfen der Werte
-            if (!stgJhr.Equals("") && !stg.Equals("") && !stgGrp.Equals("")) {
+            if (!room.Equals("")) {
+                room = room.ToLower();
                 try {
-                    string requestData = WebUtility.UrlEncode("StgJhr") + "=" + WebUtility.UrlEncode(stgJhr) + "&"
-                        + WebUtility.UrlEncode("Stg") + "=" + WebUtility.UrlEncode(stg) + "&"
-                        + WebUtility.UrlEncode("StgGrp") + "=" + WebUtility.UrlEncode(stgGrp);
+                    string requestData = WebUtility.UrlEncode("Room") + "=" + WebUtility.UrlEncode(room);
 
                     Uri uri = new Uri("https://www2.htw-dresden.de/~app/API/GetTimetable.php?" + requestData);
                     HttpClient client = new HttpClient();
@@ -47,23 +44,24 @@ namespace HTWAppUniversal {
 
                     List<TimetableObject> timetableObjects = JsonConvert.DeserializeObject<List<TimetableObject>>(content);
                     // backup timetable if connection fails the next time
-                    await saveTimetableBackup(timetableObjects);
+                    await saveRoomTimetableBackup(timetableObjects, room);
 
                     return timetableObjects;
                 }
                 catch (Exception e) {
                     Debug.WriteLine(e.ToString());
-                    return await loadTimetableBackup();
-                }                
+                    return await loadRoomTimetableBackup(room);
+                }
             }
             else {
                 return new List<TimetableObject>();
-            }            
+            }
         }
 
-        private async Task<bool> saveTimetableBackup(List<TimetableObject> timetableObjects) {
+        private async Task<bool> saveRoomTimetableBackup(List<TimetableObject> timetableObjects, string room) {
+            room = room.ToLower();
             try {
-                StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+                StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename + room + ".xml", CreationCollisionOption.ReplaceExisting);
                 using (Stream writeStream = await saveFile.OpenStreamForWriteAsync()) {
                     DataContractSerializer serializer = new DataContractSerializer(typeof(List<TimetableObject>));
                     serializer.WriteObject(writeStream, timetableObjects);
@@ -73,12 +71,13 @@ namespace HTWAppUniversal {
                 return true;
             }
             catch (Exception e) {
-                throw new Exception("Unable to save the timetable", e);
+                throw new Exception("Unable to save the room timetable", e);
             }
         }
 
-        public async Task<List<TimetableObject>> loadTimetableBackup () {
-            var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename);
+        public async Task<List<TimetableObject>> loadRoomTimetableBackup(string room) {
+            room = room.ToLower();
+            var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename + room + ".xml");
             if (readStream == null) {
                 return new List<TimetableObject>();
             }
@@ -88,3 +87,4 @@ namespace HTWAppUniversal {
         }
     }
 }
+

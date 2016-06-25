@@ -107,12 +107,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CanteenObject.cs" />
-    <Compile Include="CourseObject.cs" />
-    <Compile Include="GradeObject.cs" />
+    <Compile Include="Objects\CanteenObject.cs" />
+    <Compile Include="Objects\CourseObject.cs" />
+    <Compile Include="Objects\GradeObject.cs" />
+    <Compile Include="Models\CanteenModel.cs" />
     <Compile Include="Models\GradesModel.cs" />
+    <Compile Include="Models\RoomTimetableModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
-    <Compile Include="TimetableObject.cs" />
+    <Compile Include="Models\TimetableModel.cs" />
+    <Compile Include="Objects\TimetableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\HTWAppObjects.rd.xml" />
   </ItemGroup>
