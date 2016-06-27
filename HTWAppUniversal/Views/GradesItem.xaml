@@ -9,7 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <RelativePanel>
-            <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock"/>
+            <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
             <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignLeftWithPanel="True">
             <TextBlock x:Name="t_gradeText" TextWrapping="Wrap" Text="Note: "/>
                 <TextBlock x:Name="t_grade" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_gradeText"/>

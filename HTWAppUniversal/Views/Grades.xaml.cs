@@ -1,8 +1,11 @@
 ﻿using HTWAppObjects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace HTWAppUniversal.Views {
     /// <summary>
@@ -47,6 +50,7 @@ namespace HTWAppUniversal.Views {
             // fill listviews with entries
             foreach (ListView lv in semList) {
                 foreach (GradeObject g in grades) {
+                    int i = 0;
                     if (g.Semester == lv.Name) {
                         // custom page as ListViewItem template
                         double grade = double.Parse(g.PrNote) / 100;
@@ -54,7 +58,10 @@ namespace HTWAppUniversal.Views {
                         gi.Tb_title.Text = g.PrTxt + "(" + g.PrForm + ")";
                         gi.Tb_grade.Text = grade.ToString();
                         gi.Tb_credits.Text = g.EctsCredits;
+                        if (i % 2 == 0)
+                            gi.Background = new SolidColorBrush(Colors.Red);
                         lv.Items.Add(gi);
+                        i++;
                     }
                 }
             }
@@ -71,17 +78,30 @@ namespace HTWAppUniversal.Views {
                 mainView.Items.Add(lvi);
                 mainView.Items.Add(lv);
             }
-            mainView.SelectionChanged += new SelectionChangedEventHandler(SelectionChanged);
+            mainView.IsItemClickEnabled = true;
+            mainView.ItemClick += new ItemClickEventHandler(ItemClick);
         }
 
-        void SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            ListView lv = (ListView)sender;
-            if (lv.SelectedItem != null) {
-                ListViewItem lvi = (ListViewItem)lv.SelectedItem;
-                if (lvi.Content.ToString().Contains("Sommersemester") || lvi.Content.ToString().Contains("Wintersemester")) {
-                    // want to hide instead of remove but theres no option for that (DataGridView can hide Rows)
-                    //lv.Items.RemoveAt(lv.SelectedIndex + 1);
+        void ItemClick(object sender, ItemClickEventArgs e) {
+            try {
+                ListView lv = (ListView)sender;
+                ListViewItem lvi = new ListViewItem();// = (ListViewItem)lv.FindName(e.ClickedItem.ToString());
+                foreach (ListViewItem l in lv.Items) {
+                    if (l.Content.ToString() == e.ClickedItem.ToString()) {
+                        lvi = l;
+                        break;
+                    }
                 }
+                if (lvi.Content.ToString().Contains("Sommersemester") || lvi.Content.ToString().Contains("Wintersemester")) {
+                    ListView tmp = (ListView)lv.Items[lv.Items.IndexOf(lvi) + 1];
+                    if (tmp.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                        tmp.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    else
+                        tmp.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+            }
+            catch (Exception ex) {
+
             }
         }
     }
