@@ -6,11 +6,13 @@ namespace HTWAppUniversal.Views {
     /// </summary>
     public sealed partial class GradesItem : Page {
         TextBlock tb_title, tb_grade, tb_credits;
+        Grid gg;
         public GradesItem() {
             this.InitializeComponent();
             Tb_title = t_title;
             Tb_grade = t_grade;
             Tb_credits = t_credits;
+            Gg = g_grid;
         }
 
         #region Properties
@@ -27,6 +29,11 @@ namespace HTWAppUniversal.Views {
         public TextBlock Tb_title {
             get { return tb_title; }
             set { tb_title = value; }
+        }
+
+        public Grid Gg {
+            get { return gg; }
+            set { gg = value; }
         }
         #endregion
     }

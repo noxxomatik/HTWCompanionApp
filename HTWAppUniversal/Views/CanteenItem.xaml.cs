@@ -6,12 +6,14 @@ namespace HTWAppUniversal.Views {
     /// </summary>
     public sealed partial class CanteenItem : Page {
         TextBlock tb_cat, tb_desc, tb_price;
+        Grid gg;
 
         public CanteenItem() {
             this.InitializeComponent();
             Tb_cat = t_cat;
             Tb_desc = t_desc;
             Tb_price = t_price;
+            Gg = g_grid;
         }
 
         #region Properties
@@ -28,6 +30,11 @@ namespace HTWAppUniversal.Views {
         public TextBlock Tb_price {
             get { return tb_price; }
             set { tb_price = value; }
+        }
+
+        public Grid Gg {
+            get { return gg; }
+            set { gg = value; }
         }
         #endregion
     }

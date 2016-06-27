@@ -49,8 +49,8 @@ namespace HTWAppUniversal.Views {
 
             // fill listviews with entries
             foreach (ListView lv in semList) {
+                int i = 0;
                 foreach (GradeObject g in grades) {
-                    int i = 0;
                     if (g.Semester == lv.Name) {
                         // custom page as ListViewItem template
                         double grade = double.Parse(g.PrNote) / 100;
@@ -58,8 +58,8 @@ namespace HTWAppUniversal.Views {
                         gi.Tb_title.Text = g.PrTxt + "(" + g.PrForm + ")";
                         gi.Tb_grade.Text = grade.ToString();
                         gi.Tb_credits.Text = g.EctsCredits;
-                        if (i % 2 == 0)
-                            gi.Background = new SolidColorBrush(Colors.Red);
+                        if (i % 2 == 1)
+                            gi.Gg.Background = new SolidColorBrush(Colors.LightGray);
                         lv.Items.Add(gi);
                         i++;
                     }
@@ -75,6 +75,7 @@ namespace HTWAppUniversal.Views {
                     lvi.Content = "Sommersemester " + year;
                 else if (yearPart.Equals("2"))
                     lvi.Content = "Wintersemester " + year;
+                lvi.Background = new SolidColorBrush(Colors.DarkGray);
                 mainView.Items.Add(lvi);
                 mainView.Items.Add(lv);
             }
