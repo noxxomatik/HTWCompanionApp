@@ -8,9 +8,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="t_cat" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="t_desc" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="72" Width="340"/>
-        <TextBlock x:Name="t_price" HorizontalAlignment="Left" Margin="10,112,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <RelativePanel>
+            <TextBlock x:Name="t_cat" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock"/>
+            <TextBlock x:Name="t_desc" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_cat"/>
+            <TextBlock x:Name="t_price" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_desc"/>
+        </RelativePanel>
 
     </Grid>
 </Page>

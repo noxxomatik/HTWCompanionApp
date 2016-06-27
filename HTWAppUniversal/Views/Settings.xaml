@@ -8,18 +8,26 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="b_save" Content="Speichern" HorizontalAlignment="Left" Margin="10,568,0,0" VerticalAlignment="Top" Click="b_save_Click" Width="340"/>
-        <PasswordBox x:Name="pb_pw" HorizontalAlignment="Left" Margin="146,128,0,0" VerticalAlignment="Top" PlaceholderText="*****" AutomationProperties.IsRequiredForForm="True" GotFocus="pb_pw_GotFocus" LostFocus="pb_pw_LostFocus"/>
-        <TextBox x:Name="tb_sNr" HorizontalAlignment="Left" Margin="146,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="xxxxx" AutomationProperties.IsRequiredForForm="True" InputScope="Digits" GotFocus="tb_sNr_GotFocus" LostFocus="tb_sNr_LostFocus"/>
-        <TextBlock x:Name="t_sNumber" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Bibliotheksnummer" VerticalAlignment="Top" Width="340" TextAlignment="Center"/>
-        <TextBlock x:Name="t_s" HorizontalAlignment="Left" Margin="135,40,0,0" TextWrapping="Wrap" Text="s" VerticalAlignment="Top"/>
-        <TextBlock x:Name="t_passwort" HorizontalAlignment="Left" Margin="10,103,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Width="340" TextAlignment="Center"/>
-        <TextBlock x:Name="t_sy" HorizontalAlignment="Left" Margin="10,194,0,0" TextWrapping="Wrap" Text="Studienjahrgang" VerticalAlignment="Top" Width="340" TextAlignment="Center"/>
-        <TextBlock x:Name="t_sg" HorizontalAlignment="Left" Margin="10,291,0,0" TextWrapping="Wrap" Text="Studiengang" VerticalAlignment="Top" Width="340" TextAlignment="Center"/>
-        <TextBlock x:Name="t_sgn" HorizontalAlignment="Left" Margin="10,395,0,0" TextWrapping="Wrap" Text="Studiengruppe" VerticalAlignment="Top" TextAlignment="Center" Width="340"/>
-        <TextBox x:Name="tb_sy" HorizontalAlignment="Left" Margin="146,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" InputScope="Digits" PlaceholderText="15" GotFocus="tb_sy_GotFocus" LostFocus="tb_sy_LostFocus" AutomationProperties.IsRequiredForForm="True"/>
-        <TextBox x:Name="tb_sg" HorizontalAlignment="Left" Margin="146,316,0,0" TextWrapping="Wrap" VerticalAlignment="Top" InputScope="Digits" PlaceholderText="044" GotFocus="tb_sg_GotFocus" LostFocus="tb_sg_LostFocus" AutomationProperties.IsRequiredForForm="True"/>
-        <TextBox x:Name="tb_sgn" HorizontalAlignment="Left" Margin="146,420,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="73-CM" GotFocus="tb_sgn_GotFocus" LostFocus="tb_sgn_LostFocus" AutomationProperties.IsRequiredForForm="True"/>
+        <RelativePanel>
+            <TextBlock x:Name="t_sNumber" TextWrapping="Wrap" Text="Bibliotheksnummer" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <TextBlock x:Name="ph0" RelativePanel.Below="t_sNumber"/>
+            <TextBlock x:Name="t_s" TextWrapping="Wrap" Text="s" RelativePanel.Below="ph0" RelativePanel.LeftOf="tb_sNr" RelativePanel.AlignVerticalCenterWith="tb_sNr"/>
+            <TextBox x:Name="tb_sNr" TextWrapping="Wrap" PlaceholderText="xxxxx" AutomationProperties.IsRequiredForForm="True" InputScope="Digits" TabIndex="0" RelativePanel.Below="ph0" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sNr_TextChanged"/>
+            <TextBlock x:Name="ph1" RelativePanel.Below="tb_sNr"/>
+            <TextBlock x:Name="t_passwort" TextWrapping="Wrap" Text="Passwort" RelativePanel.Below="ph1" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <PasswordBox x:Name="pb_pw" PlaceholderText="*****" AutomationProperties.IsRequiredForForm="True" TabIndex="1" RelativePanel.Below="t_passwort" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" PasswordChanged="pb_pw_PasswordChanged"/>
+            <TextBlock x:Name="ph2" RelativePanel.Below="pb_pw"/>
+            <TextBlock x:Name="t_sy" TextWrapping="Wrap" Text="Studienjahrgang" RelativePanel.Below="ph2" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <TextBox x:Name="tb_sy" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="15" AutomationProperties.IsRequiredForForm="True" TabIndex="2" RelativePanel.Below="t_sy" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sy_TextChanged"/>
+            <TextBlock x:Name="ph3" RelativePanel.Below="tb_sy"/>
+            <TextBlock x:Name="t_sg" TextWrapping="Wrap" Text="Studiengang" RelativePanel.Below="ph3" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <TextBox x:Name="tb_sg" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="044" AutomationProperties.IsRequiredForForm="True" TabIndex="3" RelativePanel.Below="t_sg" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sg_TextChanged"/>
+            <TextBlock x:Name="ph4" RelativePanel.Below="tb_sg"/>
+            <TextBlock x:Name="t_sgn" TextWrapping="Wrap" Text="Studiengruppe" RelativePanel.Below="ph4" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <TextBox x:Name="tb_sgn" TextWrapping="Wrap" PlaceholderText="73-CM" AutomationProperties.IsRequiredForForm="True" TabIndex="4" RelativePanel.Below="t_sgn" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sgn_TextChanged"/>
+            <TextBlock x:Name="ph5" RelativePanel.Below="tb_sgn"/>
+            <Button x:Name="b_save" Content="Speichern" Click="b_save_Click" RelativePanel.Below="ph5" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+        </RelativePanel>
 
     </Grid>
 </Page>

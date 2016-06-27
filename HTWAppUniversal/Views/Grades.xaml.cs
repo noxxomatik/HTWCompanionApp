@@ -1,24 +1,12 @@
 ﻿using HTWAppObjects;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace HTWAppUniversal.Views {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Notenansicht
     /// </summary>
     public sealed partial class Grades : Page {
         public Grades() {
@@ -29,13 +17,17 @@ namespace HTWAppUniversal.Views {
         async void showData() {
             SettingsModel sm = SettingsModel.getInstance();
             GradesModel gm = GradesModel.getInstance();
+            List<GradeObject> grades;
 
-            /* for testing */
-            //sm.SNummer = " ";
-            //sm.RZLogin = " ";
-            /* for testing */
-
-            List<GradeObject> grades = await gm.getGrades(sm.SNummer, sm.RZLogin);
+            // only show if correct user name/password
+            try {
+                grades = await gm.getGrades(sm.SNummer, sm.RZLogin);
+            }
+            catch (Exception e) {
+                MessageDialog md = new MessageDialog("Ungültiger Benutzername und/oder Passwort in Einstellungen hinterlegt!");
+                await md.ShowAsync();
+                return;
+            }
 
             // get all semesters
             List<string> semester = new List<string>();
@@ -52,17 +44,11 @@ namespace HTWAppUniversal.Views {
                 semList.Add(lv);
             }
 
-            // todo: fill listviews with entries
+            // fill listviews with entries
             foreach (ListView lv in semList) {
                 foreach (GradeObject g in grades) {
                     if (g.Semester == lv.Name) {
-                        // ListViewItem method (simple)
-                        /*string grade = (double.Parse(g.prNote) / 100).ToString();
-                        ListViewItem lvi = new ListViewItem();
-                        lvi.Content = g.prTxt + "(" + g.prForm + ")" + "\n" + "Note: " + grade + "\t\t" + "Credits: " + g.ectsCredits;
-                        lv.Items.Add(lvi);*/
-
-                        // custom page method
+                        // custom page as ListViewItem template
                         double grade = double.Parse(g.PrNote) / 100;
                         GradesItem gi = new GradesItem();
                         gi.Tb_title.Text = g.PrTxt + "(" + g.PrForm + ")";
@@ -84,6 +70,18 @@ namespace HTWAppUniversal.Views {
                     lvi.Content = "Wintersemester " + year;
                 mainView.Items.Add(lvi);
                 mainView.Items.Add(lv);
+            }
+            mainView.SelectionChanged += new SelectionChangedEventHandler(SelectionChanged);
+        }
+
+        void SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ListView lv = (ListView)sender;
+            if (lv.SelectedItem != null) {
+                ListViewItem lvi = (ListViewItem)lv.SelectedItem;
+                if (lvi.Content.ToString().Contains("Sommersemester") || lvi.Content.ToString().Contains("Wintersemester")) {
+                    // want to hide instead of remove but theres no option for that (DataGridView can hide Rows)
+                    //lv.Items.RemoveAt(lv.SelectedIndex + 1);
+                }
             }
         }
     }

@@ -1,25 +1,14 @@
 ﻿using HTWAppObjects;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace HTWAppUniversal.Views {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Einstellungsansicht
     /// </summary>
     public sealed partial class Settings : Page {
         public Settings() {
@@ -29,7 +18,15 @@ namespace HTWAppUniversal.Views {
             tb_sg.MaxLength = 3;
         }
 
-        private void b_save_Click(object sender, RoutedEventArgs e) {
+        bool IsDigit(string s) {
+            foreach (char c in s) {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
+
+        async void SaveData() {
             SettingsModel sm = SettingsModel.getInstance();
             if (tb_sNr.Text.Length == 5)
                 sm.SNummer = 's' + tb_sNr.Text;
@@ -41,63 +38,53 @@ namespace HTWAppUniversal.Views {
                 sm.Stg = tb_sg.Text;
             if (tb_sgn.Text.Length != 0)
                 sm.StgGrp = tb_sgn.Text;
+            MessageDialog md = new MessageDialog("Einstellungen gespeichert");
+            await md.ShowAsync();
         }
 
-        private void tb_sNr_GotFocus(object sender, RoutedEventArgs e) {
-            tb_sNr.Text = "";
+        private void b_save_Click(object sender, RoutedEventArgs e) {
+            SaveData();
         }
 
-        private async void tb_sNr_LostFocus(object sender, RoutedEventArgs e) {
-            if (tb_sNr.Text.Length != 5) {
-                MessageDialog md = new MessageDialog("Ungültige s-Nummer");
-                await md.ShowAsync();
-                tb_sNr.Focus(FocusState.Programmatic);
+        private void EnterPressed(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) {
+            if (e.Key == Windows.System.VirtualKey.Enter) {
+                SaveData();
             }
         }
 
-        private void pb_pw_GotFocus(object sender, RoutedEventArgs e) {
-            pb_pw.Password = "";
+        private void tb_sNr_TextChanged(object sender, TextChangedEventArgs e) {
+            if (tb_sNr.Text.Length != 5 || !IsDigit(tb_sNr.Text))
+                tb_sNr.BorderBrush = new SolidColorBrush(Colors.Red);
+            else
+                tb_sNr.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private async void pb_pw_LostFocus(object sender, RoutedEventArgs e) {
-            if (pb_pw.Password.Length == 0) {
-                MessageDialog md = new MessageDialog("Bitte Passwort eingeben");
-                await md.ShowAsync();
-                tb_sNr.Focus(FocusState.Programmatic);
-            }
-
+        private void pb_pw_PasswordChanged(object sender, RoutedEventArgs e) {
+            if (pb_pw.Password.Length == 0)
+                pb_pw.BorderBrush = new SolidColorBrush(Colors.Red);
+            else
+                pb_pw.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void tb_sy_GotFocus(object sender, RoutedEventArgs e) {
-            tb_sy.Text = "";
+        private void tb_sy_TextChanged(object sender, TextChangedEventArgs e) {
+            if (tb_sy.Text.Length != 2 || !IsDigit(tb_sy.Text))
+                tb_sy.BorderBrush = new SolidColorBrush(Colors.Red);
+            else
+                tb_sy.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private async void tb_sy_LostFocus(object sender, RoutedEventArgs e) {
-            if (tb_sy.Text.Length != 2) {
-                MessageDialog md = new MessageDialog("Ungültiger Studienjahrgang");
-                await md.ShowAsync();
-                tb_sNr.Focus(FocusState.Programmatic);
-            }
+        private void tb_sg_TextChanged(object sender, TextChangedEventArgs e) {
+            if (tb_sg.Text.Length != 3 || !IsDigit(tb_sg.Text))
+                tb_sg.BorderBrush = new SolidColorBrush(Colors.Red);
+            else
+                tb_sg.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void tb_sg_GotFocus(object sender, RoutedEventArgs e) {
-            tb_sg.Text = "";
-        }
-
-        private async void tb_sg_LostFocus(object sender, RoutedEventArgs e) {
-            if (tb_sg.Text.Length != 3) {
-                MessageDialog md = new MessageDialog("Ungültiger Studiengang");
-                await md.ShowAsync();
-                tb_sNr.Focus(FocusState.Programmatic);
-            }
-        }
-
-        private void tb_sgn_GotFocus(object sender, RoutedEventArgs e) {
-            tb_sgn.Text = "";
-        }
-
-        private void tb_sgn_LostFocus(object sender, RoutedEventArgs e) {
-            // keine pruefung
+        private void tb_sgn_TextChanged(object sender, TextChangedEventArgs e) {
+            if (tb_sgn.Text.Length == 0)
+                tb_sgn.BorderBrush = new SolidColorBrush(Colors.Red);
+            else
+                tb_sgn.BorderBrush = new SolidColorBrush(Colors.Green);
         }
     }
 }

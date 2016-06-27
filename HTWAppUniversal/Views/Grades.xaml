@@ -8,6 +8,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="g" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView x:Name="mainView" HorizontalAlignment="Left" Height="620" VerticalAlignment="Top" Width="340" Margin="10,10,0,0"/>
+        <RelativePanel>
+            <ListView x:Name="mainView" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+        </RelativePanel>
     </Grid>
 </Page>
