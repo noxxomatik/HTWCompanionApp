@@ -23,6 +23,8 @@ namespace HTWAppUniversal.Views {
                 // custom page as ListViewItem template
                 CanteenItem ci = new CanteenItem();
                 string category = c.Title.Contains(":") ? c.Title.Split(':')[0] : "";
+                if (category == "")
+                    ci.Tb_cat.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0] : c.Title.Split('(')[0];
                 string price = c.Title.Split('(')[c.Title.Split('(').Length - 1].Split(')')[0];
                 ci.Tb_cat.Text = category;
