@@ -9,7 +9,10 @@
 
     <Grid x:Name="g" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <RelativePanel>
-            <ListView x:Name="mainView" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            <Grid x:Name="headline" Grid.RowSpan="1" Height="48px" Background="RoyalBlue" Width="2000">
+                <TextBlock Text="Noten" FontSize="16" Margin="4 0 0 0" VerticalAlignment="Center" Foreground="White"/>
+            </Grid>
+            <ListView x:Name="mainView" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="headline"/>
         </RelativePanel>
     </Grid>
 </Page>

@@ -19,15 +19,15 @@
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <SplitView x:Name="SplitView" Background="Black" OpenPaneLength="240" CompactPaneLength="48"  
-        DisplayMode="CompactOverlay" IsPaneOpen="False" PaneBackground="DarkSeaGreen" Content="{Binding}">
+        DisplayMode="CompactOverlay" IsPaneOpen="False" PaneBackground="DarkBlue" Content="{Binding}" >
             <SplitView.Pane>
                 <StackPanel x:Name="SplitViewPanePanel">
-                    <RadioButton x:Name="b_hamburger" Click="b_hamburger_Click" Tag="&#xE700;" Content="Menu" GroupName="Hamburger"/>
-                    <RadioButton x:Name="b_timetable" Click="b_timetable_Click" Tag="&#xE787;" Content="Stundenplan" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_rTimetable" Click="b_rTimetable_Click" Tag="&#xE8EC;" Content="Raumbelegungsplan" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_grades" Click="b_grades_Click" Tag="&#xE104;" Content="Noten" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_cantine" Click="b_cantine_Click" Tag="&#xEB51;" Content="Mensa" GroupName="Navigation"/>
-                    <RadioButton x:Name="b_settings" Click="b_settings_Click" Tag="&#xE713;" Content="Einstellungen" GroupName="Navigation" VerticalAlignment="Bottom"/>
+                    <RadioButton x:Name="b_hamburger" Click="b_hamburger_Click" Tag="&#xE700;" Content="Menu" GroupName="Hamburger" Height="48px" Foreground="White"/>
+                    <RadioButton x:Name="b_timetable" Click="b_timetable_Click" Tag="&#xE787;" Content="Stundenplan" GroupName="Navigation" Height="48px" Foreground="White"/>
+                    <RadioButton x:Name="b_rTimetable" Click="b_rTimetable_Click" Tag="&#xE8EC;" Content="Raumbelegungsplan" GroupName="Navigation" Height="48px" Foreground="White"/>
+                    <RadioButton x:Name="b_grades" Click="b_grades_Click" Tag="&#xE104;" Content="Noten" GroupName="Navigation" Height="48px" Foreground="White"/>
+                    <RadioButton x:Name="b_cantine" Click="b_cantine_Click" Tag="&#xEB51;" Content="Mensa" GroupName="Navigation" Height="48px" Foreground="White"/>
+                    <RadioButton x:Name="b_settings" Click="b_settings_Click" Tag="&#xE713;" Content="Einstellungen" GroupName="Navigation" VerticalAlignment="Bottom" Height="48px" Foreground="White"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>

@@ -21,7 +21,9 @@
         </Grid.ColumnDefinitions>
 
         <!-- headline -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Raumbelegungsplan" FontSize="16" Margin="0 0 0 4"/>
+        <Grid  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="48px" Margin="-4, -4, -4, 0" Background="RoyalBlue">
+            <TextBlock Text="Raumbelegungsplan" FontSize="16" Margin="4 0 0 0" VerticalAlignment="Center" Foreground="White"/>
+        </Grid>
 
         <!-- User Input -->
         <AutoSuggestBox x:Name="roomChoiceComboBoxTextBox" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" Grid.Column="0" Grid.Row="1" Margin="0 0 0 4" PlaceholderText="Raum" BorderThickness="1" KeyUp="roomChoiceComboBoxTextBox_KeyUp" ItemsSource="{x:Bind SuggestedRooms}" TextChanged="roomChoiceComboBoxTextBox_TextChanged"/>
