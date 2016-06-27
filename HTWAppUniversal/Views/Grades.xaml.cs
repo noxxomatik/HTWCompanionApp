@@ -60,6 +60,7 @@ namespace HTWAppUniversal.Views {
                         gi.Tb_credits.Text = g.EctsCredits;
                         if (i % 2 == 1)
                             gi.Gg.Background = new SolidColorBrush(Colors.LightGray);
+                        gi.Tb_title.Width = 360;
                         lv.Items.Add(gi);
                         i++;
                     }

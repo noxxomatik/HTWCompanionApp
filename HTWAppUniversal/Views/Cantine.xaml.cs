@@ -24,7 +24,8 @@ namespace HTWAppUniversal.Views {
                 CanteenItem ci = new CanteenItem();
                 string category = c.Title.Contains(":") ? c.Title.Split(':')[0] : "";
                 if (category == "")
-                    ci.Tb_cat.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    //ci.Tb_cat.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    category = "Kantine";
                 string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0] : c.Title.Split('(')[0];
                 string price = c.Title.Split('(')[c.Title.Split('(').Length - 1].Split(')')[0];
                 ci.Tb_cat.Text = category;
@@ -32,6 +33,7 @@ namespace HTWAppUniversal.Views {
                 ci.Tb_price.Text = price;
                 if (i % 2 == 1)
                     ci.Gg.Background = new SolidColorBrush(Colors.LightGray);
+                ci.Tb_desc.Width = 360;
                 mainView.Items.Add(ci);
                 i++;
             }
