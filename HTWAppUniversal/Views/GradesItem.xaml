@@ -8,10 +8,16 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="t_title" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="24" Width="340"/>
-        <TextBlock x:Name="t_grade" HorizontalAlignment="Left" Margin="51,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="t_gradeText" HorizontalAlignment="Left" Margin="10,39,0,0" TextWrapping="Wrap" Text="Note:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="t_creditsText" HorizontalAlignment="Left" Margin="206,39,0,0" TextWrapping="Wrap" Text="Credits" VerticalAlignment="Top"/>
-        <TextBlock x:Name="t_credits" HorizontalAlignment="Left" Margin="257,39,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <RelativePanel>
+            <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock"/>
+            <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignLeftWithPanel="True">
+            <TextBlock x:Name="t_gradeText" TextWrapping="Wrap" Text="Note: "/>
+                <TextBlock x:Name="t_grade" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_gradeText"/>
+            </RelativePanel>
+            <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignRightWithPanel="True">
+                <TextBlock x:Name="t_creditsText" TextWrapping="Wrap" Text="Credits: "/>
+                <TextBlock x:Name="t_credits" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_creditsText"/>
+            </RelativePanel>
+        </RelativePanel>
     </Grid>
 </Page>

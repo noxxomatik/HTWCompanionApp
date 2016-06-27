@@ -9,9 +9,9 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <RelativePanel>
-            <TextBlock x:Name="t_cat" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock"/>
-            <TextBlock x:Name="t_desc" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_cat"/>
-            <TextBlock x:Name="t_price" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_desc"/>
+            <TextBlock x:Name="t_cat" TextWrapping="Wrap" Text="TextBlock"/>
+            <TextBlock x:Name="t_desc" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_cat"/>
+            <TextBlock x:Name="t_price" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_desc"/>
         </RelativePanel>
 
     </Grid>
