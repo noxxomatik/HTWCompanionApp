@@ -12,7 +12,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded">
 
-    <Grid x:Name="layoutGrid" Width="Auto" Height="Auto">
+    <Grid x:Name="layoutGrid" Width="300">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -30,12 +30,12 @@
             <Button x:Name="deleteSelected" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Margin="0 4 4 4" Content="gewählte Räume löschen" FontSize="10" Height="25" Width="132" Click="deleteSelected_Click"/>
         </StackPanel>
 
-        <ListView x:Name="roomsList" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Height="200" Margin="4,4,0,4" ItemsSource= "{x:Bind ListViewItems}">
+        <ListView x:Name="roomsList" Grid.Column="1" Grid.Row="0" Height="200" Width="Auto" Margin="4,4,0,4" ItemsSource= "{x:Bind ListViewItems}" SelectionChanged="roomsList_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="False" Checked="onCheckboxChecked" Unchecked="onCheckBoxUnchecked" Width="26"/>
-                        <TextBlock Name="room" Text="{Binding}" FontWeight="Bold"/>
+                        <CheckBox IsChecked="False" Checked="onCheckboxChecked" Unchecked="onCheckBoxUnchecked" MinWidth="26"/>
+                        <TextBlock Name="room" Text="{Binding}" FontWeight="Bold" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

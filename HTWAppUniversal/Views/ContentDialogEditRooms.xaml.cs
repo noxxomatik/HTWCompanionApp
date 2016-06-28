@@ -127,5 +127,10 @@ namespace HTWAppUniversal
             addRoomTextBox.Width = (layoutGrid.ActualWidth / 2) - addRoomButton.Width - addRoomPanel.Margin.Right;
             deleteSelected.Width = addRoomTextBox.Width + addRoomButton.Width;
         }
+
+        private void roomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
