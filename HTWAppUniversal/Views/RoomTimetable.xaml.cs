@@ -134,24 +134,36 @@ namespace HTWAppUniversal.Views {
             if(e.Key == VirtualKey.Enter)
             {
                 String newRoom = ((AutoSuggestBox)sender).Text;
+                setRoom(newRoom);
+            }
+        }
 
-                if (null != util.checkRoomSpell(newRoom))
+        private void roomChoiceComboBoxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            String newRoom = ((AutoSuggestBox)sender).Text;
+            setRoom(newRoom);
+        }
+
+        private void setRoom(String newRoom)
+        {
+
+            if (null != util.checkRoomSpell(newRoom))
+            {
+                if (!util.lookupRoom(newRoom))
                 {
-                    if (!util.lookupRoom(newRoom))
+                    SuggestedRooms.Clear();
+                    foreach (String room in settingsModel.Rooms)
                     {
-                        SuggestedRooms.Clear();
-                        foreach (String room in settingsModel.Rooms)
-                        {
-                            SuggestedRooms.Add(room);
-                        }
-
-                        SuggestedRooms.Add(newRoom);
-                        settingsModel.Rooms = new List<String>(SuggestedRooms);
+                        SuggestedRooms.Add(room);
                     }
 
-                    setupTimetable(newRoom);
+                    SuggestedRooms.Add(newRoom);
+                    settingsModel.Rooms = new List<String>(SuggestedRooms);
                 }
+
+                setupTimetable(newRoom);
             }
+
         }
 
         private async void editListButton_Click(object sender, RoutedEventArgs e)
@@ -185,5 +197,7 @@ namespace HTWAppUniversal.Views {
             }
             
         }
+
+
     }
 }
