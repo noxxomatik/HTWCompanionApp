@@ -33,7 +33,7 @@ namespace HTWAppUniversal.Views {
                 ci.Tb_price.Text = price;
                 if (i % 2 == 1)
                     ci.Gg.Background = new SolidColorBrush(Colors.LightGray);
-                ci.Tb_desc.Width = this.ActualWidth * .5;
+                ci.Tb_desc.Width = this.ActualWidth * .75;
                 mainView.Items.Add(ci);
                 i++;
             }

@@ -108,7 +108,7 @@ namespace HTWAppObjects {
         /// </summary>
         public List<string> Rooms {
             get {
-                rooms = ((string[]) roamingSettings.Values["Rooms"]).ToList<string>();
+                rooms = roamingSettings.Values["Rooms"] != null ? ((string[]) roamingSettings.Values["Rooms"]).ToList<string>() : new List<string>();
                 return rooms;
             }
             set {

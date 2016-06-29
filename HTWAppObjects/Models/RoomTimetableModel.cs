@@ -30,7 +30,7 @@ namespace HTWAppObjects {
          */
         public async Task<List<TimetableObject>> getRoomTimetable(string room) {
             // TODO: Regex zum Prüfen der Werte
-            if (!room.Equals("")) {
+            if (room != null && !room.Equals("")) {
                 room = room.ToLower();
                 try {
                     string requestData = WebUtility.UrlEncode("Room") + "=" + WebUtility.UrlEncode(room);

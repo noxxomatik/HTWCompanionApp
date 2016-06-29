@@ -148,7 +148,8 @@ namespace HTWAppUniversal.Views {
 
                 }
             }
+            g.Height = this.ActualHeight;
+            scrollViewer.MaxHeight = this.ActualHeight - 100;
         }
-
     }
 }

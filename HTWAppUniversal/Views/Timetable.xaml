@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loading="Page_Loading">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
+    <Grid x:Name="g" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height ="auto"/>
@@ -37,16 +37,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Montag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="Dienstag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="Mittwoch" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="0" Grid.Column="4" Text="Donnerstag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="0" Grid.Column="5" Text="Freitag" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Mo" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Di" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="Mi" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="0" Grid.Column="4" Text="Do" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="0" Grid.Column="5" Text="Fr" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         </Grid>
 
         
         <!-- Display the data (Scrollviewer must indicate MaxHeight to reveal scrollbars)-->
-        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330">
             <Grid x:Name="timetableGrid">
                 <Grid.Resources>
                     <SolidColorBrush x:Key="brush" Color="#FFECECEC"/>

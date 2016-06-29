@@ -1,5 +1,6 @@
 ﻿using HTWAppObjects;
 using System;
+using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -38,8 +39,13 @@ namespace HTWAppUniversal.Views {
                 sm.Stg = tb_sg.Text;
             if (tb_sgn.Text.Length != 0)
                 sm.StgGrp = tb_sgn.Text;
-            MessageDialog md = new MessageDialog("Einstellungen gespeichert");
-            await md.ShowAsync();
+            try {
+                MessageDialog md = new MessageDialog("Einstellungen gespeichert");
+                await md.ShowAsync();
+            }
+            catch (Exception e) {
+                Debug.WriteLine(e.Message.ToString());
+            }
         }
 
         private void b_save_Click(object sender, RoutedEventArgs e) {

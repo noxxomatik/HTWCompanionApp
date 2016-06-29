@@ -36,7 +36,7 @@ namespace HTWAppObjects {
          */
         public async Task<List<TimetableObject>> getTimetable(string stgJhr, string stg, string stgGrp)  {
             // TODO: Regex zum Prüfen der Werte
-            if (!stgJhr.Equals("") && !stg.Equals("") && !stgGrp.Equals("")) {
+            if (stgJhr != null && stg != null && stgGrp != null && !stgJhr.Equals("") && !stg.Equals("") && !stgGrp.Equals("")) {
                 try {
                     string requestData = WebUtility.UrlEncode("StgJhr") + "=" + WebUtility.UrlEncode(stgJhr) + "&"
                         + WebUtility.UrlEncode("Stg") + "=" + WebUtility.UrlEncode(stg) + "&"

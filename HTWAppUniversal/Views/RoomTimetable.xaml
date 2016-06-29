@@ -8,7 +8,7 @@
     xmlns:suggestData="using:HTWAppObjects"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
+    <Grid x:Name="g" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="4">
         <Grid.RowDefinitions>
             <RowDefinition Height ="auto" />
             <RowDefinition Height ="36" />
@@ -43,16 +43,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Montag" TextWrapping="Wrap"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="Dienstag" TextWrapping="Wrap"/>
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="Mittwoch" TextWrapping="Wrap"/>
-            <TextBlock Grid.Row="0" Grid.Column="4" Text="Donnerstag" TextWrapping="Wrap"/>
-            <TextBlock Grid.Row="0" Grid.Column="5" Text="Freitag" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Mo" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Di" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="Mi" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="0" Grid.Column="4" Text="Do" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="0" Grid.Column="5" Text="Fr" TextWrapping="Wrap"/>
 
         </Grid>
 
         <!-- Display the data (scrollviewer must indicate MaxHeigt to reveal scrollbars) -->
-        <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled" Margin="0,0,0,-330" MaxHeight="300">
             <Grid x:Name="timetableGrid" >
                 <Grid.Resources>
                     <SolidColorBrush x:Key="brush" Color="#FFECECEC"/>
