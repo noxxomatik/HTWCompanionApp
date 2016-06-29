@@ -26,17 +26,20 @@ namespace HTWAppObjects {
         }
 
         public async Task<List<GradeObject>> getGrades(string sNummer, string rZLogin) {
-            // get additional information first
-            List<CourseObject> courseObjects = await getCourses(sNummer, rZLogin);
-            CourseObject course = courseObjects[0];
-            // get the grades
-            List<GradeObject> gradeObjects = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
-            // backup grades
-            if (gradeObjects.Count > 0) {
-                await saveGradesBackup(gradeObjects, sNummer);
+            List<GradeObject> gradeObjects;
+            try {
+                // get additional information first
+                List<CourseObject> courseObjects = await getCourses(sNummer, rZLogin);
+                CourseObject course = courseObjects[0];
+                // get the grades
+                gradeObjects = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
+                // backup grades
+                if (gradeObjects.Count > 0) {
+                    await saveGradesBackup(gradeObjects, sNummer);
+                }
             }
-            else {
-
+            catch {
+                gradeObjects = await loadGradesBackup(sNummer);
             }
             return gradeObjects;
         }

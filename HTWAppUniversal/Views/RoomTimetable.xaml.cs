@@ -122,8 +122,9 @@ namespace HTWAppUniversal.Views {
                     
                 }
             }
+            // TODO: Abfrage hier nicht ideal, wird bei verlassen der Seite ausgelöst
             g.Height = this.ActualHeight;
-            scrollViewer.MaxHeight = this.ActualHeight - 140;
+            scrollViewer.MaxHeight = this.ActualHeight > 140 ? this.ActualHeight - 140 : 0;
         }
 
 
