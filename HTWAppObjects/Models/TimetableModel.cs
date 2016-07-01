@@ -172,6 +172,7 @@ namespace HTWAppObjects {
                     nextLesson = thisWeekDictionary[(int) now.DayOfWeek + j][nextLessonInt];
                     nextLessonInt++;
                 }
+                j++;
             }
             // if there is nothing in this week get next week
             int dayOfWeek = 0;
