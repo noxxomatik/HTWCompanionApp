@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using HTWAppUniversal.Classes;
 
 namespace HTWAppUniversal {
     /// <summary>
@@ -76,16 +77,9 @@ namespace HTWAppUniversal {
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
             }
-
-            // Create a tile notification
-            /*string adaptiveTile = File.ReadAllText(@"Tiles/adaptive_tile.xml");
-            XmlDocument tileXml = new XmlDocument();
-            tileXml.LoadXml(adaptiveTile);
-            TileNotification tile = new TileNotification(tileXml);
-            TileUpdater tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
-            tileUpdater.Update(tile);*/
-
             // Create a scheduled tile notification
+            TileBackgroundTask tbt = TileBackgroundTask.getInstance();
+            tbt.RegisterBackgroundTask();
         }
 
         /// <summary>
