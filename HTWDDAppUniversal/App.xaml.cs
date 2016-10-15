@@ -7,6 +7,7 @@ using Template10.Common;
 using System;
 using System.Linq;
 using Windows.UI.Xaml.Data;
+using HTWDDAppUniversal.Classes;
 
 namespace HTWDDAppUniversal
 {
@@ -46,8 +47,12 @@ namespace HTWDDAppUniversal
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args) {
-            // long-running startup tasks go here
-            //await Task.Delay(5000);
+            // register background tasks
+            BackgroundTaskHelper helper = BackgroundTaskHelper.getInstance();
+            // background task to update next lesson in tile
+            helper.RegisterBackgroundTask("TimetableBackgroundTask", "BackgroundTasks.TimetableBackgroundTask", 15);
+            // background task that checks for new grades
+            helper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);
 
             NavigationService.Navigate(typeof(Views.TimetablePage));
             await Task.CompletedTask;

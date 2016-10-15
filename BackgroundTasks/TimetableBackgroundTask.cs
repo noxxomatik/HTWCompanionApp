@@ -27,31 +27,6 @@ namespace BackgroundTasks
                 Debug.WriteLine("Missing timetable item. First load the timetable.");
             }
 
-            // check for new grades
-            try {
-                GradesModel gm = GradesModel.getInstance();
-                SettingsModel sm = SettingsModel.getInstance();
-                int countNewGrades = await gm.getNewGradesCount(sm.SNummer, sm.RZLogin);
-                if (countNewGrades > 0) {
-                    ToastContent content = new ToastContent() {
-                        Visual = new ToastVisual() {
-                            TitleText = new ToastText() {
-                                Text = countNewGrades + " neue Noten verfügbar!"
-                            }
-                        },
-                        Audio = new ToastAudio() {
-                            Src = new Uri("ms-winsoundevent:Notification.IM")
-                        }
-                    };
-                    XmlDocument xmlContent = content.GetXml();
-                    var toast = new ToastNotification(xmlContent);
-                    ToastNotificationManager.CreateToastNotifier().Show(toast);
-                }
-            }
-            catch {
-                Debug.WriteLine("Grades could not be retrieved.");
-            }
-
             // Inform the system that the task is finished.
             deferral.Complete();
         }
