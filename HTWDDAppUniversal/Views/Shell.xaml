@@ -14,15 +14,49 @@
     <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
         <Controls:HamburgerMenu.PrimaryButtons>
-            <!--  mainpage button  -->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage" 
+            <!--  timetable button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:TimetablePage" 
+                                          AutomationProperties.Name="Jerry"
+                                          PageParameter=""
+                                          >
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                                Symbol="CalendarWeek" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Stundenplan" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--  room timetable button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:RoomTimetablePage" 
                                           AutomationProperties.Name="Jerry"
                                           >
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
-                                Symbol="Home" />
+                                Symbol="CalendarDay" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Home" />
+                               Text="Raumplan" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--  grades button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:GradesPage" 
+                                          AutomationProperties.Name="Jerry"
+                                          >
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                                Symbol="Edit" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Noten" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--  canteen button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CanteenPage" 
+                                          AutomationProperties.Name="Jerry"
+                                          >
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                                Symbol="BackToWindow" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Mensa" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.PrimaryButtons>
@@ -38,7 +72,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Setting" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Settings" />
+                               Text="Einstellungen" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.SecondaryButtons>
