@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Popups;
+using System.Diagnostics;
 
 namespace HTWDDAppUniversal.Views
 {
@@ -30,6 +31,7 @@ namespace HTWDDAppUniversal.Views
                 grades = await gm.getGrades(sm.SNummer, sm.RZLogin);
             }
             catch (Exception e) {
+                Debug.WriteLine(e);
                 MessageDialog md = new MessageDialog("Ungültiger Benutzername und/oder Passwort in Einstellungen hinterlegt!");
                 await md.ShowAsync();
                 return;
@@ -106,7 +108,7 @@ namespace HTWDDAppUniversal.Views
                 }
             }
             catch (Exception ex) {
-
+                Debug.WriteLine(ex);
             }
         }
     }

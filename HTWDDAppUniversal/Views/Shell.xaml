@@ -14,10 +14,10 @@
     <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
         <Controls:HamburgerMenu.PrimaryButtons>
+            <!-- symbol icons: https://msdn.microsoft.com/de-de/library/windows/apps/windows.ui.xaml.controls.symbol -->
             <!--  timetable button  -->
             <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:TimetablePage" 
                                           AutomationProperties.Name="Jerry"
-                                          PageParameter=""
                                           >
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
