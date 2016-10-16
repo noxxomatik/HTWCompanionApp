@@ -12,21 +12,12 @@ namespace HTWDDAppUniversal.Views
     {
         private TimetableModel timetableModel;
         private List<TimetableObject> lessons;
-        private TimetableUtils util;
+        private TimetableUtils timetableUtils;
 
-        public List<TimetableObject> Lessons {
-            get {
-                return lessons;
-            }
-
-            set {
-                lessons = value;
-            }
-        }
         public TimetablePage() {
             InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            util = new TimetableUtils();
+            timetableUtils = new TimetableUtils();
         }
 
         private async void Page_Loading(FrameworkElement sender, object args) {
@@ -49,13 +40,13 @@ namespace HTWDDAppUniversal.Views
             }
 
             /*find out if current week is even or odd*/
-            int evenOdd = util.isCurrentWeekEvenOrOdd();
+            int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
 
             /*display objects in grid*/
             foreach (TimetableObject item in Lessons) {
-                int row = util.getRowForTable(item);
+                int row = timetableUtils.getRowForTable(item);
                 if (row != -1) {
-                    TextBlock tb = util.setupTimetableTextBlock(item);
+                    TextBlock tb = timetableUtils.setupTimetableTextBlock(item);
 
                     switch (item.Week) {
 
@@ -64,12 +55,12 @@ namespace HTWDDAppUniversal.Views
                                 Grid.SetRow(tb, row);
 
                                 //find out, if another lesson takes place at the same time / had already been positioned in grid
-                                FrameworkElement firstChild = util.getChildOfGrid(timetableGrid, row, Grid.GetColumn(tb));
+                                FrameworkElement firstChild = timetableUtils.getChildOfGrid(timetableGrid, row, Grid.GetColumn(tb));
                                 if (null == firstChild) // no other lesson found
                                     timetableGrid.Children.Add(tb);
                                 else {
                                     if (null == firstChild.Name || !TimetableUtils.STACKPANEL.Equals(firstChild.Name)) { //other lesson found
-                                        StackPanel stackpanel = util.createStackPanel(timetableGrid, firstChild, tb);
+                                        StackPanel stackpanel = timetableUtils.createStackPanel(timetableGrid, firstChild, tb);
                                         Grid.SetRow(stackpanel, row);
                                         timetableGrid.Children.Add(stackpanel);
                                     }
@@ -80,16 +71,16 @@ namespace HTWDDAppUniversal.Views
                                 }
 
 
-                                TextBlock copy = util.setupTimetableTextBlock(item);
+                                TextBlock copy = timetableUtils.setupTimetableTextBlock(item);
                                 Grid.SetRow(copy, row + TimetableUtils.totalNumberofLessons + 1);
 
                                 //find out, if another lesson takes place at the same time / had already been positioned in grid
-                                FrameworkElement firstChild2 = util.getChildOfGrid(timetableGrid, Grid.GetRow(copy), Grid.GetColumn(copy));
+                                FrameworkElement firstChild2 = timetableUtils.getChildOfGrid(timetableGrid, Grid.GetRow(copy), Grid.GetColumn(copy));
                                 if (null == firstChild2) // no other lesson found
                                     timetableGrid.Children.Add(copy);
                                 else {
                                     if (null == firstChild2.Name || !TimetableUtils.STACKPANEL.Equals(firstChild2.Name)) { //other lesson found
-                                        StackPanel stackpanel = util.createStackPanel(timetableGrid, firstChild2, copy);
+                                        StackPanel stackpanel = timetableUtils.createStackPanel(timetableGrid, firstChild2, copy);
                                         Grid.SetRow(stackpanel, Grid.GetRow(copy));
                                         timetableGrid.Children.Add(stackpanel);
                                     }
@@ -130,6 +121,16 @@ namespace HTWDDAppUniversal.Views
             }
             g.Height = this.ActualHeight;
             scrollViewer.MaxHeight = this.ActualHeight - 100;
+        }
+
+        public List<TimetableObject> Lessons {
+            get {
+                return lessons;
+            }
+
+            set {
+                lessons = value;
+            }
         }
     }
 }

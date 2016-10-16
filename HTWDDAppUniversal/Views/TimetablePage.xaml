@@ -24,7 +24,11 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for narrow view  -->
+                        <Setter Target="Monday.Text" Value="Mo."/>
+                        <Setter Target="Tuesday.Text" Value="Di."/>
+                        <Setter Target="Wednesday.Text" Value="Mi."/>
+                        <Setter Target="Thursday.Text" Value="Do."/>
+                        <Setter Target="Friday.Text" Value="Fr."/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -32,7 +36,11 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for normal view  -->
+                        <Setter Target="Monday.Text" Value="Montag"/>
+                        <Setter Target="Tuesday.Text" Value="Dienstag"/>
+                        <Setter Target="Wednesday.Text" Value="Mittwoch"/>
+                        <Setter Target="Thursday.Text" Value="Donnerstag"/>
+                        <Setter Target="Friday.Text" Value="Freitag"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -40,7 +48,11 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for wide view  -->
+                        <Setter Target="Monday.Text" Value="Montag"/>
+                        <Setter Target="Tuesday.Text" Value="Dienstag"/>
+                        <Setter Target="Wednesday.Text" Value="Mittwoch"/>
+                        <Setter Target="Thursday.Text" Value="Donnerstag"/>
+                        <Setter Target="Friday.Text" Value="Freitag"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -76,11 +88,11 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Mo" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Di" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-                <TextBlock Grid.Row="0" Grid.Column="3" Text="Mi" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-                <TextBlock Grid.Row="0" Grid.Column="4" Text="Do" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-                <TextBlock Grid.Row="0" Grid.Column="5" Text="Fr" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="Monday" Grid.Row="0" Grid.Column="1" Text="Mo" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="Tuesday" Grid.Row="0" Grid.Column="2" Text="Di" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="Wednesday" Grid.Row="0" Grid.Column="3" Text="Mi" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="Thursday" Grid.Row="0" Grid.Column="4" Text="Do" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="Friday" Grid.Row="0" Grid.Column="5" Text="Fr" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
             </Grid>
 
 
