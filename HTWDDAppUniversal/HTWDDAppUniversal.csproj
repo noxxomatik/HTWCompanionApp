@@ -110,8 +110,14 @@
     <Compile Include="Views\CanteenItem.xaml.cs">
       <DependentUpon>CanteenItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TimetableItem.xaml.cs">
+      <DependentUpon>TimetableItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimetablePage.xaml.cs">
       <DependentUpon>TimetablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OldTimetablePage.xaml.cs">
+      <DependentUpon>OldTimetablePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RoomTimetablePage.xaml.cs">
       <DependentUpon>RoomTimetablePage.xaml</DependentUpon>
@@ -182,7 +188,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\TimetableItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimetablePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OldTimetablePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

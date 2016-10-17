@@ -39,14 +39,14 @@ namespace HTWDDAppUniversal
 
             /*setup dictionary*/
             timeToRowDictionary = new Dictionary<String, int>();
-            timeToRowDictionary.Add("07:30:00", 0);
-            timeToRowDictionary.Add("09:20:00", 1);
-            timeToRowDictionary.Add("11:10:00", 2);
-            timeToRowDictionary.Add("13:20:00", 3);
-            timeToRowDictionary.Add("15:10:00", 4);
-            timeToRowDictionary.Add("17:00:00", 5);
-            timeToRowDictionary.Add("18:40:00", 6);
-            timeToRowDictionary.Add("20:20:00", 7);
+            timeToRowDictionary.Add("07:30:00", 1);
+            timeToRowDictionary.Add("09:20:00", 2);
+            timeToRowDictionary.Add("11:10:00", 3);
+            timeToRowDictionary.Add("13:20:00", 4);
+            timeToRowDictionary.Add("15:10:00", 5);
+            timeToRowDictionary.Add("17:00:00", 6);
+            timeToRowDictionary.Add("18:40:00", 7);
+            timeToRowDictionary.Add("20:20:00", 8);
         }
 
 
@@ -71,7 +71,6 @@ namespace HTWDDAppUniversal
             }
             return null;
         }
-
 
         /*merge element 1 und element2 in one stackpanel*/
         public StackPanel createStackPanel(Grid grid, FrameworkElement element1, FrameworkElement element2)
