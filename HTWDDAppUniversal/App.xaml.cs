@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using HTWDDAppUniversal.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
-using Template10.Common;
-using System;
-using System.Linq;
 using Windows.UI.Xaml.Data;
 using HTWDDAppUniversal.Classes;
+using Windows.UI.ViewManagement;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 
 namespace HTWDDAppUniversal
 {
@@ -53,6 +53,12 @@ namespace HTWDDAppUniversal
             helper.RegisterBackgroundTask("TimetableBackgroundTask", "BackgroundTasks.TimetableBackgroundTask", 15);
             // background task that checks for new grades
             helper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);
+
+            // hide status bar
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
+                //StatusBar statusBar = StatusBar.GetForCurrentView();
+                //statusBar.HideAsync();
+            }
 
             NavigationService.Navigate(typeof(Views.TimetablePage));
             await Task.CompletedTask;
