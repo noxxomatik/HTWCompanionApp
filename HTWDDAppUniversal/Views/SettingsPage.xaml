@@ -1,4 +1,4 @@
-<Page x:Class="HTWDDAppUniversal.Views.SettingsPage"
+﻿<Page x:Class="HTWDDAppUniversal.Views.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Behaviors="using:Template10.Behaviors"
@@ -61,31 +61,68 @@
                RelativePanel.Below="pageHeader">
 
             <!--  settings  -->
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Einstellungen">
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Benutzerdaten">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
-                        <TextBlock x:Name="ph0"/>
-                        <TextBlock x:Name="t_sNumber" TextWrapping="Wrap" Text="Bibliotheksnummer" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="ph0"/>
-                        <TextBlock x:Name="t_s" TextWrapping="Wrap" Text="s" RelativePanel.Below="t_sNumber" RelativePanel.LeftOf="tb_sNr" RelativePanel.AlignVerticalCenterWith="tb_sNr"/>
-                        <TextBox x:Name="tb_sNr" TextWrapping="Wrap" PlaceholderText="xxxxx" AutomationProperties.IsRequiredForForm="True" InputScope="Digits" TabIndex="0" RelativePanel.Below="t_sNumber" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sNr_TextChanged"/>
+                        <TextBlock x:Name="t_sNumber" TextWrapping="Wrap" Text="Bibliotheksnummer" 
+                                   RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <TextBlock x:Name="t_s" TextWrapping="Wrap" Text="s" RelativePanel.Below="t_sNumber" 
+                                   RelativePanel.LeftOf="tb_sNr" RelativePanel.AlignVerticalCenterWith="tb_sNr"/>
+                        <TextBox x:Name="tb_sNr" TextWrapping="Wrap" PlaceholderText="xxxxx" AutomationProperties.IsRequiredForForm="True" 
+                                 InputScope="Digits" TabIndex="0" RelativePanel.Below="t_sNumber" 
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" 
+                                 KeyDown="EnterPressed" TextChanged="tb_sNr_TextChanged"/>
                         <TextBlock x:Name="ph1" RelativePanel.Below="tb_sNr"/>
-                        <TextBlock x:Name="t_passwort" TextWrapping="Wrap" Text="Passwort" RelativePanel.Below="ph1" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                        <PasswordBox x:Name="pb_pw" PlaceholderText="*****" AutomationProperties.IsRequiredForForm="True" TabIndex="1" RelativePanel.Below="t_passwort" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" PasswordChanged="pb_pw_PasswordChanged"/>
+                        <TextBlock x:Name="t_passwort" TextWrapping="Wrap" Text="Passwort" 
+                                   RelativePanel.Below="ph1" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <PasswordBox x:Name="pb_pw" PlaceholderText="*****" 
+                                     AutomationProperties.IsRequiredForForm="True" TabIndex="1" 
+                                     RelativePanel.Below="t_passwort" 
+                                     RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" PasswordChanged="pb_pw_PasswordChanged"/>
                         <TextBlock x:Name="ph2" RelativePanel.Below="pb_pw"/>
-                        <TextBlock x:Name="t_sy" TextWrapping="Wrap" Text="Studienjahrgang" RelativePanel.Below="ph2" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                        <TextBox x:Name="tb_sy" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="15" AutomationProperties.IsRequiredForForm="True" TabIndex="2" RelativePanel.Below="t_sy" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sy_TextChanged"/>
+                        <TextBlock x:Name="t_sy" TextWrapping="Wrap" Text="Studienjahrgang" 
+                                   RelativePanel.Below="ph2" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <TextBox x:Name="tb_sy" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="15" 
+                                 AutomationProperties.IsRequiredForForm="True" TabIndex="2" RelativePanel.Below="t_sy" 
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sy_TextChanged"/>
                         <TextBlock x:Name="ph3" RelativePanel.Below="tb_sy"/>
-                        <TextBlock x:Name="t_sg" TextWrapping="Wrap" Text="Studiengang" RelativePanel.Below="ph3" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                        <TextBox x:Name="tb_sg" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="044" AutomationProperties.IsRequiredForForm="True" TabIndex="3" RelativePanel.Below="t_sg" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sg_TextChanged"/>
+                        <TextBlock x:Name="t_sg" TextWrapping="Wrap" Text="Studiengang" 
+                                   RelativePanel.Below="ph3" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <TextBox x:Name="tb_sg" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="044" 
+                                 AutomationProperties.IsRequiredForForm="True" TabIndex="3" RelativePanel.Below="t_sg" 
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sg_TextChanged"/>
                         <TextBlock x:Name="ph4" RelativePanel.Below="tb_sg"/>
-                        <TextBlock x:Name="t_sgn" TextWrapping="Wrap" Text="Studiengruppe" RelativePanel.Below="ph4" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                        <TextBox x:Name="tb_sgn" TextWrapping="Wrap" PlaceholderText="73-CM" AutomationProperties.IsRequiredForForm="True" TabIndex="4" RelativePanel.Below="t_sgn" RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sgn_TextChanged"/>
+                        <TextBlock x:Name="t_sgn" TextWrapping="Wrap" Text="Studiengruppe" 
+                                   RelativePanel.Below="ph4" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <TextBox x:Name="tb_sgn" TextWrapping="Wrap" PlaceholderText="73-CM" 
+                                 AutomationProperties.IsRequiredForForm="True" TabIndex="4" RelativePanel.Below="t_sgn" 
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sgn_TextChanged"/>
                         <TextBlock x:Name="ph5" RelativePanel.Below="tb_sgn"/>
-                        <Button x:Name="b_save" Content="Speichern" Click="b_save_Click" RelativePanel.Below="ph5" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <Button x:Name="b_save" Content="Speichern" Click="b_save_Click" 
+                                RelativePanel.Below="ph5" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                     </RelativePanel>
 
                 </ScrollViewer>
+            </PivotItem>
+            
+            <!-- notifications -->
+            <PivotItem Header="Benachrichtigungen">
+                <RelativePanel>
+                    <TextBlock x:Name="textToggleGradesNotification">Benachrichtigung bei neunen Noten</TextBlock>
+                    <ToggleSwitch x:Name="switchToggleGradesNotification" RelativePanel.Below="textToggleGradesNotification"></ToggleSwitch>
+                    <TextBlock x:Name="textCheckInterval" RelativePanel.Below="switchToggleGradesNotification" Margin="0,8,0,0">Prüfintervall für neue Noten</TextBlock>
+                    <ComboBox x:Name="listCheckInterval" RelativePanel.Below="textCheckInterval" SelectedIndex="2">
+                        <ComboBoxItem>15 Minuten</ComboBoxItem>
+                        <ComboBoxItem>30 Minuten</ComboBoxItem>
+                        <ComboBoxItem>60 Minuten</ComboBoxItem>
+                        <ComboBoxItem>120 Minuten</ComboBoxItem>
+                    </ComboBox>
+                </RelativePanel>
+            </PivotItem>
+            <!-- room list -->
+            <PivotItem Header="Raumliste">
+                
             </PivotItem>
 
             <!--  about  -->
