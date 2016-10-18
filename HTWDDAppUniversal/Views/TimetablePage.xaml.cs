@@ -55,23 +55,23 @@ namespace HTWDDAppUniversal.Views
                     switch (timetableObject.Week) {
                         /*lesson takes place every week*/
                         case 0: {
-                                addLessonToWeek(timetableThisWeek, row, timetableItem);
+                                timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
                                 // clone the button
                                 TimetableItem clone = new TimetableItem();
                                 Grid.SetColumn(clone, timetableObject.Day);
                                 Grid.SetRow(clone, row);
                                 clone.TextBlock.Text = timetableItem.TextBlock.Text;
-                                addLessonToWeek(timetableNextWeek, row, clone);
+                                timetableUtils.addLessonToWeek(timetableNextWeek, row, clone);
                                 break;
                             }
                         /*only at odd weeks*/
                         case 1: {
                                 /*if current week is even add it to next week*/
                                 if (evenOdd == 0) {
-                                    addLessonToWeek(timetableNextWeek, row, timetableItem);
+                                    timetableUtils.addLessonToWeek(timetableNextWeek, row, timetableItem);
                                 }
                                 else {
-                                    addLessonToWeek(timetableThisWeek, row, timetableItem);
+                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
                                 }
                                 break;
                             }
@@ -79,24 +79,20 @@ namespace HTWDDAppUniversal.Views
                         case 2: {
                                 /*if current week is even add it to this week*/
                                 if (evenOdd == 0) {
-                                    addLessonToWeek(timetableThisWeek, row, timetableItem);
+                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
                                 }
                                 else {
-                                    addLessonToWeek(timetableNextWeek, row, timetableItem);
+                                    timetableUtils.addLessonToWeek(timetableNextWeek, row, timetableItem);
                                 }
+                                break;
+                            }
+                        default: {
                                 break;
                             }
                     }
                 }
             }
         }
-
-        private void addLessonToWeek(Grid week, int row, TimetableItem timetableItem) {
-            week.Children.Add(timetableItem);
-            // TODO: show an indicator that more than one lesson are at the same time
-    }
-
-
 
         // update the live tile
         private static async Task updateLiveTile() {

@@ -1,154 +1,152 @@
+ï»¿using HTWAppObjects;
 using System;
-using HTWDDAppUniversal.ViewModels;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
-using HTWAppObjects;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using System.Linq;
-using Windows.System;
-using System.Text.RegularExpressions;
 
 namespace HTWDDAppUniversal.Views
 {
     public sealed partial class RoomTimetablePage : Page
     {
         private RoomTimetableModel roomTimetableModel;
-        private TimetableUtils util;
+        private TimetableUtils timetableUtils;
         private SettingsModel settingsModel;
 
         private ObservableCollection<String> rooms;
 
-        private ObservableCollection<String> SuggestedRooms {
-            get { return rooms; }
-            set { rooms = value; }
+        private bool suggestionChosen = false;
 
-        }
-
-        public RoomTimetablePage() {
-            InitializeComponent();
+        public RoomTimetablePage()
+        {
+            this.InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             settingsModel = SettingsModel.getInstance();
             rooms = new ObservableCollection<string>(settingsModel.Rooms);
             roomTimetableModel = RoomTimetableModel.getInstance();
-            util = new TimetableUtils();
+            timetableUtils = new TimetableUtils();
         }
 
-        private async void setupTimetable(string newRoom) {
-            /*check if grid already contains elements (except days and times = 13)
-              if yes: delete those elements 
-             */
-
-            List<UIElement> children = timetableGrid.Children.ToList<UIElement>();
-            if (children.Count > 13) {
-                List<UIElement> hasToBeDeleted = new List<UIElement>();
-                foreach (UIElement child in children) {
-                    if (Grid.GetColumn((FrameworkElement) child) != 0) {
-                        hasToBeDeleted.Add(child);
-                    }
-                }
-
-                foreach (UIElement item in hasToBeDeleted) {
-                    timetableGrid.Children.Remove(item);
-                }
-            }
+        private async void setupTimetable(string newRoom)
+        {
+            // clear timetable
+            timetableUtils.clearTimetable(timetableThisWeek);
 
             /*request list of timetableObjects*/
             List<TimetableObject> items = await roomTimetableModel.getRoomTimetable(newRoom);
 
             /*find out if current week is even or odd*/
-            int evenOdd = util.isCurrentWeekEvenOrOdd();
+            int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
 
             /*display objects in grid*/
             foreach (TimetableObject item in items) {
-                int row = util.getRowForTable(item);
+                int row = timetableUtils.getRowForTable(item);
                 if (row != -1) {
-                    TextBlock tb = util.setupRoomTimetableTextBlock(item);
 
+                    // prepare the button for this lesson
+                    TimetableItem timetableItem = new TimetableItem();
+                    timetableItem.TextBlock.Text = item.LessonTag + "\n"
+                        + item.Type + "\n"
+                        + item.Professor;
+                    Grid.SetColumn(timetableItem, item.Day);
+                    Grid.SetRow(timetableItem, row);
+
+                    // switch for the week number
                     switch (item.Week) {
-
                         /*lesson takes place every week*/
                         case 0: {
-                                Grid.SetRow(tb, row);
-                                timetableGrid.Children.Add(tb);
-
-                                TextBlock copy = util.setupRoomTimetableTextBlock(item);
-                                Grid.SetRow(copy, row + TimetableUtils.totalNumberofLessons + 1); //Add 1 because of empty row in view
-                                Grid.SetColumn(copy, item.Day);
-                                timetableGrid.Children.Add(copy);
+                                timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
                                 break;
                             }
-
                         /*only at odd weeks*/
                         case 1: {
-                                if (evenOdd == 0) /*current week is even -> show it first*/
-                                    Grid.SetRow(tb, row + TimetableUtils.totalNumberofLessons + 1);
-                                else
-                                    Grid.SetRow(tb, row);
-                                timetableGrid.Children.Add(tb);
+                                if (evenOdd == 1) {
+                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
+                                }
                                 break;
                             }
-
                         /*only at even weeks*/
                         case 2: {
                                 if (evenOdd == 0) /*current week is even -> show it first*/
-                                    Grid.SetRow(tb, row);
-                                else
-                                    Grid.SetRow(tb, row + TimetableUtils.totalNumberofLessons + 1);
-                                timetableGrid.Children.Add(tb);
+                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
                                 break;
                             }
-
                         default: {
                                 break;
                             }
                     }
-
                 }
             }
-            // TODO: Abfrage hier nicht ideal, wird bei verlassen der Seite ausgelöst
-            g.Height = this.ActualHeight;
-            scrollViewer.MaxHeight = this.ActualHeight > 140 ? this.ActualHeight - 140 : 0;
         }
 
+        private void setRoom(String newRoom) 
+        {
+            if (null != timetableUtils.checkRoomSpell(newRoom)) {
+                if (!timetableUtils.lookupRoom(newRoom)) {
+                    SuggestedRooms.Clear();
+                    foreach (String room in settingsModel.Rooms) {
+                        SuggestedRooms.Add(room);
+                    }
+                    SuggestedRooms.Add(newRoom);
+                    settingsModel.Rooms = new List<String>(SuggestedRooms);
+                }
+                setupTimetable(newRoom);
+            }
+        }
 
-
-
-
-        private void roomChoiceComboBoxTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) {
-            if (e.Key == VirtualKey.Enter) {
+        private void roomChoiceComboBoxTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) 
+        {
+             if (e.Key == VirtualKey.Enter) {
                 String newRoom = ((AutoSuggestBox) sender).Text;
                 setRoom(newRoom);
             }
         }
 
-        private void roomChoiceComboBoxTextBox_LostFocus(object sender, RoutedEventArgs e) {
+        // try to set the input as a room
+        private void roomChoiceComboBoxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
             String newRoom = ((AutoSuggestBox) sender).Text;
             setRoom(newRoom);
         }
-
-        private void setRoom(String newRoom) {
-
-            if (null != util.checkRoomSpell(newRoom)) {
-                if (!util.lookupRoom(newRoom)) {
-                    SuggestedRooms.Clear();
-                    foreach (String room in settingsModel.Rooms) {
-                        SuggestedRooms.Add(room);
-                    }
-
-                    SuggestedRooms.Add(newRoom);
-                    settingsModel.Rooms = new List<String>(SuggestedRooms);
-                }
-
-                setupTimetable(newRoom);
-            }
-
+        private void roomChoiceComboBoxTextBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs e)
+        {
+            String newRoom = sender.Text;
+            setRoom(newRoom);
+        }
+        private void roomChoiceComboBoxTextBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
+        {
+            suggestionChosen = true;
         }
 
-        private async void editListButton_Click(object sender, RoutedEventArgs e) {
+
+        // show suggestion which match the input
+        private void roomChoiceComboBoxTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            String text = sender.Text.ToLower();
+            // a suggestion was chosen and added to the edit field
+            if (suggestionChosen) {
+                setRoom(text);
+                suggestionChosen = false;
+            }
+            else {
+                SuggestedRooms.Clear();
+
+                List<string> all = new List<string>(settingsModel.Rooms);
+                foreach (String room in all) {
+                    String lower = room.ToLower();
+                    Regex regex = new Regex(@"\b" + text);
+
+                    if (regex.Match(lower).Success) {
+                        SuggestedRooms.Add(room);
+                    }
+                }
+            }
+        }
+
+        private async void editListButton_Click(object sender, RoutedEventArgs e)
+        {
             ContentDialogEditRooms editRoomsDialog = new ContentDialogEditRooms(this.ActualWidth);
             var result = await editRoomsDialog.ShowAsync();
 
@@ -159,19 +157,10 @@ namespace HTWDDAppUniversal.Views
 
         }
 
-        private void roomChoiceComboBoxTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
-            String text = sender.Text.ToLower();
-            SuggestedRooms.Clear();
-
-            List<string> all = new List<string>(settingsModel.Rooms);
-            foreach (String room in all) {
-                String lower = room.ToLower();
-                Regex regex = new Regex(@"\b" + text);
-
-                if (regex.Match(lower).Success) {
-                    SuggestedRooms.Add(room);
-                }
-            }
+        private ObservableCollection<String> SuggestedRooms
+        {
+            get { return rooms; }
+            set { rooms = value; }
 
         }
     }

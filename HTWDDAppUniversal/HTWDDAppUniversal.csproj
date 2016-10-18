@@ -110,6 +110,9 @@
     <Compile Include="Views\CanteenItem.xaml.cs">
       <DependentUpon>CanteenItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RoomTimetablePage.xaml.cs">
+      <DependentUpon>RoomTimetablePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimetableItem.xaml.cs">
       <DependentUpon>TimetableItem.xaml</DependentUpon>
     </Compile>
@@ -119,8 +122,8 @@
     <Compile Include="Views\OldTimetablePage.xaml.cs">
       <DependentUpon>OldTimetablePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RoomTimetablePage.xaml.cs">
-      <DependentUpon>RoomTimetablePage.xaml</DependentUpon>
+    <Compile Include="Views\OldRoomTimetablePage.xaml.cs">
+      <DependentUpon>OldRoomTimetablePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GradesPage.xaml.cs">
       <DependentUpon>GradesPage.xaml</DependentUpon>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\RoomTimetablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimetableItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,7 +207,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RoomTimetablePage.xaml">
+    <Page Include="Views\OldRoomTimetablePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

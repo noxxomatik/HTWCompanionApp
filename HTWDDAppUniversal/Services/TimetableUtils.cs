@@ -7,6 +7,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Controls;
+using HTWDDAppUniversal.Views;
 
 namespace HTWDDAppUniversal
 {
@@ -19,19 +20,6 @@ namespace HTWDDAppUniversal
 
         /*dictionary to map dates to appropriate number of row in the grid*/
         private Dictionary<String, int> timeToRowDictionary;
-
-        public Dictionary<String, int> TimeToRowDictionary
-        {
-            get
-            {
-                return timeToRowDictionary;
-            }
-
-            set
-            {
-                timeToRowDictionary = value;
-            }
-        }
 
         public TimetableUtils()
         {
@@ -201,7 +189,8 @@ namespace HTWDDAppUniversal
          * return null if not
          * return corrected string if there where no space or too many (white)spaces
          * */
-        public String checkRoomSpell(String room) {
+        public String checkRoomSpell(String room)
+        {
             String pattern = @"\b[A-Za-z]{1}\s*[0-9]{3}\b";
             Regex regex = new Regex(pattern);
 
@@ -249,6 +238,39 @@ namespace HTWDDAppUniversal
 
             return false;
         }
-                
+
+        /*
+         * check if grid already contains elements 
+         * if yes: delete those elements              
+         */
+        public void clearTimetable(Grid timetable)
+        {            
+            List<UIElement> children = timetable.Children.ToList<UIElement>();
+            foreach (UIElement element in children) {
+                if (element.GetType().Name == "TimetableItem") {
+                    timetable.Children.Remove(element);
+                }
+            }
+        }
+
+        /*
+         * add a timetable item to the timetable
+         */
+        public void addLessonToWeek(Grid week, int row, TimetableItem timetableItem)
+        {
+            week.Children.Add(timetableItem);
+            // TODO: show an indicator that more than one lesson are at the same time
+        }
+
+        public Dictionary<String, int> TimeToRowDictionary 
+        {
+            get {
+                return timeToRowDictionary;
+            }
+
+            set {
+                timeToRowDictionary = value;
+            }
+        }
     }
 }

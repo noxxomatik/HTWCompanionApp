@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Button x:Name="lesson" Click="lessonButton_Click" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TextBlock x:Name="text" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="text" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11"/>
     </Button>
 </Page>
