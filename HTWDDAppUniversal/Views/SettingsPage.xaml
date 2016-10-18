@@ -13,8 +13,7 @@
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-
-
+    
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -110,9 +109,10 @@
             <PivotItem Header="Benachrichtigungen">
                 <RelativePanel>
                     <TextBlock x:Name="textToggleGradesNotification">Benachrichtigung bei neunen Noten</TextBlock>
-                    <ToggleSwitch x:Name="switchToggleGradesNotification" RelativePanel.Below="textToggleGradesNotification"></ToggleSwitch>
-                    <TextBlock x:Name="textCheckInterval" RelativePanel.Below="switchToggleGradesNotification" Margin="0,8,0,0">Prüfintervall für neue Noten</TextBlock>
-                    <ComboBox x:Name="listCheckInterval" RelativePanel.Below="textCheckInterval" SelectedIndex="2">
+                    <ToggleSwitch x:Name="switchToggleGradesNotification" RelativePanel.Below="textToggleGradesNotification"
+                                  IsOn="False" Toggled="switchToggleGradesNotification_Toggled"/>
+                    <TextBlock x:Name="textCheckInterval" RelativePanel.Below="switchToggleGradesNotification" Margin="0,8,0,0" Visibility="Collapsed">Prüfintervall für neue Noten</TextBlock>
+                    <ComboBox x:Name="listCheckInterval" RelativePanel.Below="textCheckInterval" SelectedIndex="2" Visibility="Collapsed">
                         <ComboBoxItem>15 Minuten</ComboBoxItem>
                         <ComboBoxItem>30 Minuten</ComboBoxItem>
                         <ComboBoxItem>60 Minuten</ComboBoxItem>
@@ -122,7 +122,10 @@
             </PivotItem>
             <!-- room list -->
             <PivotItem Header="Raumliste">
-                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView x:Name="roomList">
+                    </ListView>
+                </ScrollViewer>
             </PivotItem>
 
             <!--  about  -->

@@ -1,5 +1,7 @@
 using HTWAppObjects;
+using HTWDDAppUniversal.Classes;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -21,11 +23,69 @@ namespace HTWDDAppUniversal.Views
             tb_sNr.MaxLength = 5;
             tb_sy.MaxLength = 2;
             tb_sg.MaxLength = 3;
+
+            loadSavedSettings();
+            loadRoomList();
+            loadBackgroundTaskSettings();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             var index = int.Parse(_SerializationService.Deserialize(e.Parameter?.ToString()).ToString());
             MyPivot.SelectedIndex = index;
+        }
+
+        void loadSavedSettings() {
+            SettingsModel settingsModel = SettingsModel.getInstance();
+            if (settingsModel.SNummer != null)
+                tb_sNr.Text = settingsModel.SNummer.Split('s')[1];
+            if (settingsModel.RZLogin != null)
+                pb_pw.Password = settingsModel.RZLogin;
+            if (settingsModel.StgJhr != null)
+                tb_sy.Text = settingsModel.StgJhr;
+            if (settingsModel.Stg != null)
+                tb_sg.Text = settingsModel.Stg;
+            if (settingsModel.StgGrp != null)
+                tb_sgn.Text = settingsModel.StgGrp;
+        }
+
+        void loadRoomList() {
+            SettingsModel settingsModel = SettingsModel.getInstance();
+            List<string> rooms = settingsModel.Rooms;
+            if (rooms.Count > 0) {
+                foreach (string room in rooms) {
+                    RelativePanel relativePanel = new RelativePanel();
+                    relativePanel.Width = 100;
+                    TextBlock roomText = new TextBlock();
+                    roomText.Name = "rt" + rooms.IndexOf(room);
+                    roomText.Text = room;
+                    Button deleteButton = new Button();
+                    RelativePanel.SetAlignRightWithPanel(deleteButton, true);
+                    RelativePanel.SetAlignVerticalCenterWith(deleteButton, roomText.Name);
+                    TextBlock deleteText = new TextBlock();
+                    deleteText.Text = "\u2573";
+                    deleteText.FontFamily = new FontFamily("Segoe UI Symbol");
+                    deleteText.FontSize = 12;
+                    deleteText.Height = 20;
+
+                    deleteButton.Name = "db" + rooms.IndexOf(room);
+                    deleteButton.Click += new RoutedEventHandler(deleteButton_Click);
+
+                    deleteButton.Content = deleteText;
+                    relativePanel.Children.Add(roomText);
+                    relativePanel.Children.Add(deleteButton);
+                    roomList.Items.Add(relativePanel);
+                }
+            }
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e) {
+            SettingsModel settingsModel = SettingsModel.getInstance();
+            List<string> rooms = settingsModel.Rooms;
+            rooms.RemoveAt(Int32.Parse(((Button) sender).Name.Split('b')[1]));
+            settingsModel.Rooms = rooms;
+
+            roomList.Items.Clear();
+            loadRoomList();
         }
 
         bool IsDigit(string s) {
@@ -100,6 +160,23 @@ namespace HTWDDAppUniversal.Views
                 tb_sgn.BorderBrush = new SolidColorBrush(Colors.Red);
             else
                 tb_sgn.BorderBrush = new SolidColorBrush(Colors.Green);
+        }
+
+        /*
+         * backgroundtask settings
+         */
+        private async void loadBackgroundTaskSettings() {
+            switchToggleGradesNotification.IsOn = await BackgroundTaskHelper.CheckIfBackgroundTaskIsRegistered("GradesBackgroundTask");
+        }
+
+        private void switchToggleGradesNotification_Toggled(object sender, RoutedEventArgs e) {
+            ToggleSwitch toggleSwitch = (ToggleSwitch) sender;
+            if (toggleSwitch.IsOn) {
+                BackgroundTaskHelper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);                
+            }
+            else {
+                BackgroundTaskHelper.UnregisterBackgroundTask("GradesBackgroundTask");
+            }
         }
     }
 }

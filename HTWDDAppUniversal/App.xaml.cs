@@ -48,11 +48,10 @@ namespace HTWDDAppUniversal
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args) {
             // register background tasks
-            BackgroundTaskHelper helper = BackgroundTaskHelper.getInstance();
             // background task to update next lesson in tile
-            helper.RegisterBackgroundTask("TimetableBackgroundTask", "BackgroundTasks.TimetableBackgroundTask", 15);
+            BackgroundTaskHelper.RegisterBackgroundTask("TimetableBackgroundTask", "BackgroundTasks.TimetableBackgroundTask", 15);
             // background task that checks for new grades
-            helper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);
+            //BackgroundTaskHelper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);
 
             // hide status bar
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {

@@ -46,7 +46,7 @@
 
         <!-- User Input -->
         <AutoSuggestBox x:Name="roomChoiceComboBoxTextBox" PlaceholderText="Raum" BorderThickness="1"
-                        RelativePanel.Below="pageHeader" Margin="12, 4, 4, 4" Width="400"
+                        RelativePanel.Below="pageHeader" Margin="12, 4, 4, 4" Width="200"
                         ItemsSource="{x:Bind SuggestedRooms}" 
                         TextChanged="roomChoiceComboBoxTextBox_TextChanged" 
                         LostFocus="roomChoiceComboBoxTextBox_LostFocus"

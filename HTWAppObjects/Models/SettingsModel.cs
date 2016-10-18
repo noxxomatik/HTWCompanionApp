@@ -113,7 +113,7 @@ namespace HTWAppObjects {
             }
             set {
                 rooms = value;
-                roamingSettings.Values["Rooms"] = rooms.ToArray();
+                roamingSettings.Values["Rooms"] = rooms.Count > 0 ? rooms.ToArray() : null;
             }
         }
     }
