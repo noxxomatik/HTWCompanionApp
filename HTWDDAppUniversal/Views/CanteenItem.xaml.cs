@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 
 namespace HTWDDAppUniversal.Views {
     /// <summary>
@@ -6,6 +7,7 @@ namespace HTWDDAppUniversal.Views {
     /// </summary>
     public sealed partial class CanteenItem : Page {
         TextBlock tb_cat, tb_desc, tb_price;
+        Hyperlink hyperlink;
         Grid gg;
 
         public CanteenItem() {
@@ -14,6 +16,7 @@ namespace HTWDDAppUniversal.Views {
             Tb_desc = t_desc;
             Tb_price = t_price;
             Gg = g_grid;
+            Hyperlink = t_hyperlink;
         }
 
         #region Properties
@@ -35,6 +38,16 @@ namespace HTWDDAppUniversal.Views {
         public Grid Gg {
             get { return gg; }
             set { gg = value; }
+        }
+
+        public Hyperlink Hyperlink {
+            get {
+                return hyperlink;
+            }
+
+            set {
+                hyperlink = value;
+            }
         }
         #endregion
     }

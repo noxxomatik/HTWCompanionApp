@@ -3,6 +3,7 @@ using HTWAppObjects;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using System;
 
 namespace HTWDDAppUniversal.Views
 {
@@ -28,18 +29,19 @@ namespace HTWDDAppUniversal.Views
                 foreach (CanteenObject c in canteenToday) {
                     // custom page as ListViewItem template
                     CanteenItem ci = new CanteenItem();
-                    string category = c.Title.Contains(":") ? c.Title.Split(':')[0] : "";
+                    string category = c.Title.Contains(": ") ? c.Title.Split(':')[0] : "";
                     if (category == "")
                         //ci.Tb_cat.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         category = "Kantine";
-                    string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0] : c.Title.Split('(')[0];
+                    string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0].Remove(0, 1) : c.Title.Split('(')[0];
                     string price = c.Title.Split('(')[c.Title.Split('(').Length - 1].Split(')')[0];
                     ci.Tb_cat.Text = category;
                     ci.Tb_desc.Text = content;
                     ci.Tb_price.Text = price;
-                    if (i % 2 == 1)
-                        ci.Gg.Background = new SolidColorBrush(Colors.LightGray);
-                    ci.Tb_desc.Width = this.ActualWidth * .75;
+                    ci.Hyperlink.NavigateUri = new Uri(c.Link);
+                    //if (i % 2 == 1)
+                        //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
+                    //ci.Tb_desc.Width = this.ActualWidth * .75;
                     mainViewToday.Items.Add(ci);
                     i++;
                 }
@@ -65,14 +67,14 @@ namespace HTWDDAppUniversal.Views
                     if (category == "")
                         //ci.Tb_cat.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         category = "Kantine";
-                    string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0] : c.Title.Split('(')[0];
+                    string content = c.Title.Contains(":") ? c.Title.Split(':')[1].Split('(')[0].Remove(0, 1) : c.Title.Split('(')[0];
                     string price = c.Title.Split('(')[c.Title.Split('(').Length - 1].Split(')')[0];
                     ci.Tb_cat.Text = category;
                     ci.Tb_desc.Text = content;
                     ci.Tb_price.Text = price;
-                    if (i % 2 == 1)
-                        ci.Gg.Background = new SolidColorBrush(Colors.LightGray);
-                    ci.Tb_desc.Width = this.ActualWidth * .75;
+                    //if (i % 2 == 1)
+                        //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
+                    //ci.Tb_desc.Width = this.ActualWidth * .75;
                     mainViewTomorrow.Items.Add(ci);
                     i++;
                 }

@@ -11,12 +11,12 @@
         <RelativePanel>
             <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
             <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignLeftWithPanel="True">
-            <TextBlock x:Name="t_gradeText" TextWrapping="Wrap" Text="Note: "/>
-                <TextBlock x:Name="t_grade" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_gradeText"/>
+                <TextBlock x:Name="t_gradeText" TextWrapping="Wrap" Text="Note:"/>
+                <TextBlock x:Name="t_grade" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_gradeText" Margin="4, 0, 0, 0"/>
             </RelativePanel>
             <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignRightWithPanel="True">
                 <TextBlock x:Name="t_creditsText" TextWrapping="Wrap" Text="Credits: "/>
-                <TextBlock x:Name="t_credits" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_creditsText"/>
+                <TextBlock x:Name="t_credits" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_creditsText" Margin="4, 0, 0, 0"/>
             </RelativePanel>
         </RelativePanel>
     </Grid>

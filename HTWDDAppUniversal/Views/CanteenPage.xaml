@@ -56,7 +56,7 @@
                RelativePanel.AlignRightWithPanel="True"
                RelativePanel.Below="pageHeader">
             <PivotItem x:Name="PivotToday" Header="Heute">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
+                <ScrollViewer Margin="0, 0,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <ListView x:Name="mainViewToday"/>
@@ -65,7 +65,7 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem x:Name="PivotTomorrow" Header="Morgen">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
+                <ScrollViewer Margin="0, 0,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <ListView x:Name="mainViewTomorrow"/>

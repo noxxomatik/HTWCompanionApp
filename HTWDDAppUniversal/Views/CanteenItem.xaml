@@ -7,11 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="g_grid">
-        <RelativePanel>
+    <Grid x:Name="g_grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <RelativePanel Padding="4">
             <TextBlock x:Name="t_cat" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
             <TextBlock x:Name="t_desc" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_cat"/>
             <TextBlock x:Name="t_price" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_desc" FontStyle="Italic"/>
+            <TextBlock TextWrapping="Wrap" RelativePanel.Below="t_price">
+                <Hyperlink x:Name="t_hyperlink">Link</Hyperlink>
+            </TextBlock>
         </RelativePanel>
 
     </Grid>
