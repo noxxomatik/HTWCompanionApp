@@ -5,9 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Windows.UI.Xaml.Data;
 using HTWDDAppUniversal.Classes;
-using Windows.UI.ViewManagement;
 using Windows.Foundation.Metadata;
-using Windows.UI;
 
 namespace HTWDDAppUniversal
 {

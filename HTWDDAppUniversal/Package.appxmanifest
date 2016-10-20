@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="93eabaab-02ed-419e-a231-6433eace0d5f" Publisher="CN=Sven" Version="1.1.0.0" />
+  <Identity Name="HTWDDAppUniversal" Publisher="CN=Sven" Version="2.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="93eabaab-02ed-419e-a231-6433eace0d5f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>HTWDDAppUniversal</DisplayName>
+    <DisplayName>HTW Dresden UWP</DisplayName>
     <PublisherDisplayName>Sven Otte</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

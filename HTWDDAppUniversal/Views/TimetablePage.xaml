@@ -46,7 +46,8 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Stundenplan">
         </controls:PageHeader>
-        <Pivot RelativePanel.Below="pageHeader"
+        <Pivot x:Name="pivot"
+               RelativePanel.Below="pageHeader"
                RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True">
             <PivotItem Header="Diese Woche" Margin="0, 0, 0, 0">
@@ -54,6 +55,7 @@
                     <Grid x:Name="timetableThisWeek" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                           Margin="12, 0">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -162,6 +164,9 @@
                         <Border Grid.Column="3" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
                         <Border Grid.Column="4" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
                         <Border Grid.Column="5" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
+
+                        <!-- timestamp -->
+                        <TextBlock x:Name="timestampThisWeek" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="5" FontSize="11" Opacity="0.8"></TextBlock>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
@@ -179,6 +184,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -278,10 +284,19 @@
                         <Border Grid.Column="3" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
                         <Border Grid.Column="4" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
                         <Border Grid.Column="5" Grid.Row="8" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1"/>
+
+                        <!-- timestamp -->
+                        <TextBlock x:Name="timestampNextWeek" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6" FontSize="11" Opacity="0.8"></TextBlock>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
         </Pivot>
+        <SymbolIcon x:Name="symbolIcon" Symbol="Refresh"
+                    RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="pageHeader" 
+                    Margin="0, 12, 12, 0" Tapped="SymbolIcon_Tapped" Visibility="Visible" Foreground="{ThemeResource ContrastColorBrush}"/>
+        <ProgressRing x:Name="progressRing"
+                      RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="pageHeader" 
+                      Margin="0, 12, 12, 0" Visibility="Collapsed" IsActive="True" Foreground="{ThemeResource ContrastColorBrush}"/>
     </RelativePanel>
 </Page>
 

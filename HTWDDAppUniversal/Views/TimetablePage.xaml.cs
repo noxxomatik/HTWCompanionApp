@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Windows.Data.Xml.Dom;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using HTWAppObjects.Objects;
 
 namespace HTWDDAppUniversal.Views
 {
@@ -20,77 +21,171 @@ namespace HTWDDAppUniversal.Views
             InitializeComponent();
             //NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             //timetableUtils = new TimetableUtils();
-            loadTimetables();
+            loadTimetablesBackup();            
         }
 
-        async void loadTimetables() {
+        async Task loadTimetables() 
+        {
             timetableModel = TimetableModel.getInstance();
             timetableUtils = new TimetableUtils();
             settingsModel = SettingsModel.getInstance();
-            Lessons = await timetableModel.getTimetable(settingsModel.StgJhr, settingsModel.Stg, settingsModel.StgGrp);
+            TimetableObjectsList timetableObjects = await timetableModel.getTimetable(settingsModel.StgJhr, settingsModel.Stg, settingsModel.StgGrp);
+            if (timetableObjects != null) {
+                // clear the timetables
+                timetableUtils.clearTimetable(timetableThisWeek);
+                timetableUtils.clearTimetable(timetableNextWeek);
 
-            await updateLiveTile();
+                Lessons = timetableObjects.timetableObjects;
 
-            /*find out if current week is even or odd*/
-            int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
+                updateLiveTile();
 
-            foreach (TimetableObject timetableObject in Lessons) {
-                int row = timetableUtils.getRowForTable(timetableObject);
-                if (row != -1) {
-                    // prepare the button for this lesson
-                    TimetableItem timetableItem = new TimetableItem();
-                    string room = "";
-                    if (timetableObject.Rooms.Count > 1) {
-                        room = timetableObject.Rooms[0] + " ...";
-                    }
-                    else {
-                        room = timetableObject.Rooms[0];
-                    }
-                    timetableItem.TextBlock.Text = timetableObject.LessonTag + "\n" 
-                        + timetableObject.Type + "\n" 
-                        + room;
-                    Grid.SetColumn(timetableItem, timetableObject.Day);
-                    Grid.SetRow(timetableItem, row);
-                    // switch for the week number
-                    switch (timetableObject.Week) {
-                        /*lesson takes place every week*/
-                        case 0: {
-                                timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
-                                // clone the button
-                                TimetableItem clone = new TimetableItem();
-                                Grid.SetColumn(clone, timetableObject.Day);
-                                Grid.SetRow(clone, row);
-                                clone.TextBlock.Text = timetableItem.TextBlock.Text;
-                                timetableUtils.addLessonToWeek(timetableNextWeek, row, clone);
-                                break;
+                /*find out if current week is even or odd*/
+                int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
+
+                foreach (TimetableObject timetableObject in Lessons) {
+                    int[] row = timetableUtils.getRowForTable(timetableObject);
+                    if (row[0] != -1 && row[1] != -1) {
+                        for (int currentRow = row[0]; currentRow <= row[1]; currentRow++) {
+                            // prepare the button for this lesson
+                            TimetableItem timetableItem = new TimetableItem();
+                            string room = "";
+                            if (timetableObject.Rooms.Count > 1) {
+                                room = timetableObject.Rooms[0] + " ...";
                             }
-                        /*only at odd weeks*/
-                        case 1: {
-                                /*if current week is even add it to next week*/
-                                if (evenOdd == 0) {
-                                    timetableUtils.addLessonToWeek(timetableNextWeek, row, timetableItem);
-                                }
-                                else {
-                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
-                                }
-                                break;
+                            else {
+                                room = timetableObject.Rooms[0];
                             }
-                        /*only at even weeks*/
-                        case 2: {
-                                /*if current week is even add it to this week*/
-                                if (evenOdd == 0) {
-                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
-                                }
-                                else {
-                                    timetableUtils.addLessonToWeek(timetableNextWeek, row, timetableItem);
-                                }
-                                break;
+                            timetableItem.TextBlock.Text = timetableObject.LessonTag + "\n"
+                                + timetableObject.Type + "\n"
+                                + room;
+                            Grid.SetColumn(timetableItem, timetableObject.Day);
+                            Grid.SetRow(timetableItem, currentRow);
+                            // switch for the week number
+                            switch (timetableObject.Week) {
+                                /*lesson takes place every week*/
+                                case 0: {
+                                        timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        // clone the button
+                                        TimetableItem clone = new TimetableItem();
+                                        Grid.SetColumn(clone, timetableObject.Day);
+                                        Grid.SetRow(clone, currentRow);
+                                        clone.TextBlock.Text = timetableItem.TextBlock.Text;
+                                        timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, clone);
+                                        break;
+                                    }
+                                /*only at odd weeks*/
+                                case 1: {
+                                        /*if current week is even add it to next week*/
+                                        if (evenOdd == 0) {
+                                            timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, timetableItem);
+                                        }
+                                        else {
+                                            timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        }
+                                        break;
+                                    }
+                                /*only at even weeks*/
+                                case 2: {
+                                        /*if current week is even add it to this week*/
+                                        if (evenOdd == 0) {
+                                            timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        }
+                                        else {
+                                            timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, timetableItem);
+                                        }
+                                        break;
+                                    }
+                                default: {
+                                        break;
+                                    }
                             }
-                        default: {
-                                break;
-                            }
+                        }
                     }
                 }
+                // update timestamp
+                timestampThisWeek.Text = timestampNextWeek.Text = "Stand: " + timetableObjects.timestamp.ToLocalTime().ToString();
+            }
+        }
+
+        async void loadTimetablesBackup() {
+            timetableModel = TimetableModel.getInstance();
+            timetableUtils = new TimetableUtils();
+            settingsModel = SettingsModel.getInstance();
+            TimetableObjectsList timetableObjects = await TimetableModel.LoadTimetableBackup();
+            if (timetableObjects != null) {
+                // clear the timetables
+                timetableUtils.clearTimetable(timetableThisWeek);
+                timetableUtils.clearTimetable(timetableNextWeek);
+
+                Lessons = timetableObjects.timetableObjects;
+
+                updateLiveTile();
+
+                /*find out if current week is even or odd*/
+                int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
+
+                foreach (TimetableObject timetableObject in Lessons) {
+                    int[] row = timetableUtils.getRowForTable(timetableObject);
+                    if (row[0] != -1 && row[1] != -1) {
+                        for (int currentRow = row[0]; currentRow <= row[1]; currentRow++) {
+                            // prepare the button for this lesson
+                            TimetableItem timetableItem = new TimetableItem();
+                            string room = "";
+                            if (timetableObject.Rooms.Count > 1) {
+                                room = timetableObject.Rooms[0] + " ...";
+                            }
+                            else {
+                                room = timetableObject.Rooms[0];
+                            }
+                            timetableItem.TextBlock.Text = timetableObject.LessonTag + "\n"
+                                + timetableObject.Type + "\n"
+                                + room;
+                            Grid.SetColumn(timetableItem, timetableObject.Day);
+                            Grid.SetRow(timetableItem, currentRow);
+                            // switch for the week number
+                            switch (timetableObject.Week) {
+                                /*lesson takes place every week*/
+                                case 0: {
+                                        timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        // clone the button
+                                        TimetableItem clone = new TimetableItem();
+                                        Grid.SetColumn(clone, timetableObject.Day);
+                                        Grid.SetRow(clone, currentRow);
+                                        clone.TextBlock.Text = timetableItem.TextBlock.Text;
+                                        timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, clone);
+                                        break;
+                                    }
+                                /*only at odd weeks*/
+                                case 1: {
+                                        /*if current week is even add it to next week*/
+                                        if (evenOdd == 0) {
+                                            timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, timetableItem);
+                                        }
+                                        else {
+                                            timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        }
+                                        break;
+                                    }
+                                /*only at even weeks*/
+                                case 2: {
+                                        /*if current week is even add it to this week*/
+                                        if (evenOdd == 0) {
+                                            timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                        }
+                                        else {
+                                            timetableUtils.addLessonToWeek(timetableNextWeek, currentRow, timetableItem);
+                                        }
+                                        break;
+                                    }
+                                default: {
+                                        break;
+                                    }
+                            }
+                        }
+                    }
+                }
+                // update timestamp
+                timestampThisWeek.Text = timestampNextWeek.Text = "Stand: " + timetableObjects.timestamp.ToLocalTime().ToString();
             }
         }
 
@@ -117,6 +212,16 @@ namespace HTWDDAppUniversal.Views
             set {
                 lessons = value;
             }
+        }
+
+        private async void SymbolIcon_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            symbolIcon.Visibility = Visibility.Collapsed;
+            progressRing.Visibility = Visibility.Visible;
+
+            await loadTimetables();
+
+            progressRing.Visibility = Visibility.Collapsed;
+            symbolIcon.Visibility = Visibility.Visible;            
         }
     }
 }

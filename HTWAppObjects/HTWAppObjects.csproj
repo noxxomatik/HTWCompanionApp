@@ -116,6 +116,7 @@
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\TimetableModel.cs" />
     <Compile Include="Objects\TimetableObject.cs" />
+    <Compile Include="Objects\TimetableObjectsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\HTWAppObjects.rd.xml" />
   </ItemGroup>

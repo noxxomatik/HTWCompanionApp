@@ -19,22 +19,33 @@ namespace HTWDDAppUniversal
         private SettingsModel settingsModel;
 
         /*dictionary to map dates to appropriate number of row in the grid*/
-        private Dictionary<String, int> timeToRowDictionary;
+        private Dictionary<String, int> timeToRowDictionaryBeginTime;
+        private Dictionary<String, int> timeToRowDictionaryEndTime;
 
         public TimetableUtils()
         {
             settingsModel = SettingsModel.getInstance();
 
             /*setup dictionary*/
-            timeToRowDictionary = new Dictionary<String, int>();
-            timeToRowDictionary.Add("07:30:00", 1);
-            timeToRowDictionary.Add("09:20:00", 2);
-            timeToRowDictionary.Add("11:10:00", 3);
-            timeToRowDictionary.Add("13:20:00", 4);
-            timeToRowDictionary.Add("15:10:00", 5);
-            timeToRowDictionary.Add("17:00:00", 6);
-            timeToRowDictionary.Add("18:40:00", 7);
-            timeToRowDictionary.Add("20:20:00", 8);
+            timeToRowDictionaryBeginTime = new Dictionary<String, int>();
+            timeToRowDictionaryBeginTime.Add("07:30:00", 1);
+            timeToRowDictionaryBeginTime.Add("09:20:00", 2);
+            timeToRowDictionaryBeginTime.Add("11:10:00", 3);
+            timeToRowDictionaryBeginTime.Add("13:20:00", 4);
+            timeToRowDictionaryBeginTime.Add("15:10:00", 5);
+            timeToRowDictionaryBeginTime.Add("17:00:00", 6);
+            timeToRowDictionaryBeginTime.Add("18:40:00", 7);
+            timeToRowDictionaryBeginTime.Add("20:20:00", 8);
+
+            timeToRowDictionaryEndTime = new Dictionary<String, int>();
+            timeToRowDictionaryEndTime.Add("09:00:00", 1);
+            timeToRowDictionaryEndTime.Add("10:50:00", 2);
+            timeToRowDictionaryEndTime.Add("12:40:00", 3);
+            timeToRowDictionaryEndTime.Add("14:50:00", 4);
+            timeToRowDictionaryEndTime.Add("16:40:00", 5);
+            timeToRowDictionaryEndTime.Add("18:30:00", 6);
+            timeToRowDictionaryEndTime.Add("20:10:00", 7);
+            timeToRowDictionaryEndTime.Add("21:50:00", 8);
         }
 
 
@@ -172,12 +183,11 @@ namespace HTWDDAppUniversal
 
 
         /*return Grid.Row of giben object*/
-        public int getRowForTable(TimetableObject item)
-        {
-            int row;
-            if (timeToRowDictionary.TryGetValue(item.BeginTime, out row))
-                return row;
-            else return -1;
+        public int[] getRowForTable(TimetableObject item) {
+            int[] row = { -1, -1 };
+            timeToRowDictionaryBeginTime.TryGetValue(item.BeginTime, out row[0]);
+            TimeToRowDictionaryEndTime.TryGetValue(item.EndTime, out row[1]);
+            return row;
         }
 
 
@@ -262,14 +272,24 @@ namespace HTWDDAppUniversal
             // TODO: show an indicator that more than one lesson are at the same time
         }
 
-        public Dictionary<String, int> TimeToRowDictionary 
+        public Dictionary<String, int> TimeToRowDictionaryBeginTime 
         {
             get {
-                return timeToRowDictionary;
+                return timeToRowDictionaryBeginTime;
             }
 
             set {
-                timeToRowDictionary = value;
+                timeToRowDictionaryBeginTime = value;
+            }
+        }
+
+        public Dictionary<string, int> TimeToRowDictionaryEndTime {
+            get {
+                return timeToRowDictionaryEndTime;
+            }
+
+            set {
+                timeToRowDictionaryEndTime = value;
             }
         }
     }

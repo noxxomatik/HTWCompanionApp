@@ -41,5 +41,6 @@ namespace HTWAppObjects
         public string Professor { get; set; }
         public string WeeksOnly { get; set; }
         public List<string> Rooms { get; set; }
+        public bool hidden { get; set; }
     }
 }

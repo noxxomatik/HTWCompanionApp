@@ -42,40 +42,41 @@ namespace HTWDDAppUniversal.Views
 
             /*display objects in grid*/
             foreach (TimetableObject item in items) {
-                int row = timetableUtils.getRowForTable(item);
-                if (row != -1) {
+                int[] row = timetableUtils.getRowForTable(item);
+                if (row[0] != -1 && row[1] != -1) {
+                    for (int currentRow = row[0]; currentRow <= row[1]; currentRow++) {
+                        // prepare the button for this lesson
+                        TimetableItem timetableItem = new TimetableItem();
+                        timetableItem.TextBlock.Text = item.LessonTag + "\n"
+                            + item.Type + "\n"
+                            + item.Professor;
+                        Grid.SetColumn(timetableItem, item.Day);
+                        Grid.SetRow(timetableItem, currentRow);
 
-                    // prepare the button for this lesson
-                    TimetableItem timetableItem = new TimetableItem();
-                    timetableItem.TextBlock.Text = item.LessonTag + "\n"
-                        + item.Type + "\n"
-                        + item.Professor;
-                    Grid.SetColumn(timetableItem, item.Day);
-                    Grid.SetRow(timetableItem, row);
-
-                    // switch for the week number
-                    switch (item.Week) {
-                        /*lesson takes place every week*/
-                        case 0: {
-                                timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
-                                break;
-                            }
-                        /*only at odd weeks*/
-                        case 1: {
-                                if (evenOdd == 1) {
-                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
+                        // switch for the week number
+                        switch (item.Week) {
+                            /*lesson takes place every week*/
+                            case 0: {
+                                    timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                    break;
                                 }
-                                break;
-                            }
-                        /*only at even weeks*/
-                        case 2: {
-                                if (evenOdd == 0) /*current week is even -> show it first*/
-                                    timetableUtils.addLessonToWeek(timetableThisWeek, row, timetableItem);
-                                break;
-                            }
-                        default: {
-                                break;
-                            }
+                            /*only at odd weeks*/
+                            case 1: {
+                                    if (evenOdd == 1) {
+                                        timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                    }
+                                    break;
+                                }
+                            /*only at even weeks*/
+                            case 2: {
+                                    if (evenOdd == 0) /*current week is even -> show it first*/
+                                        timetableUtils.addLessonToWeek(timetableThisWeek, currentRow, timetableItem);
+                                    break;
+                                }
+                            default: {
+                                    break;
+                                }
+                        }
                     }
                 }
             }
