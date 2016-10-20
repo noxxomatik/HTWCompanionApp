@@ -1,4 +1,5 @@
 ﻿using HTWAppObjects;
+using HTWAppObjects.Objects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,33 +26,37 @@ namespace HTWAppObjects {
             return instance;
         }
 
-        public async Task<List<GradeObject>> getGrades(string sNummer, string rZLogin) {
-            List<GradeObject> gradeObjects;
+        public async Task<GradeObjectsList> getGrades(string sNummer, string rZLogin) {
+            GradeObjectsList gradeObjectsList;
             try {
                 // get additional information first
                 List<CourseObject> courseObjects = await getCourses(sNummer, rZLogin);
                 CourseObject course = courseObjects[0];
                 // get the grades
-                gradeObjects = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
+                gradeObjectsList = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
                 // backup grades
-                if (gradeObjects.Count > 0) {
-                    await saveGradesBackup(gradeObjects, sNummer);
+                if (gradeObjectsList.gradeObjects.Count > 0) {
+                    await saveGradesBackup(gradeObjectsList, sNummer);
                 }
             }
             catch {
-                gradeObjects = await loadGradesBackup(sNummer);
+                gradeObjectsList = await loadGradesBackup(sNummer);
             }
-            return gradeObjects;
+            return gradeObjectsList;
         }
 
         /*
          * Returns the number of new grades.
          */
         public async Task<int> getNewGradesCount(string sNummer, string rZLogin) {
-            List<GradeObject> backupGrades = await loadGradesBackup(sNummer);
-            List<GradeObject> newGrades = await getGrades(sNummer, rZLogin);
-            int count = newGrades.Count - backupGrades.Count;
-            return count >= 0 ? count : 0;
+            GradeObjectsList backupGrades = await loadGradesBackup(sNummer);
+            GradeObjectsList newGrades = await getGrades(sNummer, rZLogin);
+            if (backupGrades != null && newGrades != null) {
+                int count = newGrades.gradeObjects.Count - backupGrades.gradeObjects.Count;
+                return count >= 0 ? count : -1;
+            }
+            else
+                return -1;
         }
 
         private async Task<List<CourseObject>> getCourses(string sNummer, string rZLogin) {
@@ -78,7 +83,7 @@ namespace HTWAppObjects {
             }
         }
 
-        private async Task<List<GradeObject>> getGradesRemote(string sNummer, string rZLogin, string abschlNr, string stgNr, string pOVersion) {
+        private async Task<GradeObjectsList> getGradesRemote(string sNummer, string rZLogin, string abschlNr, string stgNr, string pOVersion) {
             // TODO: Regex zum Prüfen der Werte
             if (!sNummer.Equals("") && !rZLogin.Equals("") && !abschlNr.Equals("") && !stgNr.Equals("") && !pOVersion.Equals("")) {
                 try {
@@ -93,24 +98,27 @@ namespace HTWAppObjects {
                     string content = await response.Content.ReadAsStringAsync();
                     Debug.WriteLine(content);
                     List<GradeObject> gradeObjects = JsonConvert.DeserializeObject<List<GradeObject>>(content);
-                    return gradeObjects;
+                    GradeObjectsList gradeObjectsList = new GradeObjectsList();
+                    gradeObjectsList.gradeObjects = gradeObjects;
+                    gradeObjectsList.timestamp = DateTime.Now;
+                    return gradeObjectsList;
                 }
                 catch (Exception e) {
                     Debug.WriteLine(e.ToString());
-                    return new List<GradeObject>();
+                    return null;
                 }
             }
             else {
-                return new List<GradeObject>();
+                return null;
             }
         }
 
-        private async Task<bool> saveGradesBackup(List<GradeObject> gradeObjects, string sNummer) {
+        private async Task<bool> saveGradesBackup(GradeObjectsList gradeObjectsList, string sNummer) {
             try {
                 StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename + sNummer + ".xml", CreationCollisionOption.ReplaceExisting);
                 using (Stream writeStream = await saveFile.OpenStreamForWriteAsync()) {
-                    DataContractSerializer serializer = new DataContractSerializer(typeof(List<GradeObject>));
-                    serializer.WriteObject(writeStream, gradeObjects);
+                    DataContractSerializer serializer = new DataContractSerializer(typeof(GradeObjectsList));
+                    serializer.WriteObject(writeStream, gradeObjectsList);
                     await writeStream.FlushAsync();
                     writeStream.Dispose();
                 }
@@ -121,18 +129,18 @@ namespace HTWAppObjects {
             }
         }
 
-        public async Task<List<GradeObject>> loadGradesBackup(string sNummer) {
+        public async Task<GradeObjectsList> loadGradesBackup(string sNummer) {
             try {
                 var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename + sNummer + ".xml");
                 if (readStream == null) {
-                    return new List<GradeObject>();
+                    return null;
                 }
-                DataContractSerializer serializer = new DataContractSerializer(typeof(List<GradeObject>));
-                var gradeObjects = (List<GradeObject>) serializer.ReadObject(readStream);
-                return gradeObjects;
+                DataContractSerializer serializer = new DataContractSerializer(typeof(GradeObjectsList));
+                var gradeObjectsList = (GradeObjectsList) serializer.ReadObject(readStream);
+                return gradeObjectsList;
             }
             catch {
-                return new List<GradeObject>();
+                return null;
             }
         }
     }

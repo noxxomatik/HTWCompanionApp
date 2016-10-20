@@ -16,9 +16,9 @@ namespace BackgroundTasks
 
             // check for new grades
             try {
-                GradesModel gm = GradesModel.getInstance();
-                SettingsModel sm = SettingsModel.getInstance();
-                int countNewGrades = await gm.getNewGradesCount(sm.SNummer, sm.RZLogin);
+                GradesModel gradesModel = GradesModel.getInstance();
+                SettingsModel settingsModel = SettingsModel.getInstance();
+                int countNewGrades = await gradesModel.getNewGradesCount(settingsModel.SNummer, settingsModel.RZLogin);
                 if (countNewGrades > 0) {
                     ToastContent content = new ToastContent() {
                         Visual = new ToastVisual() {

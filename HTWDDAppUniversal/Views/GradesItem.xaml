@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="g_grid">
+    <Grid x:Name="g_grid" Padding="4">
         <RelativePanel>
             <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
             <RelativePanel RelativePanel.Below="t_title" RelativePanel.AlignLeftWithPanel="True">

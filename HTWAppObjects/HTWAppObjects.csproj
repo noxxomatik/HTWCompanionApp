@@ -115,6 +115,7 @@
     <Compile Include="Models\RoomTimetableModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\TimetableModel.cs" />
+    <Compile Include="Objects\GradeObjectsList.cs" />
     <Compile Include="Objects\TimetableObject.cs" />
     <Compile Include="Objects\TimetableObjectsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
