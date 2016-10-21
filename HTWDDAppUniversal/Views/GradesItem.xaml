@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="HTWDDAppUniversal.Views.GradesItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HTWDDAppUniversal.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="g_grid">
+        <RelativePanel>
+            <TextBlock x:Name="t_title" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
+            <RelativePanel x:Name="gradePanel" RelativePanel.Below="t_title" RelativePanel.AlignLeftWithPanel="True">
+                <TextBlock x:Name="t_gradeText" TextWrapping="Wrap" Text="Note:"/>
+                <TextBlock x:Name="t_grade" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_gradeText" Margin="4, 0, 0, 0"/>
+            </RelativePanel>
+            <RelativePanel RelativePanel.Below="gradePanel">
+                <TextBlock x:Name="t_creditsText" TextWrapping="Wrap" Text="Credits: "/>
+                <TextBlock x:Name="t_credits" TextWrapping="Wrap" Text="TextBlock" RelativePanel.RightOf="t_creditsText" Margin="4, 0, 0, 0"/>
+            </RelativePanel>
+        </RelativePanel>
+    </Grid>
+</Page>

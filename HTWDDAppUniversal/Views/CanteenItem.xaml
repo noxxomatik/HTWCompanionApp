@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="HTWDDAppUniversal.Views.CanteenItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HTWDDAppUniversal.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="g_grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <RelativePanel Padding="4">
+            <TextBlock x:Name="t_cat" TextWrapping="Wrap" Text="TextBlock" FontWeight="Bold"/>
+            <TextBlock x:Name="t_desc" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_cat"/>
+            <TextBlock x:Name="t_price" TextWrapping="Wrap" Text="TextBlock" RelativePanel.Below="t_desc" FontStyle="Italic"/>
+            <TextBlock TextWrapping="Wrap" RelativePanel.Below="t_price">
+                <Hyperlink x:Name="t_hyperlink">Link</Hyperlink>
+            </TextBlock>
+        </RelativePanel>
+
+    </Grid>
+</Page>

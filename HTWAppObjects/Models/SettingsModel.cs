@@ -1,33 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace HTWAppObjects {
+namespace HTWAppObjects
+{
     // use settings as roaming data to sync them with other systems
     // https://msdn.microsoft.com/en-us/windows/uwp/app-settings/store-and-retrieve-app-data
-    public class SettingsModel {
+    public class SettingsModel
+    {
         static SettingsModel instance = null;
         ApplicationDataContainer roamingSettings;
         StorageFolder roamingFolder;
 
         // settings
         string sNummer;
-        string rZLogin;         
+        string rZLogin;
         string stgJhr;
         string stg;
         string stgGrp;
         List<string> rooms;
 
         // Singleton pattern
-        private SettingsModel () {
+        private SettingsModel()
+        {
             roamingSettings = ApplicationData.Current.RoamingSettings;
             roamingFolder = ApplicationData.Current.RoamingFolder;
         }
 
-        public static SettingsModel getInstance () {
+        public static SettingsModel GetInstance()
+        {
             if (instance == null)
                 instance = new SettingsModel();
             return instance;
@@ -36,23 +37,25 @@ namespace HTWAppObjects {
         /// <summary>
         /// Bibliotheksnummer (inkl. fuehrendem s)
         /// </summary>
-        public string SNummer {
+        public string SNummer
+        {
             get {
                 sNummer = (string) roamingSettings.Values["sNummer"];
                 return sNummer;
             }
             set {
                 sNummer = value;
-                roamingSettings.Values["sNummer"] = sNummer;                
+                roamingSettings.Values["sNummer"] = sNummer;
             }
         }
 
         /// <summary>
         /// Passwort
         /// </summary>
-        public string RZLogin {
+        public string RZLogin
+        {
             get {
-                rZLogin = (string)roamingSettings.Values["RZLogin"];
+                rZLogin = (string) roamingSettings.Values["RZLogin"];
                 return rZLogin;
             }
             set {
@@ -64,9 +67,10 @@ namespace HTWAppObjects {
         /// <summary>
         /// Studienjahrgang (z.B. 15)
         /// </summary>
-        public string StgJhr {
+        public string StgJhr
+        {
             get {
-                stgJhr = (string)roamingSettings.Values["StgJhr"];
+                stgJhr = (string) roamingSettings.Values["StgJhr"];
                 return stgJhr;
             }
             set {
@@ -78,9 +82,10 @@ namespace HTWAppObjects {
         /// <summary>
         /// Studiengang (z.B. 044)
         /// </summary>
-        public string Stg {
+        public string Stg
+        {
             get {
-                stg = (string)roamingSettings.Values["Stg"];
+                stg = (string) roamingSettings.Values["Stg"];
                 return stg;
             }
             set {
@@ -92,9 +97,10 @@ namespace HTWAppObjects {
         /// <summary>
         /// Studiengruppe (z.B. 73-CM)
         /// </summary>
-        public string StgGrp {
+        public string StgGrp
+        {
             get {
-                stgGrp = (string)roamingSettings.Values["StgGrp"];
+                stgGrp = (string) roamingSettings.Values["StgGrp"];
                 return stgGrp;
             }
             set {
@@ -106,14 +112,15 @@ namespace HTWAppObjects {
         /// <summary>
         /// anzuzeigende Raeume fuer Raumbelegung
         /// </summary>
-        public List<string> Rooms {
+        public List<string> Rooms
+        {
             get {
                 rooms = roamingSettings.Values["Rooms"] != null ? ((string[]) roamingSettings.Values["Rooms"]).ToList<string>() : new List<string>();
                 return rooms;
             }
             set {
                 rooms = value;
-                roamingSettings.Values["Rooms"] = rooms.ToArray();
+                roamingSettings.Values["Rooms"] = rooms.Count > 0 ? rooms.ToArray() : null;
             }
         }
     }

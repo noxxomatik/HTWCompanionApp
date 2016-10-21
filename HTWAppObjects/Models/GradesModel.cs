@@ -1,60 +1,68 @@
-﻿using HTWAppObjects;
+﻿using HTWAppObjects.Objects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace HTWAppObjects {
-    public class GradesModel {
+namespace HTWAppObjects
+{
+    public class GradesModel
+    {
         static GradesModel instance = null;
         private const string filename = "grades";
 
-        private GradesModel() {}
+        private GradesModel() { }
 
-        public static GradesModel getInstance() {
+        public static GradesModel GetInstance()
+        {
             if (instance == null)
                 instance = new GradesModel();
             return instance;
         }
 
-        public async Task<List<GradeObject>> getGrades(string sNummer, string rZLogin) {
-            List<GradeObject> gradeObjects;
+        public async Task<GradeObjectsList> GetGrades(string sNummer, string rZLogin)
+        {
+            GradeObjectsList gradeObjectsList;
             try {
                 // get additional information first
-                List<CourseObject> courseObjects = await getCourses(sNummer, rZLogin);
+                List<CourseObject> courseObjects = await GetCourses(sNummer, rZLogin);
                 CourseObject course = courseObjects[0];
                 // get the grades
-                gradeObjects = await getGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
+                gradeObjectsList = await GetGradesRemote(sNummer, rZLogin, course.AbschlNr, course.StgNr, course.POVersion);
                 // backup grades
-                if (gradeObjects.Count > 0) {
-                    await saveGradesBackup(gradeObjects, sNummer);
+                if (gradeObjectsList.gradeObjects.Count > 0) {
+                    await SaveGradesBackup(gradeObjectsList, sNummer);
                 }
             }
             catch {
-                gradeObjects = await loadGradesBackup(sNummer);
+                gradeObjectsList = await LoadGradesBackup(sNummer);
             }
-            return gradeObjects;
+            return gradeObjectsList;
         }
 
         /*
          * Returns the number of new grades.
          */
-        public async Task<int> getNewGradesCount(string sNummer, string rZLogin) {
-            List<GradeObject> backupGrades = await loadGradesBackup(sNummer);
-            List<GradeObject> newGrades = await getGrades(sNummer, rZLogin);
-            int count = newGrades.Count - backupGrades.Count;
-            return count >= 0 ? count : 0;
+        public async Task<int> GetNewGradesCount(string sNummer, string rZLogin)
+        {
+            GradeObjectsList backupGrades = await LoadGradesBackup(sNummer);
+            GradeObjectsList newGrades = await GetGrades(sNummer, rZLogin);
+            if (backupGrades != null && newGrades != null) {
+                int count = newGrades.gradeObjects.Count - backupGrades.gradeObjects.Count;
+                return count >= 0 ? count : -1;
+            }
+            else
+                return -1;
         }
 
-        private async Task<List<CourseObject>> getCourses(string sNummer, string rZLogin) {
+        private async Task<List<CourseObject>> GetCourses(string sNummer, string rZLogin)
+        {
             // TODO: Regex zum Prüfen der Werte
             if (!sNummer.Equals("") && !rZLogin.Equals("")) {
                 try {
@@ -78,7 +86,8 @@ namespace HTWAppObjects {
             }
         }
 
-        private async Task<List<GradeObject>> getGradesRemote(string sNummer, string rZLogin, string abschlNr, string stgNr, string pOVersion) {
+        private async Task<GradeObjectsList> GetGradesRemote(string sNummer, string rZLogin, string abschlNr, string stgNr, string pOVersion)
+        {
             // TODO: Regex zum Prüfen der Werte
             if (!sNummer.Equals("") && !rZLogin.Equals("") && !abschlNr.Equals("") && !stgNr.Equals("") && !pOVersion.Equals("")) {
                 try {
@@ -93,24 +102,28 @@ namespace HTWAppObjects {
                     string content = await response.Content.ReadAsStringAsync();
                     Debug.WriteLine(content);
                     List<GradeObject> gradeObjects = JsonConvert.DeserializeObject<List<GradeObject>>(content);
-                    return gradeObjects;
+                    GradeObjectsList gradeObjectsList = new GradeObjectsList();
+                    gradeObjectsList.gradeObjects = gradeObjects;
+                    gradeObjectsList.timestamp = DateTime.Now;
+                    return gradeObjectsList;
                 }
                 catch (Exception e) {
                     Debug.WriteLine(e.ToString());
-                    return new List<GradeObject>();
+                    return null;
                 }
             }
             else {
-                return new List<GradeObject>();
+                return null;
             }
         }
 
-        private async Task<bool> saveGradesBackup(List<GradeObject> gradeObjects, string sNummer) {
+        private async Task<bool> SaveGradesBackup(GradeObjectsList gradeObjectsList, string sNummer)
+        {
             try {
                 StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename + sNummer + ".xml", CreationCollisionOption.ReplaceExisting);
                 using (Stream writeStream = await saveFile.OpenStreamForWriteAsync()) {
-                    DataContractSerializer serializer = new DataContractSerializer(typeof(List<GradeObject>));
-                    serializer.WriteObject(writeStream, gradeObjects);
+                    DataContractSerializer serializer = new DataContractSerializer(typeof(GradeObjectsList));
+                    serializer.WriteObject(writeStream, gradeObjectsList);
                     await writeStream.FlushAsync();
                     writeStream.Dispose();
                 }
@@ -121,18 +134,19 @@ namespace HTWAppObjects {
             }
         }
 
-        public async Task<List<GradeObject>> loadGradesBackup(string sNummer) {
+        public async Task<GradeObjectsList> LoadGradesBackup(string sNummer)
+        {
             try {
                 var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename + sNummer + ".xml");
                 if (readStream == null) {
-                    return new List<GradeObject>();
+                    return null;
                 }
-                DataContractSerializer serializer = new DataContractSerializer(typeof(List<GradeObject>));
-                var gradeObjects = (List<GradeObject>) serializer.ReadObject(readStream);
-                return gradeObjects;
+                DataContractSerializer serializer = new DataContractSerializer(typeof(GradeObjectsList));
+                var gradeObjectsList = (GradeObjectsList) serializer.ReadObject(readStream);
+                return gradeObjectsList;
             }
             catch {
-                return new List<GradeObject>();
+                return null;
             }
         }
     }

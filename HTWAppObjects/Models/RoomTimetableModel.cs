@@ -1,5 +1,4 @@
-﻿using HTWAppObjects;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,14 +9,17 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace HTWAppObjects {
-    public class RoomTimetableModel {
+namespace HTWAppObjects
+{
+    public class RoomTimetableModel
+    {
         static RoomTimetableModel instance = null;
         private const string filename = "roomTimetable";
 
-        private RoomTimetableModel () {}
+        private RoomTimetableModel() { }
 
-        public static RoomTimetableModel getInstance() {
+        public static RoomTimetableModel GetInstance()
+        {
             if (instance == null)
                 instance = new RoomTimetableModel();
             return instance;
@@ -28,7 +30,8 @@ namespace HTWAppObjects {
          * Room must be from pattern [
          * Returns an empty list of objects if anything fails.
          */
-        public async Task<List<TimetableObject>> getRoomTimetable(string room) {
+        public async Task<List<TimetableObject>> GetRoomTimetable(string room)
+        {
             // TODO: Regex zum Prüfen der Werte
             if (room != null && !room.Equals("")) {
                 room = room.ToLower();
@@ -44,13 +47,13 @@ namespace HTWAppObjects {
 
                     List<TimetableObject> timetableObjects = JsonConvert.DeserializeObject<List<TimetableObject>>(content);
                     // backup timetable if connection fails the next time
-                    await saveRoomTimetableBackup(timetableObjects, room);
+                    await SaveRoomTimetableBackup(timetableObjects, room);
 
                     return timetableObjects;
                 }
                 catch (Exception e) {
                     Debug.WriteLine(e.ToString());
-                    return await loadRoomTimetableBackup(room);
+                    return await LoadRoomTimetableBackup(room);
                 }
             }
             else {
@@ -58,7 +61,8 @@ namespace HTWAppObjects {
             }
         }
 
-        private async Task<bool> saveRoomTimetableBackup(List<TimetableObject> timetableObjects, string room) {
+        private async Task<bool> SaveRoomTimetableBackup(List<TimetableObject> timetableObjects, string room)
+        {
             room = room.ToLower();
             try {
                 StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename + room + ".xml", CreationCollisionOption.ReplaceExisting);
@@ -75,14 +79,15 @@ namespace HTWAppObjects {
             }
         }
 
-        public async Task<List<TimetableObject>> loadRoomTimetableBackup(string room) {
+        public async Task<List<TimetableObject>> LoadRoomTimetableBackup(string room)
+        {
             room = room.ToLower();
             var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename + room + ".xml");
             if (readStream == null) {
                 return new List<TimetableObject>();
             }
             DataContractSerializer serializer = new DataContractSerializer(typeof(List<TimetableObject>));
-            var timetableObjects = (List<TimetableObject>)serializer.ReadObject(readStream);
+            var timetableObjects = (List<TimetableObject>) serializer.ReadObject(readStream);
             return timetableObjects;
         }
     }
