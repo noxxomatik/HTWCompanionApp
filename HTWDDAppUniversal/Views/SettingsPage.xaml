@@ -108,7 +108,7 @@
             <!-- notifications -->
             <PivotItem Header="Benachrichtigungen">
                 <RelativePanel>
-                    <TextBlock x:Name="textToggleGradesNotification">Benachrichtigung bei neunen Noten</TextBlock>
+                    <TextBlock x:Name="textToggleGradesNotification">Benachrichtigung bei neuen Noten</TextBlock>
                     <ToggleSwitch x:Name="switchToggleGradesNotification" RelativePanel.Below="textToggleGradesNotification"
                                   IsOn="False" Toggled="SwitchToggleGradesNotification_Toggled"/>
                     <TextBlock x:Name="textCheckInterval" RelativePanel.Below="switchToggleGradesNotification" Margin="0,8,0,0" Visibility="Collapsed">Prüfintervall für neue Noten</TextBlock>
