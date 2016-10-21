@@ -3,7 +3,6 @@ using HTWDDAppUniversal.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -17,25 +16,28 @@ namespace HTWDDAppUniversal.Views
     {
         Template10.Services.SerializationService.ISerializationService _SerializationService;
 
-        public SettingsPage() {
+        public SettingsPage()
+        {
             InitializeComponent();
             _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
             tb_sNr.MaxLength = 5;
             tb_sy.MaxLength = 2;
             tb_sg.MaxLength = 3;
 
-            loadSavedSettings();
-            loadRoomList();
-            loadBackgroundTaskSettings();
+            LoadSavedSettings();
+            LoadRoomList();
+            LoadBackgroundTaskSettings();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             var index = int.Parse(_SerializationService.Deserialize(e.Parameter?.ToString()).ToString());
             MyPivot.SelectedIndex = index;
         }
 
-        void loadSavedSettings() {
-            SettingsModel settingsModel = SettingsModel.getInstance();
+        void LoadSavedSettings()
+        {
+            SettingsModel settingsModel = SettingsModel.GetInstance();
             if (settingsModel.SNummer != null)
                 tb_sNr.Text = settingsModel.SNummer.Split('s')[1];
             if (settingsModel.RZLogin != null)
@@ -48,8 +50,9 @@ namespace HTWDDAppUniversal.Views
                 tb_sgn.Text = settingsModel.StgGrp;
         }
 
-        void loadRoomList() {
-            SettingsModel settingsModel = SettingsModel.getInstance();
+        void LoadRoomList()
+        {
+            SettingsModel settingsModel = SettingsModel.GetInstance();
             List<string> rooms = settingsModel.Rooms;
             if (rooms.Count > 0) {
                 foreach (string room in rooms) {
@@ -68,7 +71,7 @@ namespace HTWDDAppUniversal.Views
                     deleteText.Height = 20;
 
                     deleteButton.Name = "db" + rooms.IndexOf(room);
-                    deleteButton.Click += new RoutedEventHandler(deleteButton_Click);
+                    deleteButton.Click += new RoutedEventHandler(DeleteButton_Click);
 
                     deleteButton.Content = deleteText;
                     relativePanel.Children.Add(roomText);
@@ -78,17 +81,19 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        private void deleteButton_Click(object sender, RoutedEventArgs e) {
-            SettingsModel settingsModel = SettingsModel.getInstance();
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsModel settingsModel = SettingsModel.GetInstance();
             List<string> rooms = settingsModel.Rooms;
             rooms.RemoveAt(Int32.Parse(((Button) sender).Name.Split('b')[1]));
             settingsModel.Rooms = rooms;
 
             roomList.Items.Clear();
-            loadRoomList();
+            LoadRoomList();
         }
 
-        bool IsDigit(string s) {
+        bool IsDigit(string s)
+        {
             foreach (char c in s) {
                 if (c < '0' || c > '9')
                     return false;
@@ -96,8 +101,9 @@ namespace HTWDDAppUniversal.Views
             return true;
         }
 
-        async void SaveData() {
-            SettingsModel sm = SettingsModel.getInstance();
+        async void SaveData()
+        {
+            SettingsModel sm = SettingsModel.GetInstance();
             if (tb_sNr.Text.Length == 5)
                 sm.SNummer = 's' + tb_sNr.Text;
             if (pb_pw.Password.Length != 0)
@@ -117,45 +123,52 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        private void b_save_Click(object sender, RoutedEventArgs e) {
+        private void B_save_Click(object sender, RoutedEventArgs e)
+        {
             SaveData();
         }
 
-        private void EnterPressed(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) {
+        private void EnterPressed(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
             if (e.Key == Windows.System.VirtualKey.Enter) {
                 SaveData();
             }
         }
 
-        private void tb_sNr_TextChanged(object sender, TextChangedEventArgs e) {
+        private void Tb_sNr_TextChanged(object sender, TextChangedEventArgs e)
+        {
             if (tb_sNr.Text.Length != 5 || !IsDigit(tb_sNr.Text))
                 tb_sNr.BorderBrush = new SolidColorBrush(Colors.Red);
             else
                 tb_sNr.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void pb_pw_PasswordChanged(object sender, RoutedEventArgs e) {
+        private void Pb_pw_PasswordChanged(object sender, RoutedEventArgs e)
+        {
             if (pb_pw.Password.Length == 0)
                 pb_pw.BorderBrush = new SolidColorBrush(Colors.Red);
             else
                 pb_pw.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void tb_sy_TextChanged(object sender, TextChangedEventArgs e) {
+        private void Tb_sy_TextChanged(object sender, TextChangedEventArgs e)
+        {
             if (tb_sy.Text.Length != 2 || !IsDigit(tb_sy.Text))
                 tb_sy.BorderBrush = new SolidColorBrush(Colors.Red);
             else
                 tb_sy.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void tb_sg_TextChanged(object sender, TextChangedEventArgs e) {
+        private void Tb_sg_TextChanged(object sender, TextChangedEventArgs e)
+        {
             if (tb_sg.Text.Length != 3 || !IsDigit(tb_sg.Text))
                 tb_sg.BorderBrush = new SolidColorBrush(Colors.Red);
             else
                 tb_sg.BorderBrush = new SolidColorBrush(Colors.Green);
         }
 
-        private void tb_sgn_TextChanged(object sender, TextChangedEventArgs e) {
+        private void Tb_sgn_TextChanged(object sender, TextChangedEventArgs e)
+        {
             if (tb_sgn.Text.Length == 0)
                 tb_sgn.BorderBrush = new SolidColorBrush(Colors.Red);
             else
@@ -165,14 +178,16 @@ namespace HTWDDAppUniversal.Views
         /*
          * backgroundtask settings
          */
-        private async void loadBackgroundTaskSettings() {
+        private async void LoadBackgroundTaskSettings()
+        {
             switchToggleGradesNotification.IsOn = await BackgroundTaskHelper.CheckIfBackgroundTaskIsRegistered("GradesBackgroundTask");
         }
 
-        private void switchToggleGradesNotification_Toggled(object sender, RoutedEventArgs e) {
+        private void SwitchToggleGradesNotification_Toggled(object sender, RoutedEventArgs e)
+        {
             ToggleSwitch toggleSwitch = (ToggleSwitch) sender;
             if (toggleSwitch.IsOn) {
-                BackgroundTaskHelper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);                
+                BackgroundTaskHelper.RegisterBackgroundTask("GradesBackgroundTask", "BackgroundTasks.GradesBackgroundTask", 60);
             }
             else {
                 BackgroundTaskHelper.UnregisterBackgroundTask("GradesBackgroundTask");

@@ -17,19 +17,20 @@ namespace HTWDDAppUniversal.Views
         private TimetableUtils timetableUtils;
         private SettingsModel settingsModel;
 
-        public TimetablePage() {
+        public TimetablePage()
+        {
             InitializeComponent();
             //NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             //timetableUtils = new TimetableUtils();
-            loadTimetablesBackup();            
+            LoadTimetablesBackup();
         }
 
-        async Task loadTimetables() 
+        async Task LoadTimetables()
         {
-            timetableModel = TimetableModel.getInstance();
+            timetableModel = TimetableModel.GetInstance();
             timetableUtils = new TimetableUtils();
-            settingsModel = SettingsModel.getInstance();
-            TimetableObjectsList timetableObjects = await timetableModel.getTimetable(settingsModel.StgJhr, settingsModel.Stg, settingsModel.StgGrp);
+            settingsModel = SettingsModel.GetInstance();
+            TimetableObjectsList timetableObjects = await timetableModel.GetTimetable(settingsModel.StgJhr, settingsModel.Stg, settingsModel.StgGrp);
             if (timetableObjects != null) {
                 // clear the timetables
                 timetableUtils.clearTimetable(timetableThisWeek);
@@ -37,7 +38,7 @@ namespace HTWDDAppUniversal.Views
 
                 Lessons = timetableObjects.timetableObjects;
 
-                updateLiveTile();
+                UpdateLiveTile();
 
                 /*find out if current week is even or odd*/
                 int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
@@ -107,10 +108,11 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        async void loadTimetablesBackup() {
-            timetableModel = TimetableModel.getInstance();
+        async void LoadTimetablesBackup()
+        {
+            timetableModel = TimetableModel.GetInstance();
             timetableUtils = new TimetableUtils();
-            settingsModel = SettingsModel.getInstance();
+            settingsModel = SettingsModel.GetInstance();
             TimetableObjectsList timetableObjects = await TimetableModel.LoadTimetableBackup();
             if (timetableObjects != null) {
                 // clear the timetables
@@ -119,7 +121,7 @@ namespace HTWDDAppUniversal.Views
 
                 Lessons = timetableObjects.timetableObjects;
 
-                updateLiveTile();
+                UpdateLiveTile();
 
                 /*find out if current week is even or odd*/
                 int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
@@ -190,7 +192,8 @@ namespace HTWDDAppUniversal.Views
         }
 
         // update the live tile
-        private static async Task updateLiveTile() {
+        private static async Task UpdateLiveTile()
+        {
             try {
                 // Load the item.
                 XmlDocument tileXml = await TimetableModel.GetNextLessonXml();
@@ -204,7 +207,8 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        public List<TimetableObject> Lessons {
+        public List<TimetableObject> Lessons
+        {
             get {
                 return lessons;
             }
@@ -214,14 +218,15 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        private async void SymbolIcon_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+        private async void SymbolIcon_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
             symbolIcon.Visibility = Visibility.Collapsed;
             progressRing.Visibility = Visibility.Visible;
 
-            await loadTimetables();
+            await LoadTimetables();
 
             progressRing.Visibility = Visibility.Collapsed;
-            symbolIcon.Visibility = Visibility.Visible;            
+            symbolIcon.Visibility = Visibility.Visible;
         }
     }
 }

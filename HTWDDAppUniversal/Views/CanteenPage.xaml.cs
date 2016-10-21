@@ -1,28 +1,29 @@
 using Windows.UI.Xaml.Controls;
 using HTWAppObjects;
 using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
 using System;
 
 namespace HTWDDAppUniversal.Views
 {
     public sealed partial class CanteenPage : Page
     {
-        public CanteenPage() {
+        public CanteenPage()
+        {
             InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            showData();
+            ShowData();
         }
 
-        void showData() {
-            showCanteenToday();
-            showCanteenTomorrow();
+        void ShowData()
+        {
+            ShowCanteenToday();
+            ShowCanteenTomorrow();
         }
 
-        async void showCanteenToday() {
-            CanteenModel cm = CanteenModel.getInstance();
-            List<CanteenObject> canteenToday = await cm.getCanteenToday();
+        async void ShowCanteenToday()
+        {
+            CanteenModel cm = CanteenModel.GetInstance();
+            List<CanteenObject> canteenToday = await cm.GetCanteenToday();
 
             int i = 0;
             if (canteenToday.Count > 0) {
@@ -40,7 +41,7 @@ namespace HTWDDAppUniversal.Views
                     ci.Tb_price.Text = price;
                     ci.Hyperlink.NavigateUri = new Uri(c.Link);
                     //if (i % 2 == 1)
-                        //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
+                    //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
                     //ci.Tb_desc.Width = this.ActualWidth * .75;
                     mainViewToday.Items.Add(ci);
                     i++;
@@ -54,9 +55,10 @@ namespace HTWDDAppUniversal.Views
             mainViewToday.HorizontalContentAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
         }
 
-        async void showCanteenTomorrow() {
-            CanteenModel cm = CanteenModel.getInstance();
-            List<CanteenObject> canteenTomorrow = await cm.getCanteenTomorrow();
+        async void ShowCanteenTomorrow()
+        {
+            CanteenModel cm = CanteenModel.GetInstance();
+            List<CanteenObject> canteenTomorrow = await cm.GetCanteenTomorrow();
 
             int i = 0;
             if (canteenTomorrow.Count > 0) {
@@ -73,7 +75,7 @@ namespace HTWDDAppUniversal.Views
                     ci.Tb_desc.Text = content;
                     ci.Tb_price.Text = price;
                     //if (i % 2 == 1)
-                        //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
+                    //ci.Gg.Background = new SolidColorBrush(Colors.LightSteelBlue);
                     //ci.Tb_desc.Width = this.ActualWidth * .75;
                     mainViewTomorrow.Items.Add(ci);
                     i++;

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HTWAppObjects {
-    public class GradeObject {
+﻿namespace HTWAppObjects
+{
+    public class GradeObject
+    {
         public string Status { get; set; }
         public string Semester { get; set; }
         public string PrDatum { get; set; }

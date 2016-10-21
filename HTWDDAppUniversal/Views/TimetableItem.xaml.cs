@@ -8,20 +8,23 @@ namespace HTWDDAppUniversal.Views
     {
         Button button;
         TextBlock textBlock;
-        public TimetableItem() {
+        public TimetableItem()
+        {
             this.InitializeComponent();
 
             Button = lesson;
             TextBlock = text;
         }
 
-        void lessonButton_Click(object sender, RoutedEventArgs e) {
+        void LessonButton_Click(object sender, RoutedEventArgs e)
+        {
             //var button = sender as Button;
             //var theValue = button.Attributes["myParam"].ToString();
             Debug.WriteLine("Lesson clicked");
         }
 
-        public Button Button {
+        public Button Button
+        {
             get {
                 return button;
             }
@@ -31,7 +34,8 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        public TextBlock TextBlock {
+        public TextBlock TextBlock
+        {
             get {
                 return textBlock;
             }

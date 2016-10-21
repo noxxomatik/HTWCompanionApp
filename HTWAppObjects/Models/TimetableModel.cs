@@ -16,13 +16,15 @@ using Windows.UI.Notifications;
 
 namespace HTWAppObjects
 {
-    public class TimetableModel {
+    public class TimetableModel
+    {
         static TimetableModel instance = null;
         private const string filename = "timetable.xml";
 
-        private TimetableModel () {}
+        private TimetableModel() { }
 
-        public static TimetableModel getInstance() {
+        public static TimetableModel GetInstance()
+        {
             if (instance == null)
                 instance = new TimetableModel();
             return instance;
@@ -32,7 +34,8 @@ namespace HTWAppObjects
          * Get the timetable asynchronous from the server.
          * Returns an empty list of objects if anything fails.
          */
-        public async Task<TimetableObjectsList> getTimetable(string stgJhr, string stg, string stgGrp)  {
+        public async Task<TimetableObjectsList> GetTimetable(string stgJhr, string stg, string stgGrp)
+        {
             // TODO: Regex zum Prüfen der Werte
             if (stgJhr != null && stg != null && stgGrp != null && !stgJhr.Equals("") && !stg.Equals("") && !stgGrp.Equals("")) {
                 try {
@@ -53,21 +56,22 @@ namespace HTWAppObjects
                     timetableObjectsList.timestamp = DateTime.Now;
 
                     // backup timetable if connection fails the next time
-                    await saveTimetableBackup(timetableObjectsList);
+                    await SaveTimetableBackup(timetableObjectsList);
 
                     return timetableObjectsList;
                 }
                 catch (Exception e) {
                     Debug.WriteLine(e.ToString());
                     return null;
-                }                
+                }
             }
             else {
                 return null;
-            }            
+            }
         }
 
-        private async Task<bool> saveTimetableBackup(TimetableObjectsList timetableObjects) {
+        private async Task<bool> SaveTimetableBackup(TimetableObjectsList timetableObjects)
+        {
             try {
                 StorageFile saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
                 using (Stream writeStream = await saveFile.OpenStreamForWriteAsync()) {
@@ -83,7 +87,8 @@ namespace HTWAppObjects
             }
         }
 
-        public static async Task<XmlDocument> GetNextLessonXml() {
+        public static async Task<XmlDocument> GetNextLessonXml()
+        {
             // don´t download a new timetable, use the stored one
             TimetableObjectsList timetableObjects = await LoadTimetableBackup();
             if (timetableObjects != null) {
@@ -233,7 +238,8 @@ namespace HTWAppObjects
             return null;
         }
 
-        public static async Task<TimetableObjectsList> LoadTimetableBackup() {
+        public static async Task<TimetableObjectsList> LoadTimetableBackup()
+        {
             try {
                 var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(filename);
                 if (readStream == null) {
@@ -252,10 +258,11 @@ namespace HTWAppObjects
             catch {
                 return null;
             }
-            
+
         }
 
-        public static void UpdateTile(XmlDocument tileXml) {
+        public static void UpdateTile(XmlDocument tileXml)
+        {
             TileNotification tile = new TileNotification(tileXml);
             TileUpdater tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
             tileUpdater.Update(tile);

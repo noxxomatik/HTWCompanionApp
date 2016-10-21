@@ -71,34 +71,34 @@
                         <TextBox x:Name="tb_sNr" TextWrapping="Wrap" PlaceholderText="xxxxx" AutomationProperties.IsRequiredForForm="True" 
                                  InputScope="Digits" TabIndex="0" RelativePanel.Below="t_sNumber" 
                                  RelativePanel.AlignHorizontalCenterWithPanel="True" 
-                                 KeyDown="EnterPressed" TextChanged="tb_sNr_TextChanged"/>
+                                 KeyDown="EnterPressed" TextChanged="Tb_sNr_TextChanged"/>
                         <TextBlock x:Name="ph1" RelativePanel.Below="tb_sNr"/>
                         <TextBlock x:Name="t_passwort" TextWrapping="Wrap" Text="Passwort" 
                                    RelativePanel.Below="ph1" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                         <PasswordBox x:Name="pb_pw" PlaceholderText="*****" 
                                      AutomationProperties.IsRequiredForForm="True" TabIndex="1" 
                                      RelativePanel.Below="t_passwort" 
-                                     RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" PasswordChanged="pb_pw_PasswordChanged"/>
+                                     RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" PasswordChanged="Pb_pw_PasswordChanged"/>
                         <TextBlock x:Name="ph2" RelativePanel.Below="pb_pw"/>
                         <TextBlock x:Name="t_sy" TextWrapping="Wrap" Text="Studienjahrgang" 
                                    RelativePanel.Below="ph2" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                         <TextBox x:Name="tb_sy" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="15" 
                                  AutomationProperties.IsRequiredForForm="True" TabIndex="2" RelativePanel.Below="t_sy" 
-                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sy_TextChanged"/>
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="Tb_sy_TextChanged"/>
                         <TextBlock x:Name="ph3" RelativePanel.Below="tb_sy"/>
                         <TextBlock x:Name="t_sg" TextWrapping="Wrap" Text="Studiengang" 
                                    RelativePanel.Below="ph3" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                         <TextBox x:Name="tb_sg" TextWrapping="Wrap" InputScope="Digits" PlaceholderText="044" 
                                  AutomationProperties.IsRequiredForForm="True" TabIndex="3" RelativePanel.Below="t_sg" 
-                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sg_TextChanged"/>
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="Tb_sg_TextChanged"/>
                         <TextBlock x:Name="ph4" RelativePanel.Below="tb_sg"/>
                         <TextBlock x:Name="t_sgn" TextWrapping="Wrap" Text="Studiengruppe" 
                                    RelativePanel.Below="ph4" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                         <TextBox x:Name="tb_sgn" TextWrapping="Wrap" PlaceholderText="73-CM" 
                                  AutomationProperties.IsRequiredForForm="True" TabIndex="4" RelativePanel.Below="t_sgn" 
-                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="tb_sgn_TextChanged"/>
+                                 RelativePanel.AlignHorizontalCenterWithPanel="True" KeyDown="EnterPressed" TextChanged="Tb_sgn_TextChanged"/>
                         <TextBlock x:Name="ph5" RelativePanel.Below="tb_sgn"/>
-                        <Button x:Name="b_save" Content="Speichern" Click="b_save_Click" 
+                        <Button x:Name="b_save" Content="Speichern" Click="B_save_Click" 
                                 RelativePanel.Below="ph5" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
                     </RelativePanel>
 
@@ -110,7 +110,7 @@
                 <RelativePanel>
                     <TextBlock x:Name="textToggleGradesNotification">Benachrichtigung bei neunen Noten</TextBlock>
                     <ToggleSwitch x:Name="switchToggleGradesNotification" RelativePanel.Below="textToggleGradesNotification"
-                                  IsOn="False" Toggled="switchToggleGradesNotification_Toggled"/>
+                                  IsOn="False" Toggled="SwitchToggleGradesNotification_Toggled"/>
                     <TextBlock x:Name="textCheckInterval" RelativePanel.Below="switchToggleGradesNotification" Margin="0,8,0,0" Visibility="Collapsed">Prüfintervall für neue Noten</TextBlock>
                     <ComboBox x:Name="listCheckInterval" RelativePanel.Below="textCheckInterval" SelectedIndex="2" Visibility="Collapsed">
                         <ComboBoxItem>15 Minuten</ComboBoxItem>

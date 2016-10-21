@@ -10,10 +10,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:HTWDDAppUniversal.ViewModels" mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:MainPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -67,7 +63,7 @@
 
         <SymbolIcon x:Name="symbolIcon" Symbol="Refresh"
                     RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="pageHeader" 
-                    Margin="0, 12, 12, 0" Tapped="symbolIcon_Tapped" Visibility="Visible" Foreground="{ThemeResource ContrastColorBrush}"/>
+                    Margin="0, 12, 12, 0" Tapped="SymbolIcon_Tapped" Visibility="Visible" Foreground="{ThemeResource ContrastColorBrush}"/>
         <ProgressRing x:Name="progressRing"
                       RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWith="pageHeader" 
                       Margin="0, 12, 12, 0" Visibility="Collapsed" IsActive="True" Foreground="{ThemeResource ContrastColorBrush}"/>

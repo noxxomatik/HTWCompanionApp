@@ -17,20 +17,22 @@ namespace HTWDDAppUniversal.Views
 {
     public sealed partial class GradesPage : Page
     {
-        public GradesPage() {
+        public GradesPage()
+        {
             InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            loadGradesBackup();
+            LoadGradesBackup();
         }
 
-        async Task loadGrades() {
-            SettingsModel settingsModel = SettingsModel.getInstance();
-            GradesModel gradesModel = GradesModel.getInstance();
+        async Task LoadGrades()
+        {
+            SettingsModel settingsModel = SettingsModel.GetInstance();
+            GradesModel gradesModel = GradesModel.GetInstance();
             GradeObjectsList gradeObjectsList;
 
             // only show if correct user name/password
             try {
-                gradeObjectsList = await gradesModel.getGrades(settingsModel.SNummer, settingsModel.RZLogin);
+                gradeObjectsList = await gradesModel.GetGrades(settingsModel.SNummer, settingsModel.RZLogin);
             }
             catch (Exception e) {
                 Debug.WriteLine(e);
@@ -76,7 +78,7 @@ namespace HTWDDAppUniversal.Views
                 }
 
                 // clear listview
-                clearListView(mainView);
+                ClearListView(mainView);
 
                 // add listviews to page
                 foreach (ListView listView in semesterList) {
@@ -95,22 +97,23 @@ namespace HTWDDAppUniversal.Views
                 }
 
                 mainView.IsItemClickEnabled = true;
-                mainView.ItemClick += new ItemClickEventHandler(itemClick);
+                mainView.ItemClick += new ItemClickEventHandler(ItemClick);
 
                 timestamp.Text = "Stand: " + gradeObjectsList.timestamp.ToLocalTime().ToString();
 
-                collapseOldEntries();
+                CollapseOldEntries();
             }
         }
 
-        async void loadGradesBackup() {
-            SettingsModel settingsModel = SettingsModel.getInstance();
-            GradesModel gradesModel = GradesModel.getInstance();
+        async void LoadGradesBackup()
+        {
+            SettingsModel settingsModel = SettingsModel.GetInstance();
+            GradesModel gradesModel = GradesModel.GetInstance();
             GradeObjectsList gradeObjectsList;
 
             // only show if correct user name/password
             try {
-                gradeObjectsList = await gradesModel.loadGradesBackup(settingsModel.SNummer);
+                gradeObjectsList = await gradesModel.LoadGradesBackup(settingsModel.SNummer);
             }
             catch (Exception e) {
                 Debug.WriteLine(e);
@@ -156,7 +159,7 @@ namespace HTWDDAppUniversal.Views
                 }
 
                 // clear listview
-                clearListView(mainView);
+                ClearListView(mainView);
 
                 // add listviews to page
                 foreach (ListView listView in semesterList) {
@@ -175,26 +178,28 @@ namespace HTWDDAppUniversal.Views
                 }
 
                 mainView.IsItemClickEnabled = true;
-                mainView.ItemClick += new ItemClickEventHandler(itemClick);
+                mainView.ItemClick += new ItemClickEventHandler(ItemClick);
 
                 timestamp.Text = "Stand: " + gradeObjectsList.timestamp.ToLocalTime().ToString();
 
-                collapseOldEntries();
+                CollapseOldEntries();
             }
         }
 
-        private void collapseOldEntries() {
-            for (int i = 1; i < mainView.Items.Count - 2; i = i+2) {
+        private void CollapseOldEntries()
+        {
+            for (int i = 1; i < mainView.Items.Count - 2; i = i + 2) {
                 ((ListViewItem) mainView.Items[i]).Visibility = Visibility.Collapsed;
             }
         }
 
-        void clearListView(ListView listView) {
+        void ClearListView(ListView listView)
+        {
             listView.Items.Clear();
-            listView.ItemClick -= new ItemClickEventHandler(itemClick);
+            listView.ItemClick -= new ItemClickEventHandler(ItemClick);
         }
 
-        void itemClick(object sender, ItemClickEventArgs e) 
+        void ItemClick(object sender, ItemClickEventArgs e)
         {
             try {
                 ListView listView = (ListView) sender;
@@ -218,11 +223,12 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        private async void symbolIcon_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+        private async void SymbolIcon_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
             symbolIcon.Visibility = Visibility.Collapsed;
             progressRing.Visibility = Visibility.Visible;
 
-            await loadGrades();
+            await LoadGrades();
 
             progressRing.Visibility = Visibility.Collapsed;
             symbolIcon.Visibility = Visibility.Visible;

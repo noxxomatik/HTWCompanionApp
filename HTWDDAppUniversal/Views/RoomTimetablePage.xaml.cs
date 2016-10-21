@@ -23,19 +23,19 @@ namespace HTWDDAppUniversal.Views
         {
             this.InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            settingsModel = SettingsModel.getInstance();
+            settingsModel = SettingsModel.GetInstance();
             rooms = new ObservableCollection<string>(settingsModel.Rooms);
-            roomTimetableModel = RoomTimetableModel.getInstance();
+            roomTimetableModel = RoomTimetableModel.GetInstance();
             timetableUtils = new TimetableUtils();
         }
 
-        private async void setupTimetable(string newRoom)
+        private async void SetupTimetable(string newRoom)
         {
             // clear timetable
             timetableUtils.clearTimetable(timetableThisWeek);
 
             /*request list of timetableObjects*/
-            List<TimetableObject> items = await roomTimetableModel.getRoomTimetable(newRoom);
+            List<TimetableObject> items = await roomTimetableModel.GetRoomTimetable(newRoom);
 
             /*find out if current week is even or odd*/
             int evenOdd = timetableUtils.isCurrentWeekEvenOrOdd();
@@ -82,7 +82,7 @@ namespace HTWDDAppUniversal.Views
             }
         }
 
-        private void setRoom(String newRoom) 
+        private void SetRoom(String newRoom)
         {
             if (null != timetableUtils.checkRoomSpell(newRoom)) {
                 if (!timetableUtils.lookupRoom(newRoom)) {
@@ -93,42 +93,42 @@ namespace HTWDDAppUniversal.Views
                     SuggestedRooms.Add(newRoom);
                     settingsModel.Rooms = new List<String>(SuggestedRooms);
                 }
-                setupTimetable(newRoom);
+                SetupTimetable(newRoom);
             }
         }
 
-        private void roomChoiceComboBoxTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) 
+        private void RoomChoiceComboBoxTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-             if (e.Key == VirtualKey.Enter) {
+            if (e.Key == VirtualKey.Enter) {
                 String newRoom = ((AutoSuggestBox) sender).Text;
-                setRoom(newRoom);
+                SetRoom(newRoom);
             }
         }
 
         // try to set the input as a room
-        private void roomChoiceComboBoxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void RoomChoiceComboBoxTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             String newRoom = ((AutoSuggestBox) sender).Text;
-            setRoom(newRoom);
+            SetRoom(newRoom);
         }
-        private void roomChoiceComboBoxTextBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs e)
+        private void RoomChoiceComboBoxTextBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs e)
         {
             String newRoom = sender.Text;
-            setRoom(newRoom);
+            SetRoom(newRoom);
         }
-        private void roomChoiceComboBoxTextBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
+        private void RoomChoiceComboBoxTextBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
         {
             suggestionChosen = true;
         }
 
 
         // show suggestion which match the input
-        private void roomChoiceComboBoxTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void RoomChoiceComboBoxTextBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             String text = sender.Text.ToLower();
             // a suggestion was chosen and added to the edit field
             if (suggestionChosen) {
-                setRoom(text);
+                SetRoom(text);
                 suggestionChosen = false;
             }
             else {
@@ -144,18 +144,6 @@ namespace HTWDDAppUniversal.Views
                     }
                 }
             }
-        }
-
-        private async void editListButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialogEditRooms editRoomsDialog = new ContentDialogEditRooms(this.ActualWidth);
-            var result = await editRoomsDialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary) {
-                SuggestedRooms = new ObservableCollection<String>(settingsModel.Rooms);
-                roomChoiceComboBoxTextBox.ItemsSource = SuggestedRooms;
-            }
-
         }
 
         private ObservableCollection<String> SuggestedRooms

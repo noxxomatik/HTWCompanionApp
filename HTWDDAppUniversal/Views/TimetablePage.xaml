@@ -10,10 +10,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:HTWDDAppUniversal.ViewModels" mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:MainPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>

@@ -24,7 +24,7 @@ namespace HTWDDAppUniversal
 
         public TimetableUtils()
         {
-            settingsModel = SettingsModel.getInstance();
+            settingsModel = SettingsModel.GetInstance();
 
             /*setup dictionary*/
             timeToRowDictionaryBeginTime = new Dictionary<String, int>();

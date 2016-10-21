@@ -48,10 +48,10 @@
         <AutoSuggestBox x:Name="roomChoiceComboBoxTextBox" PlaceholderText="Raum" BorderThickness="1"
                         RelativePanel.Below="pageHeader" Margin="12, 4, 4, 4" Width="200"
                         ItemsSource="{x:Bind SuggestedRooms}" 
-                        TextChanged="roomChoiceComboBoxTextBox_TextChanged" 
-                        LostFocus="roomChoiceComboBoxTextBox_LostFocus"
-                        SuggestionChosen="roomChoiceComboBoxTextBox_SuggestionChosen"
-                        QuerySubmitted="roomChoiceComboBoxTextBox_QuerySubmitted"/>
+                        TextChanged="RoomChoiceComboBoxTextBox_TextChanged" 
+                        LostFocus="RoomChoiceComboBoxTextBox_LostFocus"
+                        SuggestionChosen="RoomChoiceComboBoxTextBox_SuggestionChosen"
+                        QuerySubmitted="RoomChoiceComboBoxTextBox_QuerySubmitted"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" RelativePanel.Below="roomChoiceComboBoxTextBox" 
                       RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
             <Grid x:Name="timetableThisWeek" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 

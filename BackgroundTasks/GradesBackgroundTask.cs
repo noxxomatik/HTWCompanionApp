@@ -8,17 +8,19 @@ using NotificationsExtensions.Toasts;
 
 namespace BackgroundTasks
 {
-    public sealed class GradesBackgroundTask : IBackgroundTask {
-        public async void Run(IBackgroundTaskInstance taskInstance) {
+    public sealed class GradesBackgroundTask : IBackgroundTask
+    {
+        public async void Run(IBackgroundTaskInstance taskInstance)
+        {
             // Get a deferral, to prevent the task from closing prematurely 
             // while asynchronous code is still running.
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
             // check for new grades
             try {
-                GradesModel gradesModel = GradesModel.getInstance();
-                SettingsModel settingsModel = SettingsModel.getInstance();
-                int countNewGrades = await gradesModel.getNewGradesCount(settingsModel.SNummer, settingsModel.RZLogin);
+                GradesModel gradesModel = GradesModel.GetInstance();
+                SettingsModel settingsModel = SettingsModel.GetInstance();
+                int countNewGrades = await gradesModel.GetNewGradesCount(settingsModel.SNummer, settingsModel.RZLogin);
                 if (countNewGrades > 0) {
                     ToastContent content = new ToastContent() {
                         Visual = new ToastVisual() {
@@ -41,6 +43,6 @@ namespace BackgroundTasks
 
             // Inform the system that the task is finished.
             deferral.Complete();
-        }        
+        }
     }
 }

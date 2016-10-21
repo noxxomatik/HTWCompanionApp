@@ -1,16 +1,4 @@
-﻿using NotificationsExtensions.Tiles;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Data.Xml.Dom;
-using Windows.Storage;
-using Windows.UI.Notifications;
+﻿using System.Collections.Generic;
 
 /*
     One lesson in the timetable
